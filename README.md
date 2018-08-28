@@ -24,9 +24,10 @@ Potrebno opisati:
 	-> Zasto je bitno da i hardver podrzava sve?
 - Softverska implementacija
 	-> Nacin na koji je odradjeno sve
-	
+
 
 Linkovi koji su korisceni pri pisanju:
 https://www.wikiwand.com/en/Precision_Time_Protocol
 https://standards.ieee.org/findstds/standard/1588-2008.html
 https://www.rtaautomation.com/technologies/ieee-1588/
+https://www.webcitation.org/5qaJpYqCH

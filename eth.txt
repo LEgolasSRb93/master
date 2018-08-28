@@ -1,0 +1,71 @@
+OSI Model:
+
+Open Systems Interconnection model (OSI model) je konceptualni model koji karakterise i standardizuje komunikacione funkcije u telekomunikacionim ili kompjuterskim sistemima, i to bez obzira na unutrasnju strukturu uredjaja ili njihovu tehnologiju. Cilj ovog modela je da se postigne kompatibilnost razlicitih komunikacionih sistema sa standardnim protokolima komunikacije. OSI model razdvaja komunikacione sisteme u apstraktne slojeve. Originalna verzija modela ima sedam slojeva.
+
+Sloj unutar modela sluzi sloj iznad njega, i koristi sloj ispod njega u hijerarhiji. Na primer, sloj koji postize komunikaciju preko mreze bez gresaka, sluzi aplikacijama iznad koje ga koriste, i to dok poziva jednostavne funkcije za prijem i predaju paketa na mrezi. Dve instance istog sloja su vizualizovane tako sto su povezane horizontalno u istom sloju.
+
+Ovaj model je proizvod Open Systems Interconnection projekta u International Organization for Standardization (ISO), i ima oznaku ISO/IEC 7498-1.
+
+## [lazarc] slika svih slojeva u osi modelu
+
+Na svakom nivou N, dva entiteta na komunikcionim uredjajima razmenjuju jedinice protokola (PDU - protocol data units) pomocu sloja N protokola. Svaki PDU sadrzi podatke od interesa (payload) (SDU - service data unit), zajedno sa zaglavljima koji odgovaraju protokolu.
+
+Obrada podataka izmedju dva uredjaja koji su OSI-kompatibilni se odvija u sledecim koracima:
+- Podaci koji se prenose se formiraju na najvisem sloju u uredjaju koji predaje podatke na mrezi (sloj N) u jedinicu protokola (PDU).
+- PDU se prosledjuje sloju N-1, gde je poznat kao SDU.
+- Na sloju N-1 se na SDU dodaju zaglavlja, na osnovu cega se formira PDU za sloj N-1. Nakon cega se prosledjuje na sloj N-2.
+- Ovaj postupak se ponavlja sve dok se ne dostigne najnizi sloj u modelu, nakon cega se podaci prenose ka uredjaju koji prima podatke.
+- Na strani prijemnog uredjaja se podaci prenose od najnizeg sloja u modelu, do najviseg, gde se serije SDU struktura uspesno obradjuju, pri cemu se skidaju zaglavlja sa svakog sloja, dok se ne dostigne najvisi sloj u modelu, nakon cega su dostupni sirovi podaci.
+
+## [lazarc] dodati jos nesto o ovome ukoliko se nadje.
+
+Sloj 1: Fizicki sloj (Physical Layer)
+
+Fizicki sloj je odgovoran za prenos i prijem nestrukturiranih sirovih podataka izmedju uredjaja i fizickog medijuma za prenos. On pretvara digitalne bitove u elektricne, radio ili opticke signale. Specifikacije sloja definisu karakteristike poput nivoa napona, fizicke brzine prenosa podataka, maksimalne udaljenosti prenosa i fizickih konektora. Ovo ukljucuje raspored pinova, napona, linijske impedanse, specifikacije kablova, vremenskih signala i frekvencije za bezicne uredjaje. Kontrola brzine bitova se vrsi na fizickom nivou i moze definisati nacin komunikacije kao simpleks, polu dupleks ili dupleks komunikaciju. Komponente fizickog sloja mogu se opisati u smislu topologije mreze. Bluetooth, Ethernet i USB, sve imaju specifikacije za fizicki sloj.
+
+Sloj 2: Sloj veze (Data Link Layer)
+
+Sloj veze podataka obezbedjuje prenos podataka izmedju dva cvora u komunikaciji - vezu izmedju dva direktno povezana uredjaja na mrezi. Ovaj sloj otkriva i eventualno ispravlja greske koje se mogu javiti u fizickom sloju. On definise protokol za uspostavljanje i prekid veze izmedju dva fizicki povezana uredjaja. Takodje, definise protokol za kontrolu protoka izmedju njih.
+
+IEEE 802 standard deli sloj veze na dva podsloja:
+- Kontrola pristupa medijumu (MAC - Medium access control): 	## [lazarc] [prevod]
+	odgovorna je za kontrolu nacina na koji uredjaji na mrezi dobijaju pristup medijumu i dozvolu za prenos podataka.
+- Kontrola logicke veze (LLC - Logical link control):			## [lazarc] [prevod]
+	odgovorna je za identifikaciju i enkapsulaciju slojeva mreznog protokola, i kontrolu gresaka i sinhronizaciju paketa koji se salju.
+
+MAC i LLC slojevi IEEE 802 mreznog standarda kao sto su 802.3 Ethernet, ili 802.11 Wi-Fi su slojevi veze (data link layer).
+
+Point-to-Point Protocol (PPP) - je protokol sloja veze koji radi na nekoliko razlicitih fizickih slojeva, kao sto su sinhrone ili asinhrone serijske linije.
+
+Sloj 3: Mrezni sloj (Network Layer)
+
+Mrezni sloj obezbedjuje funkcionalno i proceduralno sredstvo prenosa sekvenci podataka promenljive duzine, koji se nazivaju jos i paketi, od jednog cvora do drugog, poveznih u "razlicite mreze". ## [lazarc] [prevod] ## Mreza je medijum na koji moze biti povezano vise cvorova, u kom svaki cvor ima adresu i koji dozvoljava cvorovima povezanim sa njim da prenose poruke ka ostalim cvorovima, i to samo dajuci sadrzaj poruke i adresu cvora na koji poruka treba da bude dostavljena, omogucavajuci mrezi da nadje nacin da isporuci poruku odredisnom cvoru, eventualno ga usmeravajuci kroz sredisnje cvorove (uredjaje koji su izmedju dva uredjaja koji pokusavaju da komuniciraju). Ako je poruka prevelika da bi se prenela sa jednog uredjaja na drugi samo koriscenjem sloja veze (Data Link Layer), mreza moze preneti podatke tako sto ce ih podeliti u nekoliko delova na jednom uredjaju, poslati delove nezavisno, i onda spojiti delove na drugom uredjaju. Pri cemu moze, iako nije uvek potrebno, prijaviti greske u isporuci.
+
+Isporuka poruka na mreznom sloju nije garantovano pouzdana. Mrezni sloj moze pruziti pouzdanu isporuku poruka, ali nije obavezno da to mora biti ispunjeno.
+
+Neki broj protokola koji upravljaju slojevima, imaju funkciju koja je definisana u aneksu upravljanja, ISO 7498/4, i pripadaju mreznom sloju. Oni ukljucuju protokole rutiranja, upravljanja grupomsa vise uredjaja, informacije o mreznom sloju, o greskama, kao i dodeljivanje adresa mreznog sloja medju uredjajima. Ustvari, to je funkcija podataka koji se prenose uz pomoc protokola, sto ih cini da pripadaju mreznom sloju, a ne protokolu. ## [lazarc] poslednja recenica [prevod] ##
+
+Sloj 4: Transportni sloj (Transport Layer)
+
+Transportni sloj obezbedjuje funkcionalno i proceduralno sredstvo prenosa sekvenci podataka promenljive duzine od predajnog do prijemnog uredjaja, uz odrzavanje kvaliteta.
+
+Transportni sloj kontrolise pouzdanost date konekcije kroz kontrolu protoka, segmentaciju/desegmentaciju i kontrolu gresaka. Neki protokli su orjentisani na stanje mreze, a neki na konekciju u mrezi. ## [lazarc] [prevod] ## Ovo znaci da Transportni sloj moze da prati segmente i ponovo preneti one koji nisu isporuceni prijemnom uredjaju. Transportni sloj takodje omogucava i potvrdu uspesnog prenosa podataka i salje naredne podatke ako nije doslo do greske prilikom prenosa. Transportni sloj formira i segmente koji su primljeni iz visih slojeva, npr Aplikativnog sloja (Application Layer). Segmentacija je proces podele dugih poruka u krace poruke kako bi se lakse prenele preko nizih slojeva u modelu.
+
+OSI model definise pet klasa transportnih protokola za povezivnje od klase 0 (koja je takodje poznata i kao TP0 i ima najslabije karakteristike) do klase 4 (TP4, koja je dizajnirana za manje pouzdane mreze, slicne Internetu). Klasa 0 (TP0) nema mogucnost oporavka od greske i bila je dizajnirana za koriscenje na mreznim slojevima koji pruzaju konekciju bez gresaka. Klasa 4 (TP4) je najbliza TCP, iako TCP sadrzi neke funkcije koje se u OSI modelu dodeljuju visim slojevima. Takodje, sve klase u OSI modelu omogucavaju brzu upotrebu podataka i ocuvanje granica podataka ## [lazarc] [prevod] ##. Detalje karakteristika svih klasa prikazane su u sledecoj tabeli:
+
+## [lazarc] tabela sa interneta
+## [lazarc] prebaci tabelu na srpski
+
+Sloj 5: Sloj sesije (Session Layer)
+
+Sloj sesije kontrolise dijaloge (veze) izmedju uredjaja. Uspostavlja, upravlja i uklanja veze izmedju lokalnih i udaljenih aplikacija. Obezbedjuje funkcije Full-Duplex, Half-Duples ili Simplex i uspostavlja procedure Checkpoint-a, prekida ili ponovnog pokretanja procedura. OSi model je ucinio ovaj sloj odgovornim za dobro zavrsavanje sesija, sto je osobina TCP (Transmission Control Protocol), i takodje proveru sesija i oporavak, sto se obicno ne koristi u Internet Protocol Suite. Sloj sesije se obicno eksplicitno primenjuje u sredinama aplikacija koje koriste proceduralne pozive na udaljenim uredjajima.
+
+Sloj 6: Sloj prezentacije (Presentation Layer)
+
+Sloj prezentacije uspostavlja kontekst izmedju dva entiteta aplikativnog sloja, u kom entiteti aplikativnog sloja mogu koristiti razlicitu sintaksu i semantiku ukoliko sloj prezentacije pruza mapiranje izmeju njih. Ukoliko je dostupno mapiranje, jedinice protokola su enkapsulirane u jednice sesije i prosledjene na nize slojeve.
+
+Ovaj sloj obezbedjuje nezavisnost od predstavljanja podataka u razlicitim aplikacijama i mreznim formatima. Sloj prezentacije pretvara podatke u oblik koji prihvata zadata aplikacija. Ovaj sloj formatira podatke koji se salju preko mreze. Ponekad se naziva i sintaksni sloj. Takodje, moze ukljucivati i funkcije kompresije.
+
+Sloj 7: Aplikativni sloj (Application Layer)
+
+Aplikativni sloj je OSI sloj najblizi krajnjem korisniku, sto znaci da i OSI aplikativni sloj i korisnik interaguju direktno sa aplikacijom. Ovaj sloj komunicira sa softverskom aplikacijom koja sadrzi komponentu za komunikaciju. Takve aplikacije ne spadaju u okvir OSI modela. Funkcije u aplikativnom sloju obicno ukljucuju identifikovanje partnera u komunikaciji, odredjivanje dostupnosti resursa i sinhronizaciju komunikacije. Prilikom identifikacije uredjaja za komunikaciju, aplikativni sloj se razlikuje od samih aplikacija. Na primer, internet aplikacija (web strana) moze imati dva entiteta - dve aplikacije: jedna koja koristi HTTP za komunikaciju sa korisnicima, i drugu za udaljenu bazu podataka koja cuva podatke. Ni jedan od ovih protokola nemaju nista sa podacima koji se cuvaju, to se nalazi samo u aplikaciji. Aplikacijski sloj nema nacina za odredjivanje resursa u mrezi.
