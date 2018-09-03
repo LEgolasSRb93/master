@@ -16,7 +16,12 @@ Potrebno opisati:
 	-> Sta se postize ovim nacinom rada?
 	-> U cemu je poboljsanje u odnosu na prethodne nacine rada?
 - Opis PTP-a
+	-> Opis PTP-a (Precision_Time_Protocol)
+	-> Opis OSI modela
+	-> Opis TCP/IP modela
 - Opis operativnog sistema
+	-> FreeRTOS opis
+	-> lwIP opis
 - Hardverska implementacija
 	-> Zasto je odabran ovaj hardver?
 	-> Koje su dobre strane koriscenja?

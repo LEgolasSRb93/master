@@ -32,3 +32,6 @@ Sinhronizacija i obrada u PTP sistemu se postize razmenom poruka preko komunikac
 - Signalne poruke se koriste u komunikaciji izmedju uredjaja koje nisu vremenski kriticne. Signalne poruke su uvedene u IEEE 1588-2002 standard.
 
 Poruke se karakterizuju kao Event i General, odnosno poruke dogadjaja i opste poruke. Event poruke su vremenski kriticne i to u preciznosti predaje i prijema preciznosti vremenskih pecata (TIMESTAMPs) i direktno uticu na distribuciju preciznosti vremena. (JOS JEDNOM POGLEDAJ OVAJ PREVOD). Sync, Delay_Req, Pdelay_Req i Pdelay_resp su poruke dogadjaja. Opste poruke su ubicajene jedinice protokola, zato sto podaci u ovim porukama su od znacaja za PTP, ali njihovi vremenski pecati za predaju i prijem nisu.Announce, Follow_Up, Delay_Resp, Pdelay_Resp_Follow_Up, Management i Signalne poruke su opste poruke.
+
+Prenos poruka:
+PTP poruke mogu da koriste UDP (User datagram portocol) preko Internet protokola (UDP/IP) za prenos poruka. IEEE 1588-2002, koristi samo IPv4 prenos, ali je ovo prosireno da ukljucuje i IPv6 u IEEE 1588-2008 standardu. U IEEE 1588-2002, sve PTP poruke se salju u Multicast (modulu objavljivanja na mrezi) (#pogldedaj opet ovaj prevod#), dok se u IEEE 1588-2008 je uveo kao opciju
