@@ -36,4 +36,26 @@ Kao sto je vec opisani, prioriteti taskova mogu pomoci da se osigura da aplikaci
 = Modularnost (Modularity)
 	Taskovi su nezavisni moduli, pri cemu svaki od njih mora imati dobro definisanu svrhu.
 = Timski razvoj (Team development)
-	
+	Taskovi bi trebalo da imaju dobro definisane interfejse, kako bi se lakse razvijali u timovima.
+= Lakse testiranje (Easier testing)
+	Ako su takskovi dobro definisani kao nezavisni moduli sa cistim interfejsima, mogu biti testirani nezavnisno.
+= Ponovno koriscenje koda (Code reuse)
+	Veca modularnost sa vecom nezavisnoscu koda koji se moze ponovo koristiti sa manje ulozenog truda.
+= Poboljsana efikasnost (Improved efficiency)
+	Koriscenjem kernela softver se u popunosti moze prebaciti na opkretanje dogadjajima (event driven programming), i time bi se ustedelo procesorsko vreme koje se trosi na poliranje dogadjaja koji se ne dogadjaju. Kod se pokrece samo ukoliko postoji nesto sto je potrebno uraditi.
+
+	Protiv poboljsane efikasnosti stoji to da je potrebno pocesuirati RTOS prekid, i promeniti izvrsavanje sa jednog taska na drugi. Kako god, i aplikacije koje ne koriste RTOS normalno ukljucuju neku formu prekida.
+
+= Idle time (##[lazarc] [prevod]##)
+	Idle task je task koji se automatski kreira prilikom startovanja Rasporedjivaca (##[lazarc] [prevod]##). I izvrsava se kad nema taskova unutar aplikacije koji bi se izvrsavali. Ovaj task se moze koristiti za merenje procesorske moci koja se trosi, za izvrsavanje provera u pozadini, ili da jednostavno pokrene rezim smanjene potrosnje u sistemu.
+
+= Upravljanje snagom (Power management)
+	Efikasnost koja se dobija koriscenjem RTOS-a dozovoljava procesoru da provede vise vremena u rezimu smanjenje potrosnje.
+
+	Potrosnja se moze znacajno smanjiti time sto procesor odlazi u rezim smanjenje potrosnje kad god je pokrenut Idle task. FreeRTOS takodje ima i specijalni tick-less mod, u kome procesor odlazi u rezim smanjene potrosnje na duze.
+
+= Fleksibilno upravljanje prekidima (Flexible interrupt handling)
+	Upravljanje prekidima se moze drzati veoma kratko tako sto se odlaze obrada bilo kog taska koji je kreirao sam dizajner, ili taska unutar FreeRTOS-a.
+
+= Razliciti zahtevi za obradom (Mixed processing requirements)
+	Jednostavni oblici dizajniranja programa mogu se postici mesanjem periodicnog, kontinualnog i procesiranja pokretanog dogadjajima. Pored toga, ispunjavanje strogih i manje strogih zahteva za realnim vremenom u aplikacijama moze se postici izborom odgovoarajucih taskova i prioriteta prekida.

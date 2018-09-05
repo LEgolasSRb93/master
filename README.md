@@ -36,3 +36,7 @@ https://www.wikiwand.com/en/Precision_Time_Protocol
 https://standards.ieee.org/findstds/standard/1588-2008.html
 https://www.rtaautomation.com/technologies/ieee-1588/
 https://www.webcitation.org/5qaJpYqCH
+https://www.freertos.org/Documentation/161204_Mastering_the_FreeRTOS_Real_Time_Kernel-A_Hands-On_Tutorial_Guide.pdf
+https://www.wikiwand.com/en/FreeRTOS
+http://lwip.wikia.com/wiki/LwIP_Wiki
+https://savannah.nongnu.org/projects/lwip/
