@@ -61,20 +61,23 @@
 	(SDU - service data unit), zajedno sa zaglavljima koji odgovaraju protokolu.
 
 	Obrada podataka izmedju dva uredjaja koji su OSI-kompatibilni se odvija u sledecim koracima:
-	- Podaci koji se prenose se formiraju na najvisem sloju u uredjaju koji predaje podatke na
-	mrezi (sloj N) u jedinicu protokola (PDU).
-	- PDU se prosledjuje sloju N-1, gde je poznat kao SDU.
-	- Na sloju N-1 se na SDU dodaju zaglavlja, na osnovu cega se formira PDU za sloj N-1. Nakon
-	cega se prosledjuje na sloj N-2.
-	- Ovaj postupak se ponavlja sve dok se ne dostigne najnizi sloj u modelu, nakon cega se podaci
-	prenose ka uredjaju koji prima podatke.
-	- Na strani prijemnog uredjaja se podaci prenose od najnizeg sloja u modelu, do najviseg, gde
-	se serije SDU struktura uspesno obradjuju, pri cemu se skidaju zaglavlja sa svakog sloja, dok
-	se ne dostigne najvisi sloj u modelu, nakon cega su dostupni sirovi podaci.
+	\begin{itemize}
+		\item Podaci koji se prenose se formiraju na najvisem sloju u uredjaju koji predaje podatke
+		na mrezi (sloj N) u jedinicu protokola (PDU).
+		\item PDU se prosledjuje sloju N-1, gde je poznat kao SDU.
+		\item Na sloju N-1 se na SDU dodaju zaglavlja, na osnovu cega se formira PDU za sloj N-1.
+		Nakon cega se prosledjuje na sloj N-2.
+		\item Ovaj postupak se ponavlja sve dok se ne dostigne najnizi sloj u modelu, nakon cega se
+		podaci prenose ka uredjaju koji prima podatke.
+		\item Na strani prijemnog uredjaja se podaci prenose od najnizeg sloja u modelu, do
+		najviseg, gde se serije SDU struktura uspesno obradjuju, pri cemu se skidaju zaglavlja sa
+		svakog sloja, dok se ne dostigne najvisi sloj u modelu, nakon cega su dostupni sirovi
+		podaci.
+	\end{itemize}
 
 	\#\# [lazarc] dodati jos nesto o ovome ukoliko se nadje.
 
-	Sloj 1: Fizicki sloj (Physical Layer)
+	\subsection{Sloj 1: Fizicki sloj (Physical Layer)}
 
 	Fizicki sloj je odgovoran za prenos i prijem nestrukturiranih sirovih podataka izmedju uredjaja
 	i fizickog medijuma za prenos. On pretvara digitalne bitove u elektricne, radio ili opticke
@@ -85,7 +88,7 @@
 	kao simpleks, polu dupleks ili dupleks komunikaciju. Komponente fizickog sloja mogu se opisati
 	u smislu topologije mreze. Bluetooth, Ethernet i USB, sve imaju specifikacije za fizicki sloj.
 
-	Sloj 2: Sloj veze (Data Link Layer)
+	\subsection{Sloj 2: Sloj veze (Data Link Layer)}
 
 	Sloj veze podataka obezbedjuje prenos podataka izmedju dva cvora u komunikaciji - vezu izmedju
 	dva direktno povezana uredjaja na mrezi. Ovaj sloj otkriva i eventualno ispravlja greske koje
@@ -93,12 +96,16 @@
 	dva fizicki povezana uredjaja. Takodje, definise protokol za kontrolu protoka izmedju njih.
 
 	IEEE 802 standard deli sloj veze na dva podsloja:
-	- Kontrola pristupa medijumu (MAC - Medium access control): 	\#\# [lazarc] [prevod]
+	\begin{itemize}
+		\item \textbf{Kontrola pristupa medijumu (MAC - Medium access control):}
+		\#\# [lazarc] [prevod]
 		odgovorna je za kontrolu nacina na koji uredjaji na mrezi dobijaju pristup medijumu i
 		dozvolu za prenos podataka.
-	- Kontrola logicke veze (LLC - Logical link control):			\#\# [lazarc] [prevod]
+		\item \textbf{Kontrola logicke veze (LLC - Logical link control):}
+		\#\# [lazarc] [prevod]
 		odgovorna je za identifikaciju i enkapsulaciju slojeva mreznog protokola, i kontrolu
 		gresaka i sinhronizaciju paketa koji se salju.
+	\end{itemize}
 
 	MAC i LLC slojevi IEEE 802 mreznog standarda kao sto su 802.3 Ethernet, ili 802.11 Wi-Fi su
 	slojevi veze (data link layer).
@@ -106,7 +113,7 @@
 	Point-to-Point Protocol (PPP) - je protokol sloja veze koji radi na nekoliko razlicitih
 	fizickih slojeva, kao sto su sinhrone ili asinhrone serijske linije.
 
-	Sloj 3: Mrezni sloj (Network Layer)
+	\subsection{Sloj 3: Mrezni sloj (Network Layer)}
 
 	Mrezni sloj obezbedjuje funkcionalno i proceduralno sredstvo prenosa sekvenci podataka
 	promenljive duzine, koji se nazivaju jos i paketi, od jednog cvora do drugog, poveznih u
@@ -130,7 +137,7 @@
 	pomoc protokola, sto ih cini da pripadaju mreznom sloju, a ne protokolu. \#\# [lazarc] poslednja
 	recenica [prevod] \#\#
 
-	Sloj 4: Transportni sloj (Transport Layer)
+	\subsection{Sloj 4: Transportni sloj (Transport Layer)}
 
 	Transportni sloj obezbedjuje funkcionalno i proceduralno sredstvo prenosa sekvenci podataka
 	promenljive duzine od predajnog do prijemnog uredjaja, uz odrzavanje kvaliteta.
@@ -156,7 +163,7 @@
 	\#\# [lazarc] tabela sa interneta
 	\#\# [lazarc] prebaci tabelu na srpski
 
-	Sloj 5: Sloj sesije (Session Layer)
+	\subsection{Sloj 5: Sloj sesije (Session Layer)}
 
 	Sloj sesije kontrolise dijaloge (veze) izmedju uredjaja. Uspostavlja, upravlja i uklanja veze
 	izmedju lokalnih i udaljenih aplikacija. Obezbedjuje funkcije Full-Duplex, Half-Duples ili
@@ -166,7 +173,7 @@
 	u Internet Protocol Suite. Sloj sesije se obicno eksplicitno primenjuje u sredinama aplikacija
 	koje koriste proceduralne pozive na udaljenim uredjajima.
 
-	Sloj 6: Sloj prezentacije (Presentation Layer)
+	\subsection{Sloj 6: Sloj prezentacije (Presentation Layer)}
 
 	Sloj prezentacije uspostavlja kontekst izmedju dva entiteta aplikativnog sloja, u kom entiteti
 	aplikativnog sloja mogu koristiti razlicitu sintaksu i semantiku ukoliko sloj prezentacije
@@ -178,7 +185,7 @@
 	Ovaj sloj formatira podatke koji se salju preko mreze. Ponekad se naziva i sintaksni sloj.
 	Takodje, moze ukljucivati i funkcije kompresije.
 
-	Sloj 7: Aplikativni sloj (Application Layer)
+	\subsection{Sloj 7: Aplikativni sloj (Application Layer)}
 
 	Aplikativni sloj je OSI sloj najblizi krajnjem korisniku, sto znaci da i OSI aplikativni sloj i
 	korisnik interaguju direktno sa aplikacijom. Ovaj sloj komunicira sa softverskom aplikacijom
@@ -310,14 +317,118 @@
 	objavljivanja na mrezi) (\#pogldedaj opet ovaj prevod\#), dok se u IEEE 1588-2008 je uveo kao
 	opciju
 
+	\section{Algoritam najboljeg sata (Best master clock algorithm)}
+	BMC algoritam obavlja deljenu selekciju najboljeg kandidata za tacno vreme prema sledecim
+	karakteristikama:
+
+	- Identifikator: Univerzalni jednistveni identifikator za sat. Tipicno je baziran na MAC adresi
+	uredjaja.
+	- Kvalitet: Obe verzije IEEE 1588 standarda pokusavaju da kvantifikuju kvalitet sata na osnovu
+	ocekivanih devijacija u vremenu, tehnologije koja je koriscena za implemntaciju vremena ili
+	lokacije u hijerarhiji satova, u semi kvaliteta satova (clock stratum scheme).
+
+	- Prioritet: Administrativno dodeljen prioritetni znak koji BMC koristi kako bi sto bolje
+	odredio Grandmaster u PTP domenu. Dok je IEEE 1588-2002 standard imao samo jednu logicku
+	promenljivu kako bi odredio prioritet, IEEE 1588-2008 ima dva 8-bitna polja prioriteta.
+
+	- Varijansa: Procena stabilnosti sata zasnovana na zapazanju njegovog ucinka prema PTP refernci.
+
+	IEEE 1588 koristi hijerarhijski algoritam selekcije zasnovan na sledecim osobinama, u
+	naznacenom redosledu:
+
+	- Prioritet 1: korisnik moze dodeliti specifican staticki dizajniran prioritet svakom satu, pre
+	svega odredjujuci prioritet medju njima. Manje vrednosti prioriteta oznacavaju veci prioritet.
+	- Klasa: Svaki sat je clan odredjene klase, svaka klasa dobija svoj prioritet.
+	- Preciznost: Preciznost izmedju sata i UTC, u nanosekundama.
+	- Varijansa: Varijabilnost sata.
+	- Prioritet 2: Definisan prioritet, definisuci redosled rezervne kopije u slucaju da drugi
+	kriterijumi nisu dovoljni. Manje vrednosti prioriteta oznacavaju veci prioritet.
+	- Jedinstveni identifikator: selekcija zasnovana na MAC adresi se koristi kao metod odlucivanja
+	kada su sve ostale osobine iste.
+
+	Svojstva sata se daju u IEEE 1588-2002 porukama za sinhronizaciju (Sync messages) i u IEEE
+	1588-2008 u porukama za oglasavanje (Announce messages). Trenutni Master clock (\#\#[lazarc]
+	[prevod]\#\#) prenosi sve informacije u rednovnim intervalima. Sat koji sebe smatra boljim od
+	trenutnog Master sata prenosice ove informacije kako bi se pozvali svi uredjaji za pormenu
+	Master sata. Kada trenutni Master prepozna bolji sat, tada Master sat zaustavlja emitovanje
+	poruka za sinhronizaciju (Sync Messages), ili poruke ograsavanja (Announce messages), u
+	zavisnosti od verzije protokola, i bolji sat preuzima ulogu Master sata. BMC algoritam uzima u
+	obzir samo osobine koje su vec poznate, i koje su deklarisali sami satovi, i ne uzima u obzir
+	kvalitet veze na mrezi.
+
+	\section{Sinhronizacija (Synchronization)}
+
+	Koristeci BMC algoritam, PTP bira Master sat za IEEE 1588 domen i za svaki segment mreze unutar
+	tog domena.
+	Satovi odredjuju razliku izmedju njih (offset) i Master-a na mrezi. Neka promenjiva $t$
+	predstavlja fizicki vreme. Za dati Slave uredjaj, razlika $o(t)$ u vremenu $t$ se definise kao:
+	$o(t) = s(t) - m(t)$
+	gde $s(t)$ predstavlja vreme mereno satom na Slave uredjaju u vremenu $t$, dok $m(t)$
+	predstavlja vreme mereno satom na Master uredjaju u vremenu $t$.
+
+	Master uredjaj periodicno objavljuje (Broadcasts) trenutno vreme kao poruku ostalim uredjajima
+	na mrezi. IEEE 1588-2002 protokolom je definisana objava vremena na svaku sekundu. Dok je IEEE
+	1588-2008 protokolom dozvoljeno i do 10 objava vremena u jednoj sekundi.
+
+	\#\# [lazarc] [slika] sync
+
+	Svaka objava vremena krece u vremenskom trenutku $T_1$, i to Sync porukom koju salje Master
+	uredjaj svim uredjajima u domenu. Uredjaj koji prima ovu poruku pamti vreme $T_1'$ u kom je
+	primio Sync poruku. Master moze naknadno poslati Follow\_up poruku u kojoj ce se nalaziti tacno
+	vreme $T_1$ u kom je poslata prethodna poruka. Nemaju svi Master uredjaji sposobnost da posalju
+	tacne vremenske oznake unutar Sync poruke. Tek nakon sto je prenos zavrsen, oni mogu dobaviti
+	tacne vremenske trenutke stizanja Sync poruke iz hardvera za povezivanje na mrezu. Maste
+	uredjaji sa ovim ogranicenjima salju Follow\_up poruke kako bi preneli vreme $T_1$. Master
+	uredjaji koji poseduju PTP mogucnosti unutar hardvera za povezivanje mogu ubaciti tacne
+	vremenske oznake unutar Sync poruka, i ne moraju koristiti Follow\_up poruke.
+
+	Kako bi se tacno sinhronizovali na Master uredjaj, satovi moraju individualno odrediti vreme
+	prenosa poruka kroz medijum za povezivanje. Vreme progresije poruke kroz medijum za povezivanje
+	se radi merenjem vremena koje je potrebno da poruka ode od svakog uredjaja do njihovog Mastera
+	u domenu, i da se vrati nazad. Ovu razmenu iniciraju Slave uredjaji i pri tome mere vreme
+	progresije poruke $d$. Razmena poruka pocinje tako sto Slave uredjaj salje Delay\_Req poruku u
+	vremenskom trenutku $T_2$ ka svom Master uredjaju. Master uredjaj primi ovu poruku, i kao
+	odgovor posalje tacnu vremensku oznaku kada je primio Delay\_Req poruku. Poruka odgovora
+	Delay\_Resp sadrzi tacno vreme $T_2'$ u kome je primljena poruka Delay\_Req.
+
+	Nakon razmene ovih poruka Slave uredjaj ima spoznaju o cetiri vremenska trenutka $T_1$, $T_1'$,
+	$T_2$ i $T_2'$.
+
+	Ukoliko je $d$ vreme koje je potrebno Sync poruci da prodje kroz medijum za povezivanje, a $\tilde{o}$
+	konstantna razlika satova izmedju Master i Slave uredjaja, onda je:
+	\begin{equation}
+		T_1' - T_1 = \tilde{o} + d
+	\end{equation}
+
+	i
+	\begin{equation}
+			T_2' - T_2 = -\tilde{o} + d
+	\end{equation}.
+
+	Odakle je:
+
+	\begin{equation}
+		\tilde{o}=\frac{1}{2}(T_1' - T_1 - T_2' + T_2)
+	\end{equation}.
+
+	Sada dva uredjaja znaju koliki je ofset $\tilde{o}$ prilikom prenosa i mogu se ispraviti tako da budu
+	u skladu sa Master uredjajem.
+
+	Jedna pretpostavka je da se prenos poruka odvija u periodu vremena koji je tako mali, da se
+	razlika moze smatrati konstantnom u tom periodu. Jos jedna pretpostavka je da je vreme koje je
+	potrebno da poruka stigne od Master do Slave uredjaja ista kao i u obrnutom smeru. I na kraju,
+	pretpostavka je da i Master i Slave uredjaji mogu da precizno mere vremenske trenutke u kojima
+	salju ili primaju poruke. Stepen primene ovih pretpostavki utice na to koliko ce se dobro
+	sinhronizovati dva uredjaja.
+
+	\#\# [lazarc] Pogledaj jos da se ubaci sa Teams za Valeo
+
 	\newpage
 
 	\chapter{Operativni sistem}
 
 	\section{FreeRTOS}
-	FreeRTOS:
 
-	Wiki:
 	FreeRTOS je kernel operativnog sistema koji radi u realnom vremenu, i to za namenske sisteme, i
 	moze se koristiti na preko 35 mikrokontrolera.
 
@@ -334,13 +445,15 @@
 	mogucnosti koriscenja FreeRTOS-a i za aplikacije niske potrosnje. Aplikacije koje se koriste
 	FreeRTOS mogu biti kompletno staticki alocirane. Alternativno RTOS objekti mogu dinamicki
 	alocirane sa 5 sema alokacije memorije i one cine:
-	- samo alocirati;
-	- alocirati i osloboditi sa jednostavnim, brzim algoritmom;
-	- kompleksnija ali brza alokacija i oslobadjanje uz algoritam spajanja sussednih memorijskih
-	blokova;
-	- alternativa za jos kompleksiniju semu koja ukljucuje spajanje susednih memorijskih blokova
-	koja omogucava da hip (HEAP) bude podeljen na vise memorijskih delova
-	- i na kraju C biblioteka za alociranje i oslobadjanje sa zastitom medjusobnog iskljucivanja.
+	\begin{itemize}
+		\item samo alocirati;
+		\item alocirati i osloboditi sa jednostavnim, brzim algoritmom;
+		\item kompleksnija ali brza alokacija i oslobadjanje uz algoritam spajanja sussednih
+		memorijskih blokova;
+		\item alternativa za jos kompleksiniju semu koja ukljucuje spajanje susednih memorijskih
+		blokova	koja omogucava da hip (HEAP) bude podeljen na vise memorijskih delova;
+		\item i na kraju C biblioteka za alociranje i oslobadjanje sa zastitom medjusobnog iskljucivanja.
+	\end{itemize}
 
 	Unutar FreeRTOS-a ne postoji ni jedan od slozenijih svojstava operativnih sistema koji se
 	uobicajeno mogu naci u operativnim sistemima poputi Linux-a ili Microsoft Windows-a, kao sto su
@@ -388,27 +501,28 @@
 	Kao sto je vec opisani, prioriteti taskova mogu pomoci da se osigura da aplikacija ispuni sve
 	zahteve, ali kernel moze doneti i neke manje ocigledne beneficije. Neke od njih su navedene
 	ispod:
-	= Skracivanje informacija o vremenskom rasporedu (Abstracting away timing information):
+	\begin{itemize}
+		\item \textbf{Skracivanje informacija o vremenskom rasporedu (Abstracting away timing information):}
 		Kernel je odgovoran za vreme izvrsavanja i dodeljuje API kojim se unutar aplikacije moze
 		upravljati vremenom. Ovim se omogucava jednostavnija strukturiranost koda, i ukupna
 		velicina koda je manja.
-	= Odrzavanje/Prosirivanje (Maintainability/Extensibility):
+		\item \textbf{Odrzavanje/Prosirivanje (Maintainability/Extensibility):}
 		Uskracivanjem informacija o vremenskom rasporedu rezultuje u manjim zavisnostima izmedju
 		modula, i dozvoljava aplikaciji da evoluira u kontrolisanom i predvidjenom nacinu. Takodje,
 		kernel je odgovoran za rasporedjivanje vremena, tako da performanse aplikacije manje mogu
 		biti promenjene u hardveru na kome se pokrecu.
-	= Modularnost (Modularity)
+		\item \textbf{Modularnost (Modularity):}
 		Taskovi su nezavisni moduli, pri cemu svaki od njih mora imati dobro definisanu svrhu.
-	= Timski razvoj (Team development)
+		\item \textbf{Timski razvoj (Team development):}
 		Taskovi bi trebalo da imaju dobro definisane interfejse, kako bi se lakse razvijali u
 		timovima.
-	= Lakse testiranje (Easier testing)
+		\item \textbf{Lakse testiranje (Easier testing):}
 		Ako su takskovi dobro definisani kao nezavisni moduli sa cistim interfejsima, mogu biti
 		testirani nezavnisno.
-	= Ponovno koriscenje koda (Code reuse)
+		\item \textbf{Ponovno koriscenje koda (Code reuse):}
 		Veca modularnost sa vecom nezavisnoscu koda koji se moze ponovo koristiti sa manje ulozenog
 		truda.
-	= Poboljsana efikasnost (Improved efficiency)
+		\item \textbf{Poboljsana efikasnost (Improved efficiency):}
 		Koriscenjem kernela softver se u popunosti moze prebaciti na opkretanje dogadjajima (event
 		driven programming), i time bi se ustedelo procesorsko vreme koje se trosi na poliranje
 		dogadjaja koji se ne dogadjaju. Kod se pokrece samo ukoliko postoji nesto sto je potrebno
@@ -417,30 +531,29 @@
 		Protiv poboljsane efikasnosti stoji to da je potrebno pocesuirati RTOS prekid, i promeniti
 		izvrsavanje sa jednog taska na drugi. Kako god, i aplikacije koje ne koriste RTOS normalno
 		ukljucuju neku formu prekida.
-
-	= Idle time (\#\#[lazarc] [prevod]\#\#)
-		Idle task je task koji se automatski kreira prilikom startovanja Rasporedjivaca (\#\#[lazarc]
-		[prevod]\#\#). I izvrsava se kad nema taskova unutar aplikacije koji bi se izvrsavali. Ovaj
-		task se moze koristiti za merenje procesorske moci koja se trosi, za izvrsavanje provera u
-		pozadini, ili da jednostavno pokrene rezim smanjene potrosnje u sistemu.
-
-	= Upravljanje snagom (Power management)
+		\item \textbf{Idle time (\#\#[lazarc] [prevod]\#\#):}
+		Idle task je task koji se automatski kreira prilikom startovanja Rasporedjivaca
+		(\#\#[lazarc] [prevod]\#\#). I izvrsava se kad nema taskova unutar aplikacije koji bi se
+		izvrsavali. Ovaj task se moze koristiti za merenje procesorske moci koja se trosi, za
+		izvrsavanje provera u pozadini, ili da jednostavno pokrene rezim smanjene potrosnje u
+		sistemu.
+		\item \textbf{Upravljanje snagom (Power management):}
 		Efikasnost koja se dobija koriscenjem RTOS-a dozovoljava procesoru da provede vise vremena
 		u rezimu smanjenje potrosnje.
 
 		Potrosnja se moze znacajno smanjiti time sto procesor odlazi u rezim smanjenje potrosnje
 		kad god je pokrenut Idle task. FreeRTOS takodje ima i specijalni tick-less mod, u kome
 		procesor odlazi u rezim smanjene potrosnje na duze.
-
-	= Fleksibilno upravljanje prekidima (Flexible interrupt handling)
+		\item \textbf{Fleksibilno upravljanje prekidima (Flexible interrupt handling):}
 		Upravljanje prekidima se moze drzati veoma kratko tako sto se odlaze obrada bilo kog taska
 		koji je kreirao sam dizajner, ili taska unutar FreeRTOS-a.
-
-	= Razliciti zahtevi za obradom (Mixed processing requirements)
+		\item \textbf{Razliciti zahtevi za obradom (Mixed processing requirements):}
 		Jednostavni oblici dizajniranja programa mogu se postici mesanjem periodicnog, kontinualnog
 		i procesiranja pokretanog dogadjajima. Pored toga, ispunjavanje strogih i manje strogih
 		zahteva za realnim vremenom u aplikacijama moze se postici izborom odgovoarajucih taskova i
 		prioriteta prekida.
+
+	\end{itemize}
 
 	\section{lwIP}
 
@@ -464,30 +577,46 @@
 
 	LwIP je veoma modularan i ima podrsku za dosta protokola, od kojih vecina moze da se ukloni za
 	manju velicinu koda.
-	- Mrezni protokoli i protokoli veze: (Link and network protocols)
-		- ARP, protokol veze koji se koristi za prevod prirodne hardver adrese ("MAC adresa") u IP
-		adresu
-		- IPv4, dominantni mrezni protkol koji se koristi danas, posebno za internet
-		- IPv6, naslednik IPv4, koji, narocito, prosiruje velicinu IP adrese na 128 bita
-		- ICMP, kontrolni protokol za IP
-		- IGMP, protokol za urpravljanje grupa unutar IP-a
-	- Transportni protokoli: (Transport protocols)
-		- UDP, protokol bez prikljucka, i bez mehanizma pouzdanosti
-		- TCP, protokol orjentisan ka konekciji, za kontinualni tok podataka ("streaming")
-	-Protokoli visokog nivoa: (High-level protocols)
-		- DHCP, dobijanje IP adrese sa podrskom servera
-		- AUTOIP, dobijanje IP adrese bez podrske servera
-		- SNMP, koriscen za nadgledanje stanja mreze
-		- PPP, koriscen za stvaranje direktne konekcije izmedju dva cvora na mrezi
+	\begin{itemize}
+		\item \textit{Mrezni protokoli i protokoli veze: (Link and network protocols)}
+		\begin{itemize}
+			\item \textbf{ARP}: protokol veze koji se koristi za prevod prirodne hardver adrese
+			("MAC adresa") u IP adresu
+			\item \textbf{IPv4}: dominantni mrezni protkol koji se koristi danas, posebno za
+			Internet
+			\item \textbf{IPv6}: naslednik IPv4, koji, narocito, prosiruje velicinu IP adrese na
+			128 bita
+			\item \textbf{ICMP}: kontrolni protokol za IP
+			\item \textbf{IGMP}: protokol za urpravljanje grupa unutar IP-a
+		\end{itemize}
+		\item \textit{Transportni protokoli: (Transport protocols)}
+			\begin{itemize}
+				\item \textbf{UDP}: protokol bez prikljucka, i bez mehanizma pouzdanosti
+				\item \textbf{TCP}: protokol orjentisan ka konekciji, za kontinualni tok podataka
+				("streaming")
+			\end{itemize}
+		\item \textit{Protokoli visokog nivoa: (High-level protocols)}
+			\begin{itemize}
+				\item \textbf{DHCP}: dobijanje IP adrese sa podrskom servera
+				\item \textbf{AUTOIP}: dobijanje IP adrese bez podrske servera
+				\item \textbf{SNMP}: koriscen za nadgledanje stanja mreze
+				\item \textbf{PPP}: koriscen za stvaranje direktne konekcije izmedju dva cvora na
+				mrezi
+			\end{itemize}
+	\end{itemize}
 
 	IPv4: (\#\#[lazarc] opisati u delu za softversku implementaciju \#\#)
 
 	lwIP pruza tri API-a (Application Program's Interface) za programe koji komuniciraju sa TCP/IP
 	kodom:
-		- low-level "core"/"callback" ili "raw" API
-		- dva API-a viseg nivoa (sekvencijalni API-i):
-			-> netconn API
-			-> socket API
+	\begin{itemize}
+		\item low-level "core"/"callback" ili "raw" API
+		\item dva API-a viseg nivoa (sekvencijalni API-i):
+			\begin{itemize}
+				\item netconn API
+				\item socket API
+			\end{itemize}
+	\end{itemize}
 
 	Sekvencijalni API pruza nacin za obicno, sekvencijalno programiranje koje koristi lwIP stek
 	(\#\#[lazarc] stack \#\#). Model izvrsavanja je baziran na blokirajucoj
@@ -502,26 +631,122 @@
 	rutini ili u vreme izvrsavanja unutar tcpip\_callback rutine).
 
 	Jos neke cinjenice o API-ima koje uticu na koriscenje lwIP steka:
-	- netconn- i raw-API su samo unutar lwIP-a: kod koji koristi ovaj API se ne moze koristiti u
-	drugim stekovima koji imaju iste mogucnosti kao lwIP (na primer uIP i td.)
-	- socket API je u suprotnosti sa gore navedenom stavkom, napravljen je tako da je kompatibilan
-	i moze se koristiti u drugim stekovima.
-	- socket- i netconn-API su sekvencijalni API-i koji zahtevaju programske niti (jedna nit je za
-	aplikaciju koja koristi API, jedna nit upravlja tajmerima unutar steka, paketima koji dolaze, i
-	td.)
-	- raw API koristi mehanizam povratnih rutina (na primer. aplikacija poziva rutinu kada dodje
-	novi podatak). Ukoliko se koristi u programu koji radi na sekvencijalni nacin, moze biti teze
-	koriscenje.
-	- raw API daje bolje performanse kako ne zahteva promenu izvrsavanja programskih niti.
-	- raw- i netconn-API podrzavaju zero-copy kako za TX tako i za RX. (kako za predaju, tako i za
-	prijem) (\#\#[lazarc] FOOTNOTE: zero-copy - predstavlja operaciju pri kojoj procesor ne vrsi
-	kopiranje podataka iz jedne memorijske oblasti u drugu. Ovo se cesto koristi kako bi se
-	sacuvali ciklusi procesora i propusnog opsega memorije prilikom prenosa kontinualnih podataka
-	(datoteka, fajlova) preko mreze. \#\#)
+	\begin{itemize}
+		\item \textbf{netconn- i raw-API su samo unutar lwIP-a :} kod koji koristi ovaj API se ne
+		moze koristiti u drugim stekovima koji imaju iste mogucnosti kao lwIP (na primer uIP i td.)
+		\item \textbf{socket API} je u suprotnosti sa gore navedenom stavkom, napravljen je tako da
+		je kompatibilan i moze se koristiti u drugim stekovima.
+		\item \textbf{socket- i netconn-API} su sekvencijalni API-i koji zahtevaju programske niti
+		(jedna nit je za aplikaciju koja koristi API, jedna nit upravlja tajmerima unutar steka,
+		paketima koji dolaze, i td.)
+		\item \textbf{raw API} koristi mehanizam povratnih rutina (na primer. aplikacija poziva
+		rutinu kada dodje novi podatak). Ukoliko se koristi u programu koji radi na sekvencijalni
+		nacin, moze biti teze koriscenje.
+		\item \textbf{raw API} daje bolje performanse kako ne zahteva promenu izvrsavanja
+		programskih niti.
+		\item \textbf{raw API i netconn API} podrzavaju zero-copy \footnote{predstavlja operaciju
+		pri kojoj procesor ne vrsi kopiranje podataka iz jedne memorijske oblasti u drugu. Ovo se
+		cesto koristi kako bi se sacuvali ciklusi procesora i propusnog opsega memorije prilikom
+		prenosa kontinualnih podataka (datoteka, fajlova) preko mreze.} kako za TX tako i za RX.
+		(kako za predaju, tako i za prijem)
+	\end{itemize}
 
 	\newpage
 
 	\chapter{Hardverska implementacija}
+
+	Razvojno okruzenje koje je korisceno za hardversku implementaciju je razvojna ploca
+	SAMA5D27-SOM1-EK1 proizvodjaca Microchip. Na ploci se nalazi SAMA5D27 SOM (System on Module)
+	modul koji je kljucan za implementaciju. Na modulu se nalazi SAMA5D27-D1G-CU SIP (System in
+	Package) koji sadrzi 1 Gbit DDR2 SDRAM memorije. Modul nudi puzdanu i niskobudzetnu platformu
+	za razvoj namenskih racunarskih sistema koji ce na kraju i zavrsiti u finalnoj proizvodnji, kao
+	i malu formu, dopunjenu sa velikim brojem interfejsa koji se mogu koristiti u delu
+	projektovanja krajnjeg sistema.
+
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[scale=.7]{../pic/hw_top_view.png}
+		\caption{Razvojna ploca SAMA5D27-SOM1-EK1 (pogled odozgo)}
+		\label{fig:hw_top_view}
+	\end{figure}
+
+
+	SOM je potpuno opremljen industrijski sertifikovan kompjuter dizajniran za integraciju
+	korisnicke aplikacije. SOM modul je namenski napravljen kao mala hardverska platforma
+	opremljena sirokim spektrom modula za brzo povezivanje kako bi podrzali	projektovanje podrske
+	za razne IoT (Internet of Things) aplikacija, prenosnih uredjaja, ali i aplikacija u
+	industrijske svrhe. SOM integrise 1Gbit DDR2 SDRAM i QSPI memoriju kao 10/100 Mbit Ethernet
+	interfejs. Takodje, SOM poseduje i 128 GPIO pinova (\#\# [lazarc]) koji	obezbedjuju pristup
+	SOM-a za razlicite upotrebe. Svi GPIO pinovi su nezavisni, i mogu se konfigurisati kao ulazi
+	ili izlazi, sa ili bez PULL-UP otpornika. Razvojna ploca poseduje i	sirok spektar periferija,
+	kao i korisnicki interfejs i nacin za prosirenje funkcionalnosti, ukljucujuci i dva microBUS
+	Click interjesa firme Mikroelektronika kojim se dobija mogucnost za	prosirenje funkcionalnosti
+	svim modulima koje ova firma nudi u svom asortimanu.
+
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[scale=.7]{../pic/hw_modules.png}
+		\caption{Moduli - Razvojna ploca SAMA5D27-SOM1-EK1}
+		\label{fig:hw_modules}
+	\end{figure}
+
+	Na samom SAMA5D27-SOM1 postoje i:
+	\begin{itemize}
+		\item Ultra mali SIP (SAMA5D27-D1G-CU) koji sadrzi stedljivi SAMA5D27 Arm Cortex A5
+		procesor i 1Gbit DDR2 SDRAM memoriju
+		\item SST26VF064 64 Mb QSPI Flash memoriju
+		\item 24AA02E48 2 Kb serijski E2PROM (Electrically Erased Programmed Read Only Memory) sa
+		programiranom EUI identifikacijom pristupa
+		\item MIC2800 cip za kontrolu napajanja
+		\item KSZ8081RNA Ethernet Phy 10/100 MHz RMII
+	\end{itemize}
+
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[scale=.7]{../pic/hw_som_modules.PNG}
+		\caption{Moduli - SAMA5D27-SOM1}
+		\label{fig:hw_som_modules}
+	\end{figure}
+
+	Razvojno okruzenje SAMA5D27-SOM1-EK1 je veoma mocno i moze se koristiti za sirok spektar
+	aplikacija. Najcesce je izbor za razvoj aplikativnog softvera u namenskim racunarskim
+	sistemima, uz koriscenje Embedded Linux operativnog sistema, i s tim ciljem se i bira. Za ovu
+	implementaciju nije koriscen u tom smislu, vec je koriscen sa drugim operativnim sistemom kojim
+	je moguce istaci neke druge njegove karakteristike. Ali ono sto je najvise interesantno za ovu
+	primenu je postojanje TSU (Timestamping unit) za harversku podrsku PTP-a. I to u sklopu
+	periferije za povezivanje preko Ethernet-a, cime je omugceno prepoznavanje PTP poruka koje
+	dolaze na interfejs.
+
+	\section{Time stamping unit - TSU}
+	IEEE-1588 je standard za preciznu sinhronizaciju vremena u lokalnim mrezama. Radi se o razmeni
+	preciznog vremena izmedju dva uredjaja u lokalnoj mrezi. PTP poruke se mogu prenositi preko
+	IEEE802.3/Ethernet, IPv4 ili IPv6 protokola kako je to vec opisano u odeljcima pre. Periferija
+	unutar razvojnog okruzenja GMAC oznacava tacku vremenske oznake poruke (na pocetku slanja i na
+	kraju slanja) poruke. IEEE 802.1AS je podskup IEEE 1588 standarda. Jedina razlika je u adresi
+	koja sluzi za slanje PTP poruka svim uredjajima u lokalnoj mrezi (Multicast). GMAC periferija
+	je dizajnirana tako da prepoznaje poruke koje su kljucne za PTP protokol. Kao sto je vec
+	navedeno, sinhronizacija izmedju dva uredjaja se izvodi u dva stadijuma, odredjivanje razlike
+	(offset) izmedju dva sata (na strani Master i Slave uredjaja), nakon cega se salje tacno
+	kasnjenje na linijama za prenos podataka, cime se tacno sinhronizuju dva sata. Hardverski
+	moduli koji pomazu u ovoj razmeni poruka odredjuju tacno vreme kada je poruka stigla, i kada je
+	poruka poslata. Sto je kljucno za odredjivanje vremena kojim se izracunavaju razlika i
+	kasnjenje. Pojava ovih poruka uzrokuje prijavljivanje hardverskih prekida, tako da je moguce
+	operisati sa vremenima koja se dobijaju tako da se dobija fina sinhronizacija vremena dva
+	uredjaja.
+	Podrska ovom protokolu u hardveru se ogleda u postojanju TSU(Timestamping unit) periferije koja
+	se sastoji od tajmera i registara u koje se smestaju tacna vremena u trenucima kada stignu ili
+	odu poruke koje su kljucne za dobijanje tacnog vremena. Prekid se prijavljuje kada se ovi
+	registri osveze vremenom slanja ili primanja poruke bitne za PTP protokol.
+	Tajmer je implemntiran kao 94-bitni brojac, u kome visih 48 bita broje sekunde, narednih 30
+	bita nanosekunde, i preostalih 16 bita broje vreme ispod nanosekunda. Nizih 46 bita se prevrte
+	(roll-over) kad se izbroji tacno jedna sekunda. Takodje, prijavljuje se hardverski prekid nakon
+	sto se izbroji jedna sekunda. Vrednosti tajmera, kao i parametri za njegovo upravljanje, se
+	mogu menjati softverski preko APB interfejsa. Tajmer se pokrece MCK taktom, koji je glavni takt
+	unutar procesora, i njime se takodje moze manipulisati.
+	Promene podesavanja tajmera unutar TSU su od velike vaznosti za tacnu sinhronizuju dva
+	uredjaja. Ova periferija najvise utice na tacno vreme koje je potrebno sinhronizovati, i
+	takodje daje informacije o tacnom vremenu na uredjaju koji se koristi. Vise detalja o samoj
+	implemntaciji i koriscenju ove periferije bice dato u delu softverske implementacije.
 
 	\newpage
 

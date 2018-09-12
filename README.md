@@ -17,23 +17,24 @@ Potrebno opisati:
 	-> U cemu je poboljsanje u odnosu na prethodne nacine rada?
 - Opis PTP-a
 	-> Opis PTP-a (Precision_Time_Protocol)
-		=> Opsti opis 						(done)
-		=> Opis poruka						(done)
-		=> Opis sinhronizacije				(done)
-		=> hardverski TSU					()
+		=> Opsti opis 								(done)
+		=> Opis poruka								(done)
+		=> Opis sinhronizacije						(done)
+		=> hardverski TSU							()
 		=> Slike
-	-> Opis OSI modela						(done, check)
-	-> Opis TCP/IP modela					(done sth, check)
+	-> Opis OSI modela								(done, check)
+	-> Opis TCP/IP modela							(done sth, check)
 - Opis operativnog sistema
-	-> FreeRTOS opis						(done, basics)
-	-> lwIP opis 							(done, check for more detail)
+	-> FreeRTOS opis								(done, basics)
+	-> lwIP opis 									(done, check for more detail)
 - Hardverska implementacija
-	-> Zasto je odabran ovaj hardver?		(done)
-	-> Koje su dobre strane koriscenja?		(done)
-	-> Hadverska ubrzanja?					(done)
+	-> Zasto je odabran ovaj hardver?				(done)
+	-> Koje su dobre strane koriscenja?				(done)
+	-> Hadverska ubrzanja?							(done)
 	-> Zasto je bitno da i hardver podrzava sve?
 - Softverska implementacija
 	-> Nacin na koji je odradjeno sve
+-
 
 
 Linkovi koji su korisceni pri pisanju:
