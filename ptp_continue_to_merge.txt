@@ -1,0 +1,47 @@
+Algoritam odredjivanja najboljeg sata (Best master clock algorithm):
+BMC algoritam obavlja deljenu selekciju najboljeg kandidata za tacno vreme prema sledecim karakteristikama:
+
+- Identifikator: Univerzalni jednistveni identifikator za sat. Tipicno je baziran na MAC adresi uredjaja.
+- Kvalitet: Obe verzije IEEE 1588 standarda pokusavaju da kvantifikuju kvalitet sata na osnovu ocekivanih devijacija u vremenu, tehnologije koja je koriscena za implemntaciju vremena ili lokacije u hijerarhiji satova, u semi kvaliteta satova (clock stratum scheme).
+- Prioritet: Administrativno dodeljen prioritetni znak koji BMC koristi kako bi sto bolje odredio Grandmaster u PTP domenu. Dok je IEEE 1588-2002 standard imao samo jednu logicku promenljivu kako bi odredio prioritet, IEEE 1588-2008 ima dva 8-bitna polja prioriteta.
+- Varijansa: Procena stabilnosti sata zasnovana na zapazanju njegovog ucinka prema PTP refernci.
+
+IEEE 1588 koristi hijerarhijski algoritam selekcije zasnovan na sledecim osobinama, u naznacenom redosledu:
+
+- Prioritet 1: korisnik moze dodeliti specifican staticki dizajniran prioritet svakom satu, pre svega odredjujuci prioritet medju njima. Manje vrednosti prioriteta oznacavaju veci prioritet.
+- Klasa: Svaki sat je clan odredjene klase, svaka klasa dobija svoj prioritet.
+- Preciznost: Preciznost izmedju sata i UTC, u nanosekundama.
+- Varijansa: Varijabilnost sata.
+- Prioritet 2: Definisan prioritet, definisuci redosled rezervne kopije u slucaju da drugi kriterijumi nisu dovoljni. Manje vrednosti prioriteta oznacavaju veci prioritet.
+- Jedinstveni identifikator: selekcija zasnovana na MAC adresi se koristi kao metod odlucivanja kada su sve ostale osobine iste.
+
+Svojstva sata se daju u IEEE 1588-2002 porukama za sinhronizaciju (Sync messages) i u IEEE 1588-2008 u porukama za oglasavanje (Announce messages). Trenutni Master clock (##[lazarc] [prevod]##) prenosi sve informacije u rednovnim intervalima. Sat koji sebe smatra boljim od trenutnog Master sata prenosice ove informacije kako bi se pozvali svi uredjaji za pormenu Master sata. Kada trenutni Master prepozna bolji sat, tada Master sat zaustavlja emitovanje poruka za sinhronizaciju (Sync Messages), ili poruke ograsavanja (Announce messages), u zavisnosti od verzije protokola, i bolji sat preuzima ulogu Master sata. BMC algoritam uzima u obzir samo osobine koje su vec poznate, i koje su deklarisali sami satovi, i ne uzima u obzir kvalitet veze na mrezi.
+
+Sinhronizacija (Synchronization):
+Koristeci BMC algoritam, PTP bira Master sat za IEEE 1588 domen i za svaki segment mreze unutar tog domena.
+Satovi odredjuju razliku izmedju njih (offset) i Master-a na mrezi. Neka promenjiva $t$ predstavlja fizicki vreme. Za dati Slave uredjaj, razlika $o(t)$ u vremenu $t$ se definise kao:
+$o(t) = s(t) - m(t)$
+gde $s(t)$ predstavlja vreme mereno satom na Slave uredjaju u vremenu $t$, dok $m(t)$ predstavlja vreme mereno satom na Master uredjaju u vremenu $t$.
+
+Master uredjaj periodicno objavljuje (Broadcasts) trenutno vreme kao poruku ostalim uredjajima na mrezi. IEEE 1588-2002 protokolom je definisana objava vremena na svaku sekundu. Dok je IEEE 1588-2008 protokolom dozvoljeno i do 10 objava vremena u jednoj sekundi.
+
+## [lazarc] [slika] sync
+
+Svaka objava vremena krece u vremenskom trenutku $T_1$, i to Sync porukom koju salje Master uredjaj svim uredjajima u domenu. Uredjaj koji prima ovu poruku pamti vreme $T_1'$ u kom je primio Sync poruku. Master moze naknadno poslati Follow_up poruku u kojoj ce se nalaziti tacno vreme $T_1$ u kom je poslata prethodna poruka. Nemaju svi Master uredjaji sposobnost da posalju tacne vremenske oznake unutar Sync poruke. Tek nakon sto je prenos zavrsen, oni mogu dobaviti tacne vremenske trenutke stizanja Sync poruke iz hardvera za povezivanje na mrezu. Maste uredjaji sa ovim ogranicenjima salju Follow_up poruke kako bi preneli vreme $T_1$. Master uredjaji koji poseduju PTP mogucnosti unutar hardvera za povezivanje mogu ubaciti tacne vremenske oznake unutar Sync poruka, i ne moraju koristiti Follow_up poruke.
+
+Kako bi se tacno sinhronizovali na Master uredjaj, satovi moraju individualno odrediti vreme prenosa poruka kroz medijum za povezivanje. Vreme progresije poruke kroz medijum za povezivanje se radi merenjem vremena koje je potrebno da poruka ode od svakog uredjaja do njihovog Mastera u domenu, i da se vrati nazad. Ovu razmenu iniciraju Slave uredjaji i pri tome mere vreme progresije poruke $d$. Razmena poruka pocinje tako sto Slave uredjaj salje Delay_Req poruku u vremenskom trenutku $T_2$ ka svom Master uredjaju. Master uredjaj primi ovu poruku, i kao odgovor posalje tacnu vremensku oznaku kada je primio Delay_Req poruku. Poruka odgovora Delay_Resp sadrzi tacno vreme $T_2'$ u kome je primljena poruka Delay_Req.
+
+Nakon razmene ovih poruka Slave uredjaj ima spoznaju o cetiri vremenska trenutka $T_1$, $T_1'$, $T_2$ i $T_2'$.
+
+Ukoliko je $d$ vreme koje je potrebno Sync poruci da prodje kroz medijum za povezivanje, a $~o$ konstantna razlika satova izmedju Master i Slave uredjaja, onda je:
+$T_1' - T_1 = ~o + d$ i $T_2' - T_2 = -~o + d$.
+
+Odakle je:
+
+$~o=frac{1}{2}(T_1' - T_1 - T_2' + T_2)$.
+
+Sada dva uredjaja znaju koliki je ofset $~o$ prilikom prenosa i mogu se ispraviti tako da budu u skladu sa Master uredjajem.
+
+Jedna pretpostavka je da se prenos poruka odvija u periodu vremena koji je tako mali, da se razlika moze smatrati konstantnom u tom periodu. Jos jedna pretpostavka je da je vreme koje je potrebno da poruka stigne od Master do Slave uredjaja ista kao i u obrnutom smeru. I na kraju, pretpostavka je da i Master i Slave uredjaji mogu da precizno mere vremenske trenutke u kojima salju ili primaju poruke. Stepen primene ovih pretpostavki utice na to koliko ce se dobro sinhronizovati dva uredjaja.
+
+## [lazarc] Pogledaj jos da se ubaci sa Teams za Valeo

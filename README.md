@@ -17,15 +17,20 @@ Potrebno opisati:
 	-> U cemu je poboljsanje u odnosu na prethodne nacine rada?
 - Opis PTP-a
 	-> Opis PTP-a (Precision_Time_Protocol)
-	-> Opis OSI modela
-	-> Opis TCP/IP modela
+		=> Opsti opis 						(done)
+		=> Opis poruka						(done)
+		=> Opis sinhronizacije				(done)
+		=> hardverski TSU					()
+		=> Slike
+	-> Opis OSI modela						(done, check)
+	-> Opis TCP/IP modela					(done sth, check)
 - Opis operativnog sistema
-	-> FreeRTOS opis
-	-> lwIP opis
+	-> FreeRTOS opis						(done, basics)
+	-> lwIP opis 							(done, check for more detail)
 - Hardverska implementacija
-	-> Zasto je odabran ovaj hardver?
-	-> Koje su dobre strane koriscenja?
-	-> Hadverska ubrzanja?
+	-> Zasto je odabran ovaj hardver?		(done)
+	-> Koje su dobre strane koriscenja?		(done)
+	-> Hadverska ubrzanja?					(done)
 	-> Zasto je bitno da i hardver podrzava sve?
 - Softverska implementacija
 	-> Nacin na koji je odradjeno sve
@@ -40,3 +45,5 @@ https://www.freertos.org/Documentation/161204_Mastering_the_FreeRTOS_Real_Time_K
 https://www.wikiwand.com/en/FreeRTOS
 http://lwip.wikia.com/wiki/LwIP_Wiki
 https://savannah.nongnu.org/projects/lwip/
+http://ww1.microchip.com/downloads/en/DeviceDoc/SAMA5D27-SOM1-Kit1-User-Guide-DS50002667B.PDF
+https://www.rtaautomation.com/technologies/ieee-1588/
