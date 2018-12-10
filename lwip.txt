@@ -1,16 +1,31 @@
 lwIP from wiki page http://lwip.wikia.com/wiki/LwIP_Wiki:
 ⁠
-lwIP (light-weight IP) je implementacija TCP/IP komplet-a (## [lazarc] [prevod] suite ##) je originalno napisao Adam Dunkels u Computer and Networks Architectures (CNA) laboratoriji na SHvetskom institutu za kompjuterske nauke (Swedish Institute of Computer Science) ali ga sad aktivno razvija tim inzenjera sirom sveta kojim rukovodi Kieran Mansley.
+lwIP (light-weight IP) je implementacija TCP/IP komplet-a (## [lazarc] [prevod] suite ##) 
+je originalno napisao Adam Dunkels u Computer and Networks Architectures (CNA) 
+laboratoriji na SHvetskom institutu za kompjuterske nauke (Swedish Institute of Computer 
+Science) ali ga sad aktivno razvija tim inzenjera sirom sveta kojim rukovodi Kieran 
+Mansley.
 
-lwIP je open-source projekat koji je besplatan za preuzimanje i koriscenje (pod BSD licencom), pisan u C programskom jeziku i moze se preuzeti sa internet stranice tima koji ga razvija.
+lwIP je open-source projekat koji je besplatan za preuzimanje i koriscenje (pod BSD 
+licencom), pisan u C programskom jeziku i moze se preuzeti sa internet stranice tima koji 
+ga razvija.
 
-Fokus lwIP implementacije TCP/IP je da se smanji koriscenje RAM memorije i da se i dalje dobija potpuna funcionalnost TCP. Ovim lwIP postaje interesantan za koriscenje u namenskim sistemima koji raspolazu sa RAM memorijom od nekoliko desetina kilobajta kB i prostorom od oko 40 kilobajta u ROM memoriji.
+Fokus lwIP implementacije TCP/IP je da se smanji koriscenje RAM memorije i da se i dalje 
+dobija potpuna funcionalnost TCP. Ovim lwIP postaje interesantan za koriscenje u 
+namenskim sistemima koji raspolazu sa RAM memorijom od nekoliko desetina kilobajta kB i 
+prostorom od oko 40 kilobajta u ROM memoriji.
 
-Od kada je prvi put objavljen, lwIP izaziva dosta interesovanja, i danas se koristi u dosta komercijalnih projekata. lwIP je do sad iskoriscen na mnogim platformama i operativnim sistemima, i moze se koristiti bez i sa operativnim sistemom. U ovoj implementaciji, lwIP se koristi u okviru FreeRTOS operativnog sistema, kao jedan njegov deo.
+Od kada je prvi put objavljen, lwIP izaziva dosta interesovanja, i danas se koristi u 
+dosta komercijalnih projekata. lwIP je do sad iskoriscen na mnogim platformama i 
+operativnim sistemima, i moze se koristiti bez i sa operativnim sistemom. U ovoj 
+implementaciji, lwIP se koristi u okviru FreeRTOS operativnog sistema, kao jedan njegov 
+deo.
 
-LwIP je veoma modularan i ima podrsku za dosta protokola, od kojih vecina moze da se ukloni za manju velicinu koda.
+LwIP je veoma modularan i ima podrsku za dosta protokola, od kojih vecina moze da se 
+ukloni za manju velicinu koda.
 - Mrezni protokoli i protokoli veze: (Link and network protocols)
-	- ARP, protokol veze koji se koristi za prevod prirodne hardver adrese ("MAC adresa") u IP adresu
+	- ARP, protokol veze koji se koristi za prevod prirodne hardver adrese ("MAC adresa") 
+	u IP adresu
 	- IPv4, dominantni mrezni protkol koji se koristi danas, posebno za internet
 	- IPv6, naslednik IPv4, koji, narocito, prosiruje velicinu IP adrese na 128 bita
 	- ICMP, kontrolni protokol za IP
@@ -26,20 +41,40 @@ LwIP je veoma modularan i ima podrsku za dosta protokola, od kojih vecina moze d
 
 IPv4: (##[lazarc] opisati u delu za softversku implementaciju ##)
 
-lwIP pruza tri API-a (Application Program's Interface) za programe koji komuniciraju sa TCP/IP kodom:
+lwIP pruza tri API-a (Application Program's Interface) za programe koji komuniciraju sa 
+TCP/IP kodom:
 	- low-level "core"/"callback" ili "raw" API
 	- dva API-a viseg nivoa (sekvencijalni API-i):
 		-> netconn API
 		-> socket API
 
-Sekvencijalni API pruza nacin za obicno, sekvencijalno programiranje koje koristi lwIP stek (##[lazarc] stack ##). Model izvrsavanja je baziran na blokirajucoj otvori-procitaj-upisi-zatvori paradigmi. Kako je TCP/IP stek baziran na dogadjajima, TCP/IP kod i aplikativni program, moraju da se pozivaju sa razlicitim kontekstima izvrsavanja, u razlicitim nitima.
+Sekvencijalni API pruza nacin za obicno, sekvencijalno programiranje koje koristi lwIP 
+stek (##[lazarc] stack ##). Model izvrsavanja je baziran na blokirajucoj 
+otvori-procitaj-upisi-zatvori paradigmi. Kako je TCP/IP stek baziran na dogadjajima, 
+TCP/IP kod i aplikativni program, moraju da se pozivaju sa razlicitim kontekstima 
+izvrsavanja, u razlicitim nitima.
 
-Prilikom mesanja sekvencijalnog i "sirovog" API-a u programima, treba biti pazljiv. Funkcije koje pripadaju nesekvencijalnom API-u u stvari mogu biti pozvane iz glavne tcpip_thread niti. Takodje, registrovanje programski rutina (ili inicijalizovanje delova u lwIP) mora biti odradjeno unutar tog konteksta (na primer, u vreme startovanja aplikacije u tcpip_init_callback rutini ili u vreme izvrsavanja unutar tcpip_callback rutine).
+Prilikom mesanja sekvencijalnog i "sirovog" API-a u programima, treba biti pazljiv. 
+Funkcije koje pripadaju nesekvencijalnom API-u u stvari mogu biti pozvane iz glavne 
+tcpip_thread niti. Takodje, registrovanje programski rutina (ili inicijalizovanje delova 
+u lwIP) mora biti odradjeno unutar tog konteksta (na primer, u vreme startovanja 
+aplikacije u tcpip_init_callback rutini ili u vreme izvrsavanja unutar tcpip_callback 
+rutine).
 
 Jos neke cinjenice o API-ima koje uticu na koriscenje lwIP steka:
-- netconn- i raw-API su samo unutar lwIP-a: kod koji koristi ovaj API se ne moze koristiti u drugim stekovima koji imaju iste mogucnosti kao lwIP (na primer uIP i td.)
-- socket API je u suprotnosti sa gore navedenom stavkom, napravljen je tako da je kompatibilan i moze se koristiti u drugim stekovima.
-- socket- i netconn-API su sekvencijalni API-i koji zahtevaju programske niti (jedna nit je za aplikaciju koja koristi API, jedna nit upravlja tajmerima unutar steka, paketima koji dolaze, i td.)
-- raw API koristi mehanizam povratnih rutina (na primer. aplikacija poziva rutinu kada dodje novi podatak). Ukoliko se koristi u programu koji radi na sekvencijalni nacin, moze biti teze koriscenje.
+- netconn- i raw-API su samo unutar lwIP-a: kod koji koristi ovaj API se ne moze 
+koristiti u drugim stekovima koji imaju iste mogucnosti kao lwIP (na primer uIP i td.)
+- socket API je u suprotnosti sa gore navedenom stavkom, napravljen je tako da je 
+kompatibilan i moze se koristiti u drugim stekovima.
+- socket- i netconn-API su sekvencijalni API-i koji zahtevaju programske niti (jedna nit 
+je za aplikaciju koja koristi API, jedna nit upravlja tajmerima unutar steka, paketima 
+koji dolaze, i td.)
+- raw API koristi mehanizam povratnih rutina (na primer. aplikacija poziva rutinu kada 
+dodje novi podatak). Ukoliko se koristi u programu koji radi na sekvencijalni nacin, moze 
+biti teze koriscenje.
 - raw API daje bolje performanse kako ne zahteva promenu izvrsavanja programskih niti.
-- raw- i netconn-API podrzavaju zero-copy kako za TX tako i za RX. (kako za predaju, tako i za prijem) (##[lazarc] FOOTNOTE: zero-copy - predstavlja operaciju pri kojoj procesor ne vrsi kopiranje podataka iz jedne memorijske oblasti u drugu. Ovo se cesto koristi kako bi se sacuvali ciklusi procesora i propusnog opsega memorije prilikom prenosa kontinualnih podataka (datoteka, fajlova) preko mreze. ##)
+- raw- i netconn-API podrzavaju zero-copy kako za TX tako i za RX. (kako za predaju, tako 
+i za prijem) (##[lazarc] FOOTNOTE: zero-copy - predstavlja operaciju pri kojoj procesor 
+ne vrsi kopiranje podataka iz jedne memorijske oblasti u drugu. Ovo se cesto koristi kako 
+bi se sacuvali ciklusi procesora i propusnog opsega memorije prilikom prenosa 
+kontinualnih podataka (datoteka, fajlova) preko mreze. ##)

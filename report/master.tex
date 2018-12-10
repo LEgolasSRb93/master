@@ -40,60 +40,63 @@
 	\section{OSI model}
 
 	Open Systems Interconnection model (OSI model) je konceptualni model koji karakterise i
-	standardizuje komunikacione funkcije u telekomunikacionim ili kompjuterskim sistemima, i to bez
-	obzira na unutrasnju strukturu uredjaja ili njihovu tehnologiju. Cilj ovog modela je da se
-	postigne kompatibilnost razlicitih komunikacionih sistema sa standardnim protokolima
-	komunikacije. OSI model razdvaja komunikacione sisteme u apstraktne slojeve. Originalna verzija
-	modela ima sedam slojeva.
+	standardizuje komunikacione funkcije u telekomunikacionim ili kompjuterskim sistemima, i 
+	to bez obzira na unutrasnju strukturu uredjaja ili njihovu tehnologiju. Cilj ovog modela 
+	je da se postigne kompatibilnost razlicitih komunikacionih sistema sa standardnim 
+	protokolima komunikacije. OSI model razdvaja komunikacione sisteme u apstraktne slojeve. 
+	Originalna verzija modela ima sedam slojeva.
 
-	Sloj unutar modela sluzi sloj iznad njega, i koristi sloj ispod njega u hijerarhiji. Na primer,
-	sloj koji postize komunikaciju preko mreze bez gresaka, sluzi aplikacijama iznad koje ga
-	koriste, i to dok poziva jednostavne funkcije za prijem i predaju paketa na mrezi. Dve instance
-	istog sloja su vizualizovane tako sto su povezane horizontalno u istom sloju.
+	Sloj unutar modela sluzi sloj iznad njega, i koristi sloj ispod njega u hijerarhiji. Na 
+	primer, sloj koji postize komunikaciju preko mreze bez gresaka, sluzi aplikacijama iznad 
+	koje ga koriste, i to dok poziva jednostavne funkcije za prijem i predaju paketa na mrezi. 
+	Dve instance istog sloja su vizualizovane tako sto su povezane horizontalno u istom sloju.
 
-	Ovaj model je proizvod Open Systems Interconnection projekta u International Organization for
-	Standardization (ISO), i ima oznaku ISO/IEC 7498-1.
+	Ovaj model je proizvod Open Systems Interconnection projekta u International Organization 
+	for Standardization (ISO), i ima oznaku ISO/IEC 7498-1.
 
 	\#\# [lazarc] slika svih slojeva u osi modelu
 
-	Na svakom nivou N, dva entiteta na komunikcionim uredjajima razmenjuju jedinice protokola (PDU
-	- protocol data units) pomocu sloja N protokola. Svaki PDU sadrzi podatke od interesa (payload)
-	(SDU - service data unit), zajedno sa zaglavljima koji odgovaraju protokolu.
+	Na svakom nivou N, dva entiteta na komunikcionim uredjajima razmenjuju jedinice protokola 
+	(PDU - protocol data units) pomocu sloja N protokola. Svaki PDU sadrzi podatke od interesa 
+	(payload) (SDU - service data unit), zajedno sa zaglavljima koji odgovaraju protokolu.
 
-	Obrada podataka izmedju dva uredjaja koji su OSI-kompatibilni se odvija u sledecim koracima:
+	Obrada podataka izmedju dva uredjaja koji su OSI-kompatibilni se odvija u sledecim 
+	koracima:
 	\begin{itemize}
-		\item Podaci koji se prenose se formiraju na najvisem sloju u uredjaju koji predaje podatke
-		na mrezi (sloj N) u jedinicu protokola (PDU).
+		\item Podaci koji se prenose se formiraju na najvisem sloju u uredjaju koji predaje 
+		podatke na mrezi (sloj N) u jedinicu protokola (PDU).
 		\item PDU se prosledjuje sloju N-1, gde je poznat kao SDU.
-		\item Na sloju N-1 se na SDU dodaju zaglavlja, na osnovu cega se formira PDU za sloj N-1.
-		Nakon cega se prosledjuje na sloj N-2.
-		\item Ovaj postupak se ponavlja sve dok se ne dostigne najnizi sloj u modelu, nakon cega se
-		podaci prenose ka uredjaju koji prima podatke.
+		\item Na sloju N-1 se na SDU dodaju zaglavlja, na osnovu cega se formira PDU za sloj 
+		N-1. Nakon cega se prosledjuje na sloj N-2.
+		\item Ovaj postupak se ponavlja sve dok se ne dostigne najnizi sloj u modelu, nakon 
+		cega se podaci prenose ka uredjaju koji prima podatke.
 		\item Na strani prijemnog uredjaja se podaci prenose od najnizeg sloja u modelu, do
-		najviseg, gde se serije SDU struktura uspesno obradjuju, pri cemu se skidaju zaglavlja sa
-		svakog sloja, dok se ne dostigne najvisi sloj u modelu, nakon cega su dostupni sirovi
-		podaci.
+		najviseg, gde se serije SDU struktura uspesno obradjuju, pri cemu se skidaju zaglavlja 
+		sa svakog sloja, dok se ne dostigne najvisi sloj u modelu, nakon cega su dostupni 
+		sirovi podaci.
 	\end{itemize}
 
 	\#\# [lazarc] dodati jos nesto o ovome ukoliko se nadje.
 
 	\subsection{Sloj 1: Fizicki sloj (Physical Layer)}
 
-	Fizicki sloj je odgovoran za prenos i prijem nestrukturiranih sirovih podataka izmedju uredjaja
-	i fizickog medijuma za prenos. On pretvara digitalne bitove u elektricne, radio ili opticke
-	signale. Specifikacije sloja definisu karakteristike poput nivoa napona, fizicke brzine prenosa
-	podataka, maksimalne udaljenosti prenosa i fizickih konektora. Ovo ukljucuje raspored pinova,
-	napona, linijske impedanse, specifikacije kablova, vremenskih signala i frekvencije za bezicne
-	uredjaje. Kontrola brzine bitova se vrsi na fizickom nivou i moze definisati nacin komunikacije
-	kao simpleks, polu dupleks ili dupleks komunikaciju. Komponente fizickog sloja mogu se opisati
-	u smislu topologije mreze. Bluetooth, Ethernet i USB, sve imaju specifikacije za fizicki sloj.
+	Fizicki sloj je odgovoran za prenos i prijem nestrukturiranih sirovih podataka izmedju 
+	uredjaja i fizickog medijuma za prenos. On pretvara digitalne bitove u elektricne, radio 
+	ili opticke signale. Specifikacije sloja definisu karakteristike poput nivoa napona, 
+	fizicke brzine prenosa podataka, maksimalne udaljenosti prenosa i fizickih konektora. Ovo 
+	ukljucuje raspored pinova, napona, linijske impedanse, specifikacije kablova, vremenskih 
+	signala i frekvencije za bezicne uredjaje. Kontrola brzine bitova se vrsi na fizickom 
+	nivou i moze definisati nacin komunikacije kao simpleks, polu dupleks ili dupleks 
+	komunikaciju. Komponente fizickog sloja mogu se opisati u smislu topologije mreze. 
+	Bluetooth, Ethernet i USB, sve imaju specifikacije za fizicki sloj.
 
 	\subsection{Sloj 2: Sloj veze (Data Link Layer)}
 
-	Sloj veze podataka obezbedjuje prenos podataka izmedju dva cvora u komunikaciji - vezu izmedju
-	dva direktno povezana uredjaja na mrezi. Ovaj sloj otkriva i eventualno ispravlja greske koje
-	se mogu javiti u fizickom sloju. On definise protokol za uspostavljanje i prekid veze izmedju
-	dva fizicki povezana uredjaja. Takodje, definise protokol za kontrolu protoka izmedju njih.
+	Sloj veze podataka obezbedjuje prenos podataka izmedju dva cvora u komunikaciji - vezu 
+	izmedju dva direktno povezana uredjaja na mrezi. Ovaj sloj otkriva i eventualno ispravlja 
+	greske koje se mogu javiti u fizickom sloju. On definise protokol za uspostavljanje i 
+	prekid veze izmedju dva fizicki povezana uredjaja. Takodje, definise protokol za kontrolu 
+	protoka izmedju njih.
 
 	IEEE 802 standard deli sloj veze na dva podsloja:
 	\begin{itemize}
@@ -117,25 +120,26 @@
 
 	Mrezni sloj obezbedjuje funkcionalno i proceduralno sredstvo prenosa sekvenci podataka
 	promenljive duzine, koji se nazivaju jos i paketi, od jednog cvora do drugog, poveznih u
-	"razlicite mreze". \#\# [lazarc] [prevod] \#\# Mreza je medijum na koji moze biti povezano vise
-	cvorova, u kom svaki cvor ima adresu i koji dozvoljava cvorovima povezanim sa njim da prenose
-	poruke ka ostalim cvorovima, i to samo dajuci sadrzaj poruke i adresu cvora na koji poruka
-	treba da bude dostavljena, omogucavajuci mrezi da nadje nacin da isporuci poruku odredisnom
-	cvoru, eventualno ga usmeravajuci kroz sredisnje cvorove (uredjaje koji su izmedju dva uredjaja
-	koji pokusavaju da komuniciraju). Ako je poruka prevelika da bi se prenela sa jednog uredjaja
-	na drugi samo koriscenjem sloja veze (Data Link Layer), mreza moze preneti podatke tako sto ce
-	ih podeliti u nekoliko delova na jednom uredjaju, poslati delove nezavisno, i onda spojiti
-	delove na drugom uredjaju. Pri cemu moze, iako nije uvek potrebno, prijaviti greske u isporuci.
+	"razlicite mreze". \#\# [lazarc] [prevod] \#\# Mreza je medijum na koji moze biti povezano 
+	vise cvorova, u kom svaki cvor ima adresu i koji dozvoljava cvorovima povezanim sa njim da 
+	prenose poruke ka ostalim cvorovima, i to samo dajuci sadrzaj poruke i adresu cvora na 
+	koji poruka treba da bude dostavljena, omogucavajuci mrezi da nadje nacin da isporuci 
+	poruku odredisnom cvoru, eventualno ga usmeravajuci kroz sredisnje cvorove (uredjaje koji 
+	su izmedju dva uredjaja koji pokusavaju da komuniciraju). Ako je poruka prevelika da bi se 
+	prenela sa jednog uredjaja na drugi samo koriscenjem sloja veze (Data Link Layer), mreza 
+	moze preneti podatke tako sto ce ih podeliti u nekoliko delova na jednom uredjaju, poslati 
+	delove nezavisno, i onda spojiti delove na drugom uredjaju. Pri cemu moze, iako nije uvek 
+	potrebno, prijaviti greske u isporuci.
 
-	Isporuka poruka na mreznom sloju nije garantovano pouzdana. Mrezni sloj moze pruziti pouzdanu
-	isporuku poruka, ali nije obavezno da to mora biti ispunjeno.
+	Isporuka poruka na mreznom sloju nije garantovano pouzdana. Mrezni sloj moze pruziti 
+	pouzdanu isporuku poruka, ali nije obavezno da to mora biti ispunjeno.
 
 	Neki broj protokola koji upravljaju slojevima, imaju funkciju koja je definisana u aneksu
 	upravljanja, ISO 7498/4, i pripadaju mreznom sloju. Oni ukljucuju protokole rutiranja,
-	upravljanja grupomsa vise uredjaja, informacije o mreznom sloju, o greskama, kao i dodeljivanje
-	adresa mreznog sloja medju uredjajima. Ustvari, to je funkcija podataka koji se prenose uz
-	pomoc protokola, sto ih cini da pripadaju mreznom sloju, a ne protokolu. \#\# [lazarc] poslednja
-	recenica [prevod] \#\#
+	upravljanja grupomsa vise uredjaja, informacije o mreznom sloju, o greskama, kao i 
+	dodeljivanje adresa mreznog sloja medju uredjajima. Ustvari, to je funkcija podataka koji 
+	se prenose uz pomoc protokola, sto ih cini da pripadaju mreznom sloju, a ne protokolu. 
+	\#\# [lazarc] poslednja	recenica [prevod] \#\#
 
 	\subsection{Sloj 4: Transportni sloj (Transport Layer)}
 
@@ -143,84 +147,86 @@
 	promenljive duzine od predajnog do prijemnog uredjaja, uz odrzavanje kvaliteta.
 
 	Transportni sloj kontrolise pouzdanost date konekcije kroz kontrolu protoka,
-	segmentaciju/desegmentaciju i kontrolu gresaka. Neki protokli su orjentisani na stanje mreze, a
-	neki na konekciju u mrezi. \#\# [lazarc] [prevod] \#\# Ovo znaci da Transportni sloj moze da prati
-	segmente i ponovo preneti one koji nisu isporuceni prijemnom uredjaju. Transportni sloj takodje
-	omogucava i potvrdu uspesnog prenosa podataka i salje naredne podatke ako nije doslo do greske
-	prilikom prenosa. Transportni sloj formira i segmente koji su primljeni iz visih slojeva, npr
-	Aplikativnog sloja (Application Layer). Segmentacija je proces podele dugih poruka u krace
-	poruke kako bi se lakse prenele preko nizih slojeva u modelu.
+	segmentaciju/desegmentaciju i kontrolu gresaka. Neki protokli su orjentisani na stanje 
+	mreze, a neki na konekciju u mrezi. \#\# [lazarc] [prevod] \#\# Ovo znaci da Transportni 
+	sloj moze da prati segmente i ponovo preneti one koji nisu isporuceni prijemnom uredjaju. 
+	Transportni sloj takodje omogucava i potvrdu uspesnog prenosa podataka i salje naredne 
+	podatke ako nije doslo do greske prilikom prenosa. Transportni sloj formira i segmente 
+	koji su primljeni iz visih slojeva, npr Aplikativnog sloja (Application Layer). 
+	Segmentacija je proces podele dugih poruka u krace poruke kako bi se lakse prenele preko 
+	nizih slojeva u modelu.
 
-	OSI model definise pet klasa transportnih protokola za povezivnje od klase 0 (koja je takodje
-	poznata i kao TP0 i ima najslabije karakteristike) do klase 4 (TP4, koja je dizajnirana za
-	manje pouzdane mreze, slicne Internetu). Klasa 0 (TP0) nema mogucnost oporavka od greske i bila
-	je dizajnirana za koriscenje na mreznim slojevima koji pruzaju konekciju bez gresaka. Klasa 4
-	(TP4) je najbliza TCP, iako TCP sadrzi neke funkcije koje se u OSI modelu dodeljuju visim
-	slojevima. Takodje, sve klase u OSI modelu omogucavaju brzu upotrebu podataka i ocuvanje
-	granica podataka \#\# [lazarc] [prevod] \#\#. Detalje karakteristika svih klasa prikazane su u
-	sledecoj tabeli:
+	OSI model definise pet klasa transportnih protokola za povezivnje od klase 0 (koja je 
+	takodje poznata i kao TP0 i ima najslabije karakteristike) do klase 4 (TP4, koja je 
+	dizajnirana za manje pouzdane mreze, slicne Internetu). Klasa 0 (TP0) nema mogucnost 
+	oporavka od greske i bila je dizajnirana za koriscenje na mreznim slojevima koji pruzaju 
+	konekciju bez gresaka. Klasa 4 (TP4) je najbliza TCP, iako TCP sadrzi neke funkcije koje 
+	se u OSI modelu dodeljuju visim slojevima. Takodje, sve klase u OSI modelu omogucavaju 
+	brzu upotrebu podataka i ocuvanje granica podataka \#\# [lazarc] [prevod] \#\#. Detalje 
+	karakteristika svih klasa prikazane su u sledecoj tabeli:
 
 	\#\# [lazarc] tabela sa interneta
 	\#\# [lazarc] prebaci tabelu na srpski
 
 	\subsection{Sloj 5: Sloj sesije (Session Layer)}
 
-	Sloj sesije kontrolise dijaloge (veze) izmedju uredjaja. Uspostavlja, upravlja i uklanja veze
-	izmedju lokalnih i udaljenih aplikacija. Obezbedjuje funkcije Full-Duplex, Half-Duples ili
-	Simplex i uspostavlja procedure Checkpoint-a, prekida ili ponovnog pokretanja procedura. OSi
-	model je ucinio ovaj sloj odgovornim za dobro zavrsavanje sesija, sto je osobina TCP
-	(Transmission Control Protocol), i takodje proveru sesija i oporavak, sto se obicno ne koristi
-	u Internet Protocol Suite. Sloj sesije se obicno eksplicitno primenjuje u sredinama aplikacija
-	koje koriste proceduralne pozive na udaljenim uredjajima.
+	Sloj sesije kontrolise dijaloge (veze) izmedju uredjaja. Uspostavlja, upravlja i uklanja 
+	veze izmedju lokalnih i udaljenih aplikacija. Obezbedjuje funkcije Full-Duplex, 
+	Half-Duples ili	Simplex i uspostavlja procedure Checkpoint-a, prekida ili ponovnog 
+	pokretanja procedura. OSi model je ucinio ovaj sloj odgovornim za dobro zavrsavanje sesija,
+	sto je osobina TCP (Transmission Control Protocol), i takodje proveru sesija i oporavak, 
+	sto se obicno ne koristi u Internet Protocol Suite. Sloj sesije se obicno eksplicitno 
+	primenjuje u sredinama aplikacija koje koriste proceduralne pozive na udaljenim uredjajima.
 
 	\subsection{Sloj 6: Sloj prezentacije (Presentation Layer)}
 
-	Sloj prezentacije uspostavlja kontekst izmedju dva entiteta aplikativnog sloja, u kom entiteti
-	aplikativnog sloja mogu koristiti razlicitu sintaksu i semantiku ukoliko sloj prezentacije
-	pruza mapiranje izmeju njih. Ukoliko je dostupno mapiranje, jedinice protokola su enkapsulirane
-	u jednice sesije i prosledjene na nize slojeve.
+	Sloj prezentacije uspostavlja kontekst izmedju dva entiteta aplikativnog sloja, u kom 
+	entiteti aplikativnog sloja mogu koristiti razlicitu sintaksu i semantiku ukoliko sloj 
+	prezentacije pruza mapiranje izmeju njih. Ukoliko je dostupno mapiranje, jedinice 
+	protokola su enkapsulirane u jednice sesije i prosledjene na nize slojeve.
 
 	Ovaj sloj obezbedjuje nezavisnost od predstavljanja podataka u razlicitim aplikacijama i
-	mreznim formatima. Sloj prezentacije pretvara podatke u oblik koji prihvata zadata aplikacija.
-	Ovaj sloj formatira podatke koji se salju preko mreze. Ponekad se naziva i sintaksni sloj.
-	Takodje, moze ukljucivati i funkcije kompresije.
+	mreznim formatima. Sloj prezentacije pretvara podatke u oblik koji prihvata zadata 
+	aplikacija.	Ovaj sloj formatira podatke koji se salju preko mreze. Ponekad se naziva i 
+	sintaksni sloj.	Takodje, moze ukljucivati i funkcije kompresije.
 
 	\subsection{Sloj 7: Aplikativni sloj (Application Layer)}
 
-	Aplikativni sloj je OSI sloj najblizi krajnjem korisniku, sto znaci da i OSI aplikativni sloj i
-	korisnik interaguju direktno sa aplikacijom. Ovaj sloj komunicira sa softverskom aplikacijom
-	koja sadrzi komponentu za komunikaciju. Takve aplikacije ne spadaju u okvir OSI modela.
-	Funkcije u aplikativnom sloju obicno ukljucuju identifikovanje partnera u komunikaciji,
-	odredjivanje dostupnosti resursa i sinhronizaciju komunikacije. Prilikom identifikacije
-	uredjaja za komunikaciju, aplikativni sloj se razlikuje od samih aplikacija. Na primer,
-	internet aplikacija (web strana) moze imati dva entiteta - dve aplikacije: jedna koja koristi
-	HTTP za komunikaciju sa korisnicima, i drugu za udaljenu bazu podataka koja cuva podatke. Ni
-	jedan od ovih protokola nemaju nista sa podacima koji se cuvaju, to se nalazi samo u
-	aplikaciji. Aplikacijski sloj nema nacina za odredjivanje resursa u mrezi.
+	Aplikativni sloj je OSI sloj najblizi krajnjem korisniku, sto znaci da i OSI aplikativni 
+	sloj i korisnik interaguju direktno sa aplikacijom. Ovaj sloj komunicira sa softverskom 
+	aplikacijom	koja sadrzi komponentu za komunikaciju. Takve aplikacije ne spadaju u okvir 
+	OSI modela.	Funkcije u aplikativnom sloju obicno ukljucuju identifikovanje partnera u 
+	komunikaciji, odredjivanje dostupnosti resursa i sinhronizaciju komunikacije. Prilikom 
+	identifikacije uredjaja za komunikaciju, aplikativni sloj se razlikuje od samih 
+	aplikacija. Na primer, internet aplikacija (web strana) moze imati dva entiteta - dve 
+	aplikacije: jedna koja koristi HTTP za komunikaciju sa korisnicima, i drugu za udaljenu 
+	bazu podataka koja cuva podatke. Ni jedan od ovih protokola nemaju nista sa podacima koji 
+	se cuvaju, to se nalazi samo u aplikaciji. Aplikacijski sloj nema nacina za odredjivanje 
+	resursa u mrezi.
 
 	\section{TCP/IP model}
 	Internet protocol suite:
 
-	Internet protocol suite je konceptualni model i set komunikacionih protokola koji se koriste za
-	Internet i slicne kompjuterske mreze. Opste je poznat kao TCP/IP zbog toga sto su osnovni
-	protokoli u ovom modelu TCP (Transmission Control Protocol) i IP (Internet Protocol). Ponekad
-	se naziva i DoD (Department of Defense) model zbog toga sto je razvijanje ovog modela
-	potpomoglo Ministarstvo odbrane SAD-a kroz DARPA.
+	Internet protocol suite je konceptualni model i set komunikacionih protokola koji se 
+	koriste za Internet i slicne kompjuterske mreze. Opste je poznat kao TCP/IP zbog toga sto 
+	su osnovni protokoli u ovom modelu TCP (Transmission Control Protocol) i IP (Internet 
+	Protocol). Ponekad se naziva i DoD (Department of Defense) model zbog toga sto je 
+	razvijanje ovog modela potpomoglo Ministarstvo odbrane SAD-a kroz DARPA.
 
 	Internet protokol suite (\#\# [lazarc] [prevod]\#\#) omogucava razmenu podataka izmedju dva
 	uredjaja na mrezi, i to specificirajuci kako ce se podaci deliti u pakete, adresirati,
-	prenositi, rutirati, i primati. Ove funkcionalnosti su organizovane u cetirir apstraktna sloja,
-	koja klasifikuju sve protokole s obzirom na to u kom delu povezivanja se nalaze (\#\#[lazarc]
-	[prevod] scope of networking involved \#\#). Od najnizeg do najviseg, slojevi se dele na Link
-	Layer (Sloj povezivanja), koji sadrzi komunikacione metode za podatke koji ostaju unutar jednog
-	segmenta mreze; Internet Layer (Sloj interneta), koji omogucava povezivanje izmedju nezavisnih
-	mreza; Transport Layer (Sloj prenosa), koji omogucava komunikacione servise za aplikacije na
-	uredjajima u mrezi; i Application Layer (Sloj aplikacije), koji omogucava servise korisnicima i
-	sistemskim aplikacijama.
+	prenositi, rutirati, i primati. Ove funkcionalnosti su organizovane u cetirir apstraktna 
+	sloja, koja klasifikuju sve protokole s obzirom na to u kom delu povezivanja se nalaze 
+	(\#\#[lazarc] [prevod] scope of networking involved \#\#). Od najnizeg do najviseg, 
+	slojevi se dele na Link	Layer (Sloj povezivanja), koji sadrzi komunikacione metode za 
+	podatke koji ostaju unutar jednog segmenta mreze; Internet Layer (Sloj interneta), koji 
+	omogucava povezivanje izmedju nezavisnih mreza; Transport Layer (Sloj prenosa), koji 
+	omogucava komunikacione servise za aplikacije na uredjajima u mrezi; i Application Layer 
+	(Sloj aplikacije), koji omogucava servise korisnicima i	sistemskim aplikacijama.
 
-	Tehnicki sandardi koji specificiraju Internet protocol suite (\#\#[lazarc] [prevod]\#\#) i mnogi od
-	protokola koji cine IPS odrzava Internet Engineering Task Force (IETF). IPS je model koji
-	prethodi OSI modelu, koji je dosta detaljniji i opisuje vise u mreznom sistemu.
+	Tehnicki sandardi koji specificiraju Internet protocol suite (\#\#[lazarc] [prevod]\#\#) i 
+	mnogi od protokola koji cine IPS odrzava Internet Engineering Task Force (IETF). IPS je 
+	model koji prethodi OSI modelu, koji je dosta detaljniji i opisuje vise u mreznom sistemu.
 
 	Key architectural principles:
 	(\#\#[lazarc] nastavi \#\#)
@@ -235,34 +241,37 @@
 	"Standard for a Precision Clock Synchronization Protocol for Networked Measurement
 	and Control Systems" i objavljen 2002 godine. U 2008 godini, IEEE 1588-2002 je
 	objavljen kao preradjen standard, poznat i kao PTP Version 2, sa poboljsanom tacnoscu,
-	preciznoscu i robusnoscu, medjutim nije kompatibilan sa prethodnom verzijom koja je objavljena
-	2002 godine.
+	preciznoscu i robusnoscu, medjutim nije kompatibilan sa prethodnom verzijom koja je 
+	objavljena 2002 godine.
 
 	"IEEE 1588 je dizajniran da popuni prazninu koja nije dobro obradjena ni jednim od dva
 	dominantna protokola, NTP i GPS. IEEE 1588 je dizajniran za lokalne sisteme u kojima je
 	potrebna preciznost izvan one koja je dostupna NTP protokolom. Takodje je dizajniran za
-	aplikacije koje se ne mogu nositi sa cenom GPS prijemnika na svakoj uredjaju, ili sa onima u
-	kojima nije moguce dobijanje GPS signala."
+	aplikacije koje se ne mogu nositi sa cenom GPS prijemnika na svakoj uredjaju, ili sa onima 
+	u kojima nije moguce dobijanje GPS signala."
 	====
-	"IEEE 1588 is designed to fill a niche not well served by either of the two dominant protocols,
-	NTP and GPS. IEEE 1588 is designed for local systems requiring accuracies beyond those
-	attainable using NTP. It is also designed for applications that cannot bear the cost of a GPS
-	receiver at each node, or for which GPS signals are inaccessible." - Eidson, John C. (April
-	2006). Measurement, Control and Communication Using IEEE 1588. Springer. ISBN 1-84628-250-0.
+	"IEEE 1588 is designed to fill a niche not well served by either of the two dominant 
+	protocols, NTP and GPS. IEEE 1588 is designed for local systems requiring accuracies 
+	beyond those attainable using NTP. It is also designed for applications that cannot bear 
+	the cost of a GPS receiver at each node, or for which GPS signals are inaccessible." - 
+	Eidson, John C. (April
+	2006). Measurement, Control and Communication Using IEEE 1588. Springer. ISBN 
+	1-84628-250-0.
 
 	Arhitektura:
-	IEEE 1588 standard opisuje hijerarhijsku master-slave arhitekturu za distribuciju vremena. Pod
-	ovom arhitekturom podrazumeva se distribucija vremena u sistemu koji se sastoji od jednog ili
-	vise komunikacionih medijuma (segmenata koji su povezani na mrezu), i jednog ili vise izvora
-	tacnog vremena. \#Obicni uredjaj\# Izvor "obicnog" vremena ("ordinary clock") je uredjaj sa
-	jednim pristupom mrezi i ima jednu od dve uloge, ili je izvor  (master) tacnog vremena, ili
-	ceka na tacno vreme (slave) u komunikaciji na mrezi. \#Sporedni uredjaj\# Granicni sat (Boundary
-	clock) ima vise pristupa, na razlicite mreze, i moze precizno sinhronizovati jedan segment
-	mreze na drugi. Master sinhronizacije se bira za svaki segment mreze u sistemu. \#Glavni
-	uredjaj\# Referentno vreme koje se uzima za izvor sinhronizacionog sata se zove Grandmaster
-	clock. Grandmaster dostavlja sinhronizacione informacije do svih uredjaja koji su povezani na
-	istu mrezu sa njim. Ukoliko se u nekom delu mreze nalazi Boundary clock on prosledjuje tacno
-	vreme ka ostalim uredjajima koji su direktno na njega povezani.
+	IEEE 1588 standard opisuje hijerarhijsku master-slave arhitekturu za distribuciju vremena. 
+	Pod	ovom arhitekturom podrazumeva se distribucija vremena u sistemu koji se sastoji od 
+	jednog ili vise komunikacionih medijuma (segmenata koji su povezani na mrezu), i jednog 
+	ili vise izvora	tacnog vremena. \#Obicni uredjaj\# Izvor "obicnog" vremena ("ordinary 
+	clock") je uredjaj sa jednim pristupom mrezi i ima jednu od dve uloge, ili je izvor  
+	(master) tacnog vremena, ili ceka na tacno vreme (slave) u komunikaciji na mrezi. 
+	\#Sporedni uredjaj\# Granicni sat (Boundary	clock) ima vise pristupa, na razlicite mreze, 
+	i moze precizno sinhronizovati jedan segment mreze na drugi. Master sinhronizacije se bira 
+	za svaki segment mreze u sistemu. \#Glavni	uredjaj\# Referentno vreme koje se uzima za 
+	izvor sinhronizacionog sata se zove Grandmaster	clock. Grandmaster dostavlja 
+	sinhronizacione informacije do svih uredjaja koji su povezani na istu mrezu sa njim. 
+	Ukoliko se u nekom delu mreze nalazi Boundary clock on prosledjuje tacno vreme ka ostalim 
+	uredjajima koji su direktno na njega povezani.
 
 	\# mora slika ovde kako izgleda arhitekura tacno
 
@@ -270,30 +279,33 @@
 	jednostavnu mrezu, i bez Boundary clocks \#Sporednih uredjaja\#. Grandmaster se bira, i svi
 	ostali uredjaji se direktno sinhronisu na njega.
 
-	IEEE 1588-2008 predstavljaju Clock koji je povezan sa mreznom opremom koja prenosi PTP poruke.
-	Transparent clock \#Transparentni uredjaj\# modifikuje PTP poruke koje prolaze kroz uredjaj.
-	Vremenski pecati (TIMESTAMPs) u porukama su modifikovani tako da se uzme u obzir i vreme za
-	koje poruka prolazi kroz dodatne uredjaje u komunikaciji. Ova sema komunikacije povecava
-	distribuciju preciznosti tako sto se kompenzuje promenljivost dostave podataka preko mreze.
+	IEEE 1588-2008 predstavljaju Clock koji je povezan sa mreznom opremom koja prenosi PTP 
+	poruke.	Transparent clock \#Transparentni uredjaj\# modifikuje PTP poruke koje prolaze 
+	kroz uredjaj. Vremenski pecati (TIMESTAMPs) u porukama su modifikovani tako da se uzme u 
+	obzir i vreme za koje poruka prolazi kroz dodatne uredjaje u komunikaciji. Ova sema 
+	komunikacije povecava distribuciju preciznosti tako sto se kompenzuje promenljivost 
+	dostave podataka preko mreze.
 
-	PTP tipicno koristi EPOCH vreme, standardno vreme za UNIX sisteme (1 Januar 1970 kao pocetak
-	racunanja vremena). Dok je UNIX vreme bazirano na Univerzalnom vremenu UTC, i mora da postoji
-	sekunda preskoka (\#Ovo dodati, mozda u uvod\#), PTP je baziran na Medjunarodnom Atomskom Vremenu
-	(TAI - International Atomic Time). PTP Grandmaster daje trenutnu razliku izmedju UTC i TAI,
-	kako bi UTC vreme moglo da se izracuna od primljenog PTP vremena.
+	PTP tipicno koristi EPOCH vreme, standardno vreme za UNIX sisteme (1 Januar 1970 kao 
+	pocetak	racunanja vremena). Dok je UNIX vreme bazirano na Univerzalnom vremenu UTC, i mora 
+	da postoji sekunda preskoka (\#Ovo dodati, mozda u uvod\#), PTP je baziran na 
+	Medjunarodnom Atomskom Vremenu (TAI - International Atomic Time). PTP Grandmaster daje 
+	trenutnu razliku izmedju UTC i TAI,	kako bi UTC vreme moglo da se izracuna od primljenog 
+	PTP vremena.
 
 	\# mora slika da se vidi razlika izmedju UTC i PTP, TAI
 
 	Detalji protokola:
-	Sinhronizacija i obrada u PTP sistemu se postize razmenom poruka preko komunikacionog medijuma.
-	Do sad, PTP standard propisuje samo ove tipove poruka.
+	Sinhronizacija i obrada u PTP sistemu se postize razmenom poruka preko komunikacionog 
+	medijuma. Do sad, PTP standard propisuje samo ove tipove poruka.
 
-	- Sync, Follow\_Up, Delay\_Req i Delay\_Resp poruke se koriste u Ordinary i Boundary uredjajima i
-	sluze samo za komunikaciju informacija o vremenu koje se koriste za sinhronizaciju uredjaja na
-	mrezi.
-	- Pdelay\_Req, Pdelay\_Resp i Pdelay\_Res\_Follow\_Up se koriste u Transparent Clock uredjajima da
-	mere kasnjenje kroz uredjaj tako da se moze iskoristiti u kompenzaciji vremena u sistemu.
-	Transparent Clock i definicija ovih poruka nisu dostupne u IEEE 1588-2002 standardu.
+	- Sync, Follow\_Up, Delay\_Req i Delay\_Resp poruke se koriste u Ordinary i Boundary 
+	uredjajima i sluze samo za komunikaciju informacija o vremenu koje se koriste za 
+	sinhronizaciju uredjaja na mrezi.
+	- Pdelay\_Req, Pdelay\_Resp i Pdelay\_Res\_Follow\_Up se koriste u Transparent Clock 
+	uredjajima da mere kasnjenje kroz uredjaj tako da se moze iskoristiti u kompenzaciji 
+	vremena u sistemu. Transparent Clock i definicija ovih poruka nisu dostupne u IEEE 
+	1588-2002 standardu.
 	- Announce poruke se koriste i Best master clock algorithm u IEEE 1588-2002 standardu za
 	algoritam odredjivanja najtacnijeg sata na mrezi, i to kako bi se izgradila hijerarhija
 	uredjaja i kako bi se odredio Grandmaster.
@@ -303,17 +315,17 @@
 	Signalne poruke su uvedene u IEEE 1588-2002 standard.
 
 	Poruke se karakterizuju kao Event i General, odnosno poruke dogadjaja i opste poruke. Event
-	poruke su vremenski kriticne i to u preciznosti predaje i prijema preciznosti vremenskih pecata
-	(TIMESTAMPs) i direktno uticu na distribuciju preciznosti vremena. (JOS JEDNOM POGLEDAJ OVAJ
-	PREVOD). Sync, Delay\_Req, Pdelay\_Req i Pdelay\_resp su poruke dogadjaja. Opste poruke su
-	ubicajene jedinice protokola, zato sto podaci u ovim porukama su od znacaja za PTP, ali njihovi
-	vremenski pecati za predaju i prijem nisu.Announce, Follow\_Up, Delay\_Resp,
-	Pdelay\_Resp\_Follow\_Up, Management i Signalne poruke su opste poruke.
+	poruke su vremenski kriticne i to u preciznosti predaje i prijema preciznosti vremenskih 
+	pecata (TIMESTAMPs) i direktno uticu na distribuciju preciznosti vremena. (JOS JEDNOM 
+	POGLEDAJ OVAJ PREVOD). Sync, Delay\_Req, Pdelay\_Req i Pdelay\_resp su poruke dogadjaja. 
+	Opste poruke su ubicajene jedinice protokola, zato sto podaci u ovim porukama su od 
+	znacaja za PTP, ali njihovi vremenski pecati za predaju i prijem nisu.Announce, Follow\_Up,
+	Delay\_Resp, Pdelay\_Resp\_Follow\_Up, Management i Signalne poruke su opste poruke.
 
 	Prenos poruka:
-	PTP poruke mogu da koriste UDP (User datagram portocol) preko Internet protokola (UDP/IP) za
-	prenos poruka. IEEE 1588-2002, koristi samo IPv4 prenos, ali je ovo prosireno da ukljucuje i
-	IPv6 u IEEE 1588-2008 standardu. U IEEE 1588-2002, sve PTP poruke se salju u Multicast (modulu
+	PTP poruke mogu da koriste UDP (User datagram portocol) preko Internet protokola (UDP/IP) 
+	za prenos poruka. IEEE 1588-2002, koristi samo IPv4 prenos, ali je ovo prosireno da 
+	ukljucuje i IPv6 u IEEE 1588-2008 standardu. U IEEE 1588-2002, sve PTP poruke se salju u Multicast (modulu
 	objavljivanja na mrezi) (\#pogldedaj opet ovaj prevod\#), dok se u IEEE 1588-2008 je uveo kao
 	opciju
 

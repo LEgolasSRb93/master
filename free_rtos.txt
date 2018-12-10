@@ -1,61 +1,131 @@
 FreeRTOS:
 
 Wiki:
-FreeRTOS je kernel operativnog sistema koji radi u realnom vremenu, i to za namenske sisteme, i moze se koristiti na preko 35 mikrokontrolera.
+FreeRTOS je kernel operativnog sistema koji radi u realnom vremenu, i to za namenske 
+sisteme, i moze se koristiti na preko 35 mikrokontrolera.
 
 (Wiki) Implementacija:
-FreeRTOS je dizajniran tako da bude mali i jednostavan. Kernel (srce operativnog sistema) se sastoji od samo 3 fajla, i pisan je u C programskom jeziku. Kako bi se kod napravi da bude citljiv, lako portabilan, i kako bi se lako odrzavao projekat, pisan je uglavnom u C programskom jeziku, sa izuzetkom da su neke funkcionalnosti napisane u asembleru, gde je to bilo potrebno, i to uglavnom rutine u Scheduler-u (Rasporedjivacu??? ##[lazarc] [prevod]##) koje su specificne za samu arhitekturu.
+FreeRTOS je dizajniran tako da bude mali i jednostavan. Kernel (srce operativnog sistema) 
+se sastoji od samo 3 fajla, i pisan je u C programskom jeziku. Kako bi se kod napravi da 
+bude citljiv, lako portabilan, i kako bi se lako odrzavao projekat, pisan je uglavnom u C 
+programskom jeziku, sa izuzetkom da su neke funkcionalnosti napisane u asembleru, gde je 
+to bilo potrebno, i to uglavnom rutine u Scheduler-u (Rasporedjivacu??? ##[lazarc] 
+[prevod]##) koje su specificne za samu arhitekturu.
 
-FreeRTOS omogucava koriscenje metoda za stvaranje vise programskih niti, ili Taskova, stvaranje mehanizama za Sinhronizaciju niti, Mutexa, Semafora i softverskih tajmera. Takodje, postoje mogucnosti koriscenja FreeRTOS-a i za aplikacije niske potrosnje. Aplikacije koje se koriste FreeRTOS mogu biti kompletno staticki alocirane. Alternativno RTOS objekti mogu dinamicki alocirane sa 5 sema alokacije memorije i one cine:
+FreeRTOS omogucava koriscenje metoda za stvaranje vise programskih niti, ili Taskova, 
+stvaranje mehanizama za Sinhronizaciju niti, Mutexa, Semafora i softverskih tajmera. 
+Takodje, postoje mogucnosti koriscenja FreeRTOS-a i za aplikacije niske potrosnje. 
+Aplikacije koje se koriste FreeRTOS mogu biti kompletno staticki alocirane. Alternativno 
+RTOS objekti mogu dinamicki alocirane sa 5 sema alokacije memorije i one cine:
 - samo alocirati;
 - alocirati i osloboditi sa jednostavnim, brzim algoritmom;
-- kompleksnija ali brza alokacija i oslobadjanje uz algoritam spajanja sussednih memorijskih blokova;
-- alternativa za jos kompleksiniju semu koja ukljucuje spajanje susednih memorijskih blokova koja omogucava da hip (HEAP) bude podeljen na vise memorijskih delova
-- i na kraju C biblioteka za alociranje i oslobadjanje sa zastitom medjusobnog iskljucivanja.
+- kompleksnija ali brza alokacija i oslobadjanje uz algoritam spajanja sussednih 
+memorijskih blokova;
+- alternativa za jos kompleksiniju semu koja ukljucuje spajanje susednih memorijskih 
+blokova koja omogucava da hip (HEAP) bude podeljen na vise memorijskih delova
+- i na kraju C biblioteka za alociranje i oslobadjanje sa zastitom medjusobnog 
+iskljucivanja.
 
-Unutar FreeRTOS-a ne postoji ni jedan od slozenijih svojstava operativnih sistema koji se uobicajeno mogu naci u operativnim sistemima poputi Linux-a ili Microsoft Windows-a, kao sto su drajveru uredjaja, napredno upravljanje memorijom, korisnicki nalozi, i umrezavanje. Akcenat ovog operativnog sistema je na kompaktnosti i brzini izvrsavanja. O FreeRTOS-u se moze misliti kao o "biblioteci niti" vise nego kao o "operativnom sistemu". (## [lazarc] , although command line interface and POSIX-like I/O abstraction add-ons are available ##)
+Unutar FreeRTOS-a ne postoji ni jedan od slozenijih svojstava operativnih sistema koji se 
+uobicajeno mogu naci u operativnim sistemima poputi Linux-a ili Microsoft Windows-a, kao 
+sto su drajveru uredjaja, napredno upravljanje memorijom, korisnicki nalozi, i 
+umrezavanje. Akcenat ovog operativnog sistema je na kompaktnosti i brzini izvrsavanja. O 
+FreeRTOS-u se moze misliti kao o "biblioteci niti" vise nego kao o "operativnom sistemu". 
+(## [lazarc] , although command line interface and POSIX-like I/O abstraction add-ons are 
+available ##)
 
-FreeRTOS implementira vise niti tako sto postoji jedan program koji poziva metode niti u jednakim kratkim vremenskim intervalima. Metoda promene niti zavisi od prioriteta niti i ukljucuje round-robin semu promene niti. Uobicajen interval promene je do 1/1000 sekunde do 1/100 sekunde, i to kroz prekid hardverskog tajmera, ali interval promene se cesto menja tako da zadovolji potrebe specificne aplikacije.
+FreeRTOS implementira vise niti tako sto postoji jedan program koji poziva metode niti u 
+jednakim kratkim vremenskim intervalima. Metoda promene niti zavisi od prioriteta niti i 
+ukljucuje round-robin semu promene niti. Uobicajen interval promene je do 1/1000 sekunde 
+do 1/100 sekunde, i to kroz prekid hardverskog tajmera, ali interval promene se cesto 
+menja tako da zadovolji potrebe specificne aplikacije.
 
 FreeRTOS Documentation:
-FreeRTOS je idealno sklopljen za duboke namenske aplikacije u realnom vremenu koje koriste mikrokontrolere ili male mikroprocesore. Ovaj nacin projektovanja aplikacija ukljucuje kombinaciju kako strogih zahteva za realnim vremenom u aplikaciji, tako i manje strogih.
+FreeRTOS je idealno sklopljen za duboke namenske aplikacije u realnom vremenu koje 
+koriste mikrokontrolere ili male mikroprocesore. Ovaj nacin projektovanja aplikacija 
+ukljucuje kombinaciju kako strogih zahteva za realnim vremenom u aplikaciji, tako i manje 
+strogih.
 
-Strogi zahtevi za aplikacijama realnog vremena su oni u kojima postoji vremenski rok u izvrsavanju, i ako se taj rok probije, doci ce do apsolutnog pada funkcionalnosti sistema. Na primer, airbag u kolima ima potencijal da napravi vise stete nego dobrog ukoliko je odziv sistema samo malo sporiji nego sto treba.
+Strogi zahtevi za aplikacijama realnog vremena su oni u kojima postoji vremenski rok u 
+izvrsavanju, i ako se taj rok probije, doci ce do apsolutnog pada funkcionalnosti 
+sistema. Na primer, airbag u kolima ima potencijal da napravi vise stete nego dobrog 
+ukoliko je odziv sistema samo malo sporiji nego sto treba.
 
-FreeRTOS je kernel realnog vrmena (ili rasporedjivac(##[lazarc] [prevod]##) realnog vremena) na koji se nadogradjuje aplikacija tako da ispuni stroge zahteve za realnim vremenom aplikacije. To dozvoljava da aplikacija bude organizovana kao kolekcija nezavisnih programskih niti. Na procesoru koji ima samo jedno jezgro, samo jedna programska nit se moze izvrsavati u jednom trenutku. Kernel odlucuje koja nit se izvrsava tako sto odredjuje prioritet koji se dodeljuje svakoj niti. U najjednostavnijem slucaju, dizajner aplikacije moze odrediti vise prioritete nitima koje implementiraju stroge zahteve za realnim vremenom, a nize prioritete onim nitima koje nemaju tako stroge zahteve za izvrsavanjem. Ovim bi se osiguralo da niti koje imaju strozije zahteve, imaju prioritete izvrsavanja i pristupa resursima nad ostalim nitima, ali odluke za dodelu izvrsavanja nisu uvek tako jednostavne.
+FreeRTOS je kernel realnog vrmena (ili rasporedjivac(##[lazarc] [prevod]##) realnog 
+vremena) na koji se nadogradjuje aplikacija tako da ispuni stroge zahteve za realnim 
+vremenom aplikacije. To dozvoljava da aplikacija bude organizovana kao kolekcija 
+nezavisnih programskih niti. Na procesoru koji ima samo jedno jezgro, samo jedna 
+programska nit se moze izvrsavati u jednom trenutku. Kernel odlucuje koja nit se izvrsava 
+tako sto odredjuje prioritet koji se dodeljuje svakoj niti. U najjednostavnijem slucaju, 
+dizajner aplikacije moze odrediti vise prioritete nitima koje implementiraju stroge 
+zahteve za realnim vremenom, a nize prioritete onim nitima koje nemaju tako stroge 
+zahteve za izvrsavanjem. Ovim bi se osiguralo da niti koje imaju strozije zahteve, imaju 
+prioritete izvrsavanja i pristupa resursima nad ostalim nitima, ali odluke za dodelu 
+izvrsavanja nisu uvek tako jednostavne.
 
-Napomena: Unutar FreeRTOS-a se programska nit naziva "task". Tako da ce se u daljem tekstu i koristiti naziv Task za programsku nit.
+Napomena: Unutar FreeRTOS-a se programska nit naziva "task". Tako da ce se u daljem 
+tekstu i koristiti naziv Task za programsku nit.
 
-U projektovanju aplikacija za namenske sistema postoji ustaljena praksa projektovanja aplikacija koja ne zahteva koriscenje kernela za realno vreme, i ove tehnike mogu dati bolje resenje problema. Mada, u kompleksnijim slucajevima, verovatnije je koriscenje kernela za aplikacije u realnom vremenu, i takodje moze biti kombinacija koriscenja kernela, i drugih tehnika projektovanja aplikacije.
+U projektovanju aplikacija za namenske sistema postoji ustaljena praksa projektovanja 
+aplikacija koja ne zahteva koriscenje kernela za realno vreme, i ove tehnike mogu dati 
+bolje resenje problema. Mada, u kompleksnijim slucajevima, verovatnije je koriscenje 
+kernela za aplikacije u realnom vremenu, i takodje moze biti kombinacija koriscenja 
+kernela, i drugih tehnika projektovanja aplikacije.
 
-Kao sto je vec opisani, prioriteti taskova mogu pomoci da se osigura da aplikacija ispuni sve zahteve, ali kernel moze doneti i neke manje ocigledne beneficije. Neke od njih su navedene ispod:
+Kao sto je vec opisani, prioriteti taskova mogu pomoci da se osigura da aplikacija ispuni 
+sve zahteve, ali kernel moze doneti i neke manje ocigledne beneficije. Neke od njih su 
+navedene ispod:
 = Skracivanje informacija o vremenskom rasporedu (Abstracting away timing information):
-	Kernel je odgovoran za vreme izvrsavanja i dodeljuje API kojim se unutar aplikacije moze upravljati vremenom. Ovim se omogucava jednostavnija strukturiranost koda, i ukupna velicina koda je manja.
+	Kernel je odgovoran za vreme izvrsavanja i dodeljuje API kojim se unutar aplikacije 
+	moze upravljati vremenom. Ovim se omogucava jednostavnija strukturiranost koda, i 
+	ukupna velicina koda je manja.
 = Odrzavanje/Prosirivanje (Maintainability/Extensibility):
-	Uskracivanjem informacija o vremenskom rasporedu rezultuje u manjim zavisnostima izmedju modula, i dozvoljava aplikaciji da evoluira u kontrolisanom i predvidjenom nacinu. Takodje, kernel je odgovoran za rasporedjivanje vremena, tako da performanse aplikacije manje mogu biti promenjene u hardveru na kome se pokrecu.
+	Uskracivanjem informacija o vremenskom rasporedu rezultuje u manjim zavisnostima 
+	izmedju modula, i dozvoljava aplikaciji da evoluira u kontrolisanom i predvidjenom 
+	nacinu. Takodje, kernel je odgovoran za rasporedjivanje vremena, tako da performanse 
+	aplikacije manje mogu biti promenjene u hardveru na kome se pokrecu.
 = Modularnost (Modularity)
 	Taskovi su nezavisni moduli, pri cemu svaki od njih mora imati dobro definisanu svrhu.
 = Timski razvoj (Team development)
-	Taskovi bi trebalo da imaju dobro definisane interfejse, kako bi se lakse razvijali u timovima.
+	Taskovi bi trebalo da imaju dobro definisane interfejse, kako bi se lakse razvijali u 
+	timovima.
 = Lakse testiranje (Easier testing)
-	Ako su takskovi dobro definisani kao nezavisni moduli sa cistim interfejsima, mogu biti testirani nezavnisno.
+	Ako su takskovi dobro definisani kao nezavisni moduli sa cistim interfejsima, mogu 
+	biti testirani nezavnisno.
 = Ponovno koriscenje koda (Code reuse)
-	Veca modularnost sa vecom nezavisnoscu koda koji se moze ponovo koristiti sa manje ulozenog truda.
+	Veca modularnost sa vecom nezavisnoscu koda koji se moze ponovo koristiti sa manje 
+	ulozenog truda.
 = Poboljsana efikasnost (Improved efficiency)
-	Koriscenjem kernela softver se u popunosti moze prebaciti na opkretanje dogadjajima (event driven programming), i time bi se ustedelo procesorsko vreme koje se trosi na poliranje dogadjaja koji se ne dogadjaju. Kod se pokrece samo ukoliko postoji nesto sto je potrebno uraditi.
+	Koriscenjem kernela softver se u popunosti moze prebaciti na opkretanje dogadjajima 
+	(event driven programming), i time bi se ustedelo procesorsko vreme koje se trosi na 
+	poliranje dogadjaja koji se ne dogadjaju. Kod se pokrece samo ukoliko postoji nesto 
+	sto je potrebno uraditi.
 
-	Protiv poboljsane efikasnosti stoji to da je potrebno pocesuirati RTOS prekid, i promeniti izvrsavanje sa jednog taska na drugi. Kako god, i aplikacije koje ne koriste RTOS normalno ukljucuju neku formu prekida.
+	Protiv poboljsane efikasnosti stoji to da je potrebno pocesuirati RTOS prekid, i 
+	promeniti izvrsavanje sa jednog taska na drugi. Kako god, i aplikacije koje ne 
+	koriste RTOS normalno ukljucuju neku formu prekida.
 
 = Idle time (##[lazarc] [prevod]##)
-	Idle task je task koji se automatski kreira prilikom startovanja Rasporedjivaca (##[lazarc] [prevod]##). I izvrsava se kad nema taskova unutar aplikacije koji bi se izvrsavali. Ovaj task se moze koristiti za merenje procesorske moci koja se trosi, za izvrsavanje provera u pozadini, ili da jednostavno pokrene rezim smanjene potrosnje u sistemu.
+	Idle task je task koji se automatski kreira prilikom startovanja Rasporedjivaca (##
+	[lazarc] [prevod]##). I izvrsava se kad nema taskova unutar aplikacije koji bi se 
+	izvrsavali. Ovaj task se moze koristiti za merenje procesorske moci koja se trosi, za 
+	izvrsavanje provera u pozadini, ili da jednostavno pokrene rezim smanjene potrosnje u 
+	sistemu.
 
 = Upravljanje snagom (Power management)
-	Efikasnost koja se dobija koriscenjem RTOS-a dozovoljava procesoru da provede vise vremena u rezimu smanjenje potrosnje.
+	Efikasnost koja se dobija koriscenjem RTOS-a dozovoljava procesoru da provede vise 
+	vremena u rezimu smanjenje potrosnje.
 
-	Potrosnja se moze znacajno smanjiti time sto procesor odlazi u rezim smanjenje potrosnje kad god je pokrenut Idle task. FreeRTOS takodje ima i specijalni tick-less mod, u kome procesor odlazi u rezim smanjene potrosnje na duze.
+	Potrosnja se moze znacajno smanjiti time sto procesor odlazi u rezim smanjenje 
+	potrosnje kad god je pokrenut Idle task. FreeRTOS takodje ima i specijalni tick-less 
+	mod, u kome procesor odlazi u rezim smanjene potrosnje na duze.
 
 = Fleksibilno upravljanje prekidima (Flexible interrupt handling)
-	Upravljanje prekidima se moze drzati veoma kratko tako sto se odlaze obrada bilo kog taska koji je kreirao sam dizajner, ili taska unutar FreeRTOS-a.
+	Upravljanje prekidima se moze drzati veoma kratko tako sto se odlaze obrada bilo kog 
+	taska koji je kreirao sam dizajner, ili taska unutar FreeRTOS-a.
 
 = Razliciti zahtevi za obradom (Mixed processing requirements)
-	Jednostavni oblici dizajniranja programa mogu se postici mesanjem periodicnog, kontinualnog i procesiranja pokretanog dogadjajima. Pored toga, ispunjavanje strogih i manje strogih zahteva za realnim vremenom u aplikacijama moze se postici izborom odgovoarajucih taskova i prioriteta prekida.
+	Jednostavni oblici dizajniranja programa mogu se postici mesanjem periodicnog, 
+	kontinualnog i procesiranja pokretanog dogadjajima. Pored toga, ispunjavanje strogih 
+	i manje strogih zahteva za realnim vremenom u aplikacijama moze se postici izborom 
+	odgovoarajucih taskova i prioriteta prekida.

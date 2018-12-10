@@ -1,5 +1,20 @@
 Introduction to lwIP:
 
-Tokom poslednjih nekoliko godina interesovanje za povezivanje racunara i racunarskih uredjaja sa bezicnim mrezama se postepeno povecava. Racunari postaju sve vise i vise integrisani sa svakodnevnom opremom koja se koristi, a cene sve vise padaju. Istovremeno, tehnologije bezicnog umrezavanja, kao sto su Bluetooth i IEEE 802.11b/g ("WiFi"), postale su uobicajene. To dovodi do mnogih novih facinantnih scenarija u oblastima kao sto su zdravstvena zastita, bezbednost, transport, preradjivacka industrija. Mali uredjaji kao sto su senzori mogu se povezati sa postojecom mreznom infrastrukturom kao sto je Internet, i nadgledati njihovo stanje sa bilo kog mesta.
+Tokom poslednjih nekoliko godina interesovanje za povezivanje racunara i racunarskih 
+uredjaja sa bezicnim mrezama se postepeno povecava. Racunari postaju sve vise i vise 
+integrisani sa svakodnevnom opremom koja se koristi, a cene sve vise padaju. Istovremeno, 
+tehnologije bezicnog umrezavanja, kao sto su Bluetooth i IEEE 802.11b/g ("WiFi"), postale 
+su uobicajene. To dovodi do mnogih novih facinantnih scenarija u oblastima kao sto su 
+zdravstvena zastita, bezbednost, transport, preradjivacka industrija. Mali uredjaji kao 
+sto su senzori mogu se povezati sa postojecom mreznom infrastrukturom kao sto je Internet,
+i nadgledati njihovo stanje sa bilo kog mesta.
 
-Internet tehnologija se pokazala dovoljno fleksibilnom da sadrzi promenljiva mrezna okruzenja u proteklih nekoliko decenija. Iako je prvobitno razvijen za mreze sa niskim brzinama, kao sto je ARPANET, Internet se sada pokrece na sirokom spektru tehnologija sa veoma razlicitim karakteristikama u smislu propusnog opsega i greske u prenosu. Takodje, veoma je povoljno koristiti postojecu Internet tehnologiju u bezicnim mrezama, jer je razvijen veliki broj aplikacija koje koriste internet tehnologiju. Takodje, velika povezanost na globalni Internet je snazan podsticaj. Posto su mali uredjaji poput senzora cesto obavezni da budu fizicki mali i jeftini, implementacija Internet protokola morace da se pozabavi i sa ogranicenim resursima u pogledu procesorske moci i memorije.
+Internet tehnologija se pokazala dovoljno fleksibilnom da sadrzi promenljiva mrezna 
+okruzenja u proteklih nekoliko decenija. Iako je prvobitno razvijen za mreze sa niskim 
+brzinama, kao sto je ARPANET, Internet se sada pokrece na sirokom spektru tehnologija sa 
+veoma razlicitim karakteristikama u smislu propusnog opsega i greske u prenosu. Takodje, 
+veoma je povoljno koristiti postojecu Internet tehnologiju u bezicnim mrezama, jer je 
+razvijen veliki broj aplikacija koje koriste internet tehnologiju. Takodje, velika 
+povezanost na globalni Internet je snazan podsticaj. Posto su mali uredjaji poput senzora 
+cesto obavezni da budu fizicki mali i jeftini, implementacija Internet protokola morace 
+da se pozabavi i sa ogranicenim resursima u pogledu procesorske moci i memorije.

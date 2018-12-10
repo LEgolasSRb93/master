@@ -1,10 +1,25 @@
 Wiki:
 Internet protocol suite:
 
-Internet protocol suite je konceptualni model i set komunikacionih protokola koji se koriste za Internet i slicne kompjuterske mreze. Opste je poznat kao TCP/IP zbog toga sto su osnovni protokoli u ovom modelu TCP (Transmission Control Protocol) i IP (Internet Protocol). Ponekad se naziva i DoD (Department of Defense) model zbog toga sto je razvijanje ovog modela potpomoglo Ministarstvo odbrane SAD-a kroz DARPA.
+Internet protocol suite je konceptualni model i set komunikacionih protokola koji se 
+koriste za Internet i slicne kompjuterske mreze. Opste je poznat kao TCP/IP zbog toga sto 
+su osnovni protokoli u ovom modelu TCP (Transmission Control Protocol) i IP (Internet 
+Protocol). Ponekad se naziva i DoD (Department of Defense) model zbog toga sto je 
+razvijanje ovog modela potpomoglo Ministarstvo odbrane SAD-a kroz DARPA.
 
-Internet protokol suite (## [lazarc] [prevod]##) omogucava razmenu podataka izmedju dva uredjaja na mrezi, i to specificirajuci kako ce se podaci deliti u pakete, adresirati, prenositi, rutirati, i primati. Ove funkcionalnosti su organizovane u cetirir apstraktna sloja, koja klasifikuju sve protokole s obzirom na to u kom delu povezivanja se nalaze (##[lazarc] [prevod] scope of networking involved ##). Od najnizeg do najviseg, slojevi se dele na Link Layer (Sloj povezivanja), koji sadrzi komunikacione metode za podatke koji ostaju unutar jednog segmenta mreze; Internet Layer (Sloj interneta), koji omogucava povezivanje izmedju nezavisnih mreza; Transport Layer (Sloj prenosa), koji omogucava komunikacione servise za aplikacije na uredjajima u mrezi; i Application Layer (Sloj aplikacije), koji omogucava servise korisnicima i sistemskim aplikacijama.
+Internet protokol suite (## [lazarc] [prevod]##) omogucava razmenu podataka izmedju dva 
+uredjaja na mrezi, i to specificirajuci kako ce se podaci deliti u pakete, adresirati, 
+prenositi, rutirati, i primati. Ove funkcionalnosti su organizovane u cetirir apstraktna 
+sloja, koja klasifikuju sve protokole s obzirom na to u kom delu povezivanja se nalaze (##
+[lazarc] [prevod] scope of networking involved ##). Od najnizeg do najviseg, slojevi se 
+dele na Link Layer (Sloj povezivanja), koji sadrzi komunikacione metode za podatke koji 
+ostaju unutar jednog segmenta mreze; Internet Layer (Sloj interneta), koji omogucava 
+povezivanje izmedju nezavisnih mreza; Transport Layer (Sloj prenosa), koji omogucava 
+komunikacione servise za aplikacije na uredjajima u mrezi; i Application Layer (Sloj 
+aplikacije), koji omogucava servise korisnicima i sistemskim aplikacijama.
 
-Tehnicki sandardi koji specificiraju Internet protocol suite (##[lazarc] [prevod]##) i mnogi od protokola koji cine IPS odrzava Internet Engineering Task Force (IETF). IPS je model koji prethodi OSI modelu, koji je dosta detaljniji i opisuje vise u mreznom sistemu.
+Tehnicki sandardi koji specificiraju Internet protocol suite (##[lazarc] [prevod]##) i 
+mnogi od protokola koji cine IPS odrzava Internet Engineering Task Force (IETF). IPS je 
+model koji prethodi OSI modelu, koji je dosta detaljniji i opisuje vise u mreznom sistemu.
 
 Key architectural principles:

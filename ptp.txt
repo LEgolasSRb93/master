@@ -1,37 +1,122 @@
 Wiki:
 
 Uopsteno:
-Precision Time Protocol (PTP) (prevod: protokol preciznog vremena) je protokol koriscen za sinhronizaciju satova preko kompjuterske mreze. U lokalnoj kompjuterskoj mrezi (local area connection), postize se precisznost sata i u rangu ispod mikrosekunde, sto ga cini pogodnim za merenja i kontrolne sisteme.
+Precision Time Protocol (PTP) (prevod: protokol preciznog vremena) je protokol koriscen 
+za sinhronizaciju satova preko kompjuterske mreze. U lokalnoj kompjuterskoj mrezi (local 
+area connection), postize se precisznost sata i u rangu ispod mikrosekunde, sto ga cini 
+pogodnim za merenja i kontrolne sisteme.
 
-PTP je originalno definisan u IEEE 1588-2002 standardu, i zvanicno nazvan "Standard for a Precision Clock Synchronization Protocol for Networked Measurement and Control Systems" i objavljen 2002 godine. U 2008 godini, IEEE 1588-2002 je objavljen kao preradjen standard, poznat i kao PTP Version 2, sa poboljsanom tacnoscu, preciznoscu i robusnoscu, medjutim nije kompatibilan sa prethodnom verzijom koja je objavljena 2002 godine.
+PTP je originalno definisan u IEEE 1588-2002 standardu, i zvanicno nazvan "Standard for a 
+Precision Clock Synchronization Protocol for Networked Measurement and Control Systems" i 
+objavljen 2002 godine. U 2008 godini, IEEE 1588-2002 je objavljen kao preradjen standard, 
+poznat i kao PTP Version 2, sa poboljsanom tacnoscu, preciznoscu i robusnoscu, medjutim 
+nije kompatibilan sa prethodnom verzijom koja je objavljena 2002 godine.
 
-"IEEE 1588 je dizajniran da popuni prazninu koja nije dobro obradjena ni jednim od dva dominantna protokola, NTP i GPS. IEEE 1588 je dizajniran za lokalne sisteme u kojima je potrebna preciznost izvan one koja je dostupna NTP protokolom. Takodje je dizajniran za aplikacije koje se ne mogu nositi sa cenom GPS prijemnika na svakoj uredjaju, ili sa onima u kojima nije moguce dobijanje GPS signala."
+"IEEE 1588 je dizajniran da popuni prazninu koja nije dobro obradjena ni jednim od dva 
+dominantna protokola, NTP i GPS. IEEE 1588 je dizajniran za lokalne sisteme u kojima je 
+potrebna preciznost izvan one koja je dostupna NTP protokolom. Takodje je dizajniran za 
+aplikacije koje se ne mogu nositi sa cenom GPS prijemnika na svakoj uredjaju, ili sa 
+onima u kojima nije moguce dobijanje GPS signala."
 ====
-"IEEE 1588 is designed to fill a niche not well served by either of the two dominant protocols, NTP and GPS. IEEE 1588 is designed for local systems requiring accuracies beyond those attainable using NTP. It is also designed for applications that cannot bear the cost of a GPS receiver at each node, or for which GPS signals are inaccessible." - Eidson, John C. (April 2006). Measurement, Control and Communication Using IEEE 1588. Springer. ISBN 1-84628-250-0.
+"IEEE 1588 is designed to fill a niche not well served by either of the two dominant 
+protocols, NTP and GPS. IEEE 1588 is designed for local systems requiring accuracies 
+beyond those attainable using NTP. It is also designed for applications that cannot bear 
+the cost of a GPS receiver at each node, or for which GPS signals are inaccessible." - 
+Eidson, John C. (April 2006). Measurement, Control and Communication Using IEEE 1588. 
+Springer. ISBN 1-84628-250-0.
 
 Arhitektura:
-IEEE 1588 standard opisuje hijerarhijsku master-slave arhitekturu za distribuciju vremena. Pod ovom arhitekturom podrazumeva se distribucija vremena u sistemu koji se sastoji od jednog ili vise komunikacionih medijuma (segmenata koji su povezani na mrezu), i jednog ili vise izvora tacnog vremena. #Obicni uredjaj# Izvor "obicnog" vremena ("ordinary clock") je uredjaj sa jednim pristupom mrezi i ima jednu od dve uloge, ili je izvor  (master) tacnog vremena, ili ceka na tacno vreme (slave) u komunikaciji na mrezi. #Sporedni uredjaj# Granicni sat (Boundary clock) ima vise pristupa, na razlicite mreze, i moze precizno sinhronizovati jedan segment mreze na drugi. Master sinhronizacije se bira za svaki segment mreze u sistemu. #Glavni uredjaj# Referentno vreme koje se uzima za izvor sinhronizacionog sata se zove Grandmaster clock. Grandmaster dostavlja sinhronizacione informacije do svih uredjaja koji su povezani na istu mrezu sa njim. Ukoliko se u nekom delu mreze nalazi Boundary clock on prosledjuje tacno vreme ka ostalim uredjajima koji su direktno na njega povezani.
+IEEE 1588 standard opisuje hijerarhijsku master-slave arhitekturu za distribuciju 
+vremena. Pod ovom arhitekturom podrazumeva se distribucija vremena u sistemu koji se 
+sastoji od jednog ili vise komunikacionih medijuma (segmenata koji su povezani na mrezu), 
+i jednog ili vise izvora tacnog vremena. #Obicni uredjaj# Izvor "obicnog" vremena 
+("ordinary clock") je uredjaj sa jednim pristupom mrezi i ima jednu od dve uloge, ili je 
+izvor  (master) tacnog vremena, ili ceka na tacno vreme (slave) u komunikaciji na mrezi. 
+#Sporedni uredjaj# Granicni sat (Boundary clock) ima vise pristupa, na razlicite mreze, i 
+moze precizno sinhronizovati jedan segment mreze na drugi. Master sinhronizacije se bira 
+za svaki segment mreze u sistemu. #Glavni uredjaj# Referentno vreme koje se uzima za 
+izvor sinhronizacionog sata se zove Grandmaster clock. Grandmaster dostavlja 
+sinhronizacione informacije do svih uredjaja koji su povezani na istu mrezu sa njim. 
+Ukoliko se u nekom delu mreze nalazi Boundary clock on prosledjuje tacno vreme ka ostalim 
+uredjajima koji su direktno na njega povezani.
 
 # mora slika ovde kako izgleda arhitekura tacno
 
-Simplifikovano, PTP sistem se sastoji od Ordinary clocks #Obicnog uredjaja# poveznih na jednostavnu mrezu, i bez Boundary clocks #Sporednih uredjaja#. Grandmaster se bira, i svi ostali uredjaji se direktno sinhronisu na njega.
+Simplifikovano, PTP sistem se sastoji od Ordinary clocks #Obicnog uredjaja# poveznih na 
+jednostavnu mrezu, i bez Boundary clocks #Sporednih uredjaja#. Grandmaster se bira, i svi 
+ostali uredjaji se direktno sinhronisu na njega.
 
-IEEE 1588-2008 predstavljaju Clock koji je povezan sa mreznom opremom koja prenosi PTP poruke. Transparent clock #Transparentni uredjaj# modifikuje PTP poruke koje prolaze kroz uredjaj. Vremenski pecati (TIMESTAMPs) u porukama su modifikovani tako da se uzme u obzir i vreme za koje poruka prolazi kroz dodatne uredjaje u komunikaciji. Ova sema komunikacije povecava distribuciju preciznosti tako sto se kompenzuje promenljivost dostave podataka preko mreze.
+IEEE 1588-2008 predstavljaju Clock koji je povezan sa mreznom opremom koja prenosi PTP 
+poruke. Transparent clock #Transparentni uredjaj# modifikuje PTP poruke koje prolaze kroz 
+uredjaj. Vremenski pecati (TIMESTAMPs) u porukama su modifikovani tako da se uzme u obzir 
+i vreme za koje poruka prolazi kroz dodatne uredjaje u komunikaciji. Ova sema 
+komunikacije povecava distribuciju preciznosti tako sto se kompenzuje promenljivost 
+dostave podataka preko mreze.
 
-PTP tipicno koristi EPOCH vreme, standardno vreme za UNIX sisteme (1 Januar 1970 kao pocetak racunanja vremena). Dok je UNIX vreme bazirano na Univerzalnom vremenu UTC, i mora da postoji sekunda preskoka (#Ovo dodati, mozda u uvod#), PTP je baziran na Medjunarodnom Atomskom Vremenu (TAI - International Atomic Time). PTP Grandmaster daje trenutnu razliku izmedju UTC i TAI, kako bi UTC vreme moglo da se izracuna od primljenog PTP vremena.
+PTP tipicno koristi EPOCH vreme, standardno vreme za UNIX sisteme (1 Januar 1970 kao 
+pocetak racunanja vremena). Dok je UNIX vreme bazirano na Univerzalnom vremenu UTC, i 
+mora da postoji sekunda preskoka (#Ovo dodati, mozda u uvod#), PTP je baziran na 
+Medjunarodnom Atomskom Vremenu (TAI - International Atomic Time). PTP Grandmaster daje 
+trenutnu razliku izmedju UTC i TAI, kako bi UTC vreme moglo da se izracuna od primljenog 
+PTP vremena.
 
 # mora slika da se vidi razlika izmedju UTC i PTP, TAI
 
 Detalji protokola:
-Sinhronizacija i obrada u PTP sistemu se postize razmenom poruka preko komunikacionog medijuma. Do sad, PTP standard propisuje samo ove tipove poruka.
+Sinhronizacija i obrada u PTP sistemu se postize razmenom poruka preko komunikacionog 
+medijuma. Do sad, PTP standard propisuje samo ove tipove poruka.
 
-- Sync, Follow_Up, Delay_Req i Delay_Resp poruke se koriste u Ordinary i Boundary uredjajima i sluze samo za komunikaciju informacija o vremenu koje se koriste za sinhronizaciju uredjaja na mrezi.
-- Pdelay_Req, Pdelay_Resp i Pdelay_Res_Follow_Up se koriste u Transparent Clock uredjajima da mere kasnjenje kroz uredjaj tako da se moze iskoristiti u kompenzaciji vremena u sistemu. Transparent Clock i definicija ovih poruka nisu dostupne u IEEE 1588-2002 standardu.
-- Announce poruke se koriste i Best master clock algorithm u IEEE 1588-2002 standardu za algoritam odredjivanja najtacnijeg sata na mrezi, i to kako bi se izgradila hijerarhija uredjaja i kako bi se odredio Grandmaster.
-- Management poruke se koriste u upravljanju mrezom za posmatranje performansi na mrezi, konfiguraciju mreze i odrzavanje PTP sistema.
-- Signalne poruke se koriste u komunikaciji izmedju uredjaja koje nisu vremenski kriticne. Signalne poruke su uvedene u IEEE 1588-2002 standard.
+- Sync, Follow_Up, Delay_Req i Delay_Resp poruke se koriste u Ordinary i Boundary 
+uredjajima i sluze samo za komunikaciju informacija o vremenu koje se koriste za 
+sinhronizaciju uredjaja na mrezi.
+- Pdelay_Req, Pdelay_Resp i Pdelay_Res_Follow_Up se koriste u Transparent Clock 
+uredjajima da mere kasnjenje kroz uredjaj tako da se moze iskoristiti u kompenzaciji 
+vremena u sistemu. Transparent Clock i definicija ovih poruka nisu dostupne u IEEE 
+1588-2002 standardu.
+- Announce poruke se koriste i Best master clock algorithm u IEEE 1588-2002 standardu za 
+algoritam odredjivanja najtacnijeg sata na mrezi, i to kako bi se izgradila hijerarhija 
+uredjaja i kako bi se odredio Grandmaster.
+- Management poruke se koriste u upravljanju mrezom za posmatranje performansi na mrezi, 
+konfiguraciju mreze i odrzavanje PTP sistema.
+- Signalne poruke se koriste u komunikaciji izmedju uredjaja koje nisu vremenski 
+kriticne. Signalne poruke su uvedene u IEEE 1588-2002 standard.
 
-Poruke se karakterizuju kao Event i General, odnosno poruke dogadjaja i opste poruke. Event poruke su vremenski kriticne i to u preciznosti predaje i prijema preciznosti vremenskih pecata (TIMESTAMPs) i direktno uticu na distribuciju preciznosti vremena. (JOS JEDNOM POGLEDAJ OVAJ PREVOD). Sync, Delay_Req, Pdelay_Req i Pdelay_resp su poruke dogadjaja. Opste poruke su ubicajene jedinice protokola, zato sto podaci u ovim porukama su od znacaja za PTP, ali njihovi vremenski pecati za predaju i prijem nisu.Announce, Follow_Up, Delay_Resp, Pdelay_Resp_Follow_Up, Management i Signalne poruke su opste poruke.
+Poruke se karakterizuju kao Event i General, odnosno poruke dogadjaja i opste poruke. 
+Event poruke su vremenski kriticne i to u preciznosti predaje i prijema preciznosti 
+vremenskih pecata (TIMESTAMPs) i direktno uticu na distribuciju preciznosti vremena. (JOS 
+JEDNOM POGLEDAJ OVAJ PREVOD). Sync, Delay_Req, Pdelay_Req i Pdelay_resp su poruke 
+dogadjaja. Opste poruke su ubicajene jedinice protokola, zato sto podaci u ovim porukama 
+su od znacaja za PTP, ali njihovi vremenski pecati za predaju i prijem nisu.Announce, 
+Follow_Up, Delay_Resp, Pdelay_Resp_Follow_Up, Management i Signalne poruke su opste 
+poruke.
 
 Prenos poruka:
-PTP poruke mogu da koriste UDP (User datagram portocol) preko Internet protokola (UDP/IP) za prenos poruka. IEEE 1588-2002, koristi samo IPv4 prenos, ali je ovo prosireno da ukljucuje i IPv6 u IEEE 1588-2008 standardu. U IEEE 1588-2002, sve PTP poruke se salju u Multicast (modulu objavljivanja na mrezi) (#pogldedaj opet ovaj prevod#), dok se u IEEE 1588-2008 je uveo kao opciju
+PTP poruke mogu koristiti UDP (User datagram portocol) preko Internet protokola (UDP/IP) 
+za prenos poruka. IEEE 1588-2002, koristi samo IPv4 prenos, ali je ovo prosireno da 
+ukljucuje i IPv6 u IEEE 1588-2008 standardu. U IEEE 1588-2002, sve PTP poruke se salju u 
+Multicast rezimu (rezimu objavljivanja na mrezi) (#pogldedaj opet ovaj prevod#), dok se u 
+IEEE 1588-2008 uveo rezim Unicast prenosa (rezim prenosa na samo jedan uredjaj). Prenosi 
+u Multicast rezimu koriste adresiranje za IP Multicasting, za koji su adresiranje 
+Multicast grupe definisane za IPv4 i IPv6. Poruke dogadjaja se salju na port broj 319. 
+Dok se opste poruke salju na port 320.
+
+## tabela sa adresama
+
+Domeni:
+Domen je interaktivni skup satova koji se sinhronizuju jedni sa drugima koristeci PTP. 
+Satovi se dodeljuju domenu na osnovu sadrzaja domena (IEEE 1588-2002) ili polja domena 
+(IEEE 1588-2008) unutar PTP poruka koje primaju ili generisu. Domeni omogucavaju 
+distribuciju vise satova u velike sisteme da dele isti komunikacioni medijum (##[lazarc] 
+[prevod]##).
+
+## tabela sa domenima
+
+Algoritam najboljeg sata (Best master clock algorithm):
+
+BMC algoritam sprovodi distribuiranu selekciju najboljeg sata koja se bazira na sledecim 
+karakteristikama:
+- Identifikator -> Univerzano jedinstveni numericki identifikator za sat. Ovo se tipicno 
+konstruise na osnovu MAC adrese uredjaja.
+- Kvalitet -> Obe verzije IEEE 1588 kvantifikuju kvalitet sata na osnovu ocekivane 
+devijacije od vremena, tehnologiju koja se koristi za implemntaciju sata ili lokaciju u 
+koj
