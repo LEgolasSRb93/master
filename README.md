@@ -1,14 +1,12 @@
 # Master rad
-=================================
 
 ## Tema: Implentacija sinhronizacije vremena u namenskim racunarskim sistemima
-=================================
 
 Uvod ili Synopsis za master rad. Nesto smisleno moze ovde da ide.
 **Takodje dodati kod na ovaj repo, ogoljen freeRTOS lwIP sa PTP-om**
 
-
 Potrebno opisati:
+
 * APstrakt
 * Uvod
     - Zasto je bitno da se to radi?
