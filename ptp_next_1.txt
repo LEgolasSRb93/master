@@ -1,0 +1,69 @@
+From:
+https://www.rtaautomation.com/technologies/ieee-1588/
+
+IEEE 1588 Unplugged – An introduction to IEEE 1588
+
+SYNOPSIS
+Sinhronizacija postaje neophodna kada su uredjaji koji rade zajedno na odredjenoj 
+udaljenosti moraju raditi u vezi jedni sa drugima. U ovim scenirijima, lokalni sat, ili 
+Master Sat, sinhronizuje sve uredjaje u istom sistemu sa tim satom. Zbog ove potrebe za 
+sinhronizacijom, IEEE 1588 standard je objavljen kao standardni protokol 2002. godine.
+(##[lazarc] However, prevod ##) Iako su dva sata unutar uredjaja podeseni da rade na 
+istoj frekvenciji, ne postoji garancija da ce ostati sinhronizovani. Upravo zbog ovoga 
+proces sinhronizacije je neprekidan. Nekoliko faktora mogu uticati na to da dva identicna 
+sata izgube sinhronizaciju. Razlozi mogu biti razliciti, kao na primer razlika u 
+temperaturi, starosti uredjaja, kao i frekvenciji na kojoj uredjaji rade, koja moze 
+uticati na kvalitet sinhronizacije. Upravo iz ovih razloga je i nastala potreba za 
+sinhronizacijom uredjaja.
+
+SYNCHRONIZATION
+IEEE 1588 obezbedjuje sinhronizaciju dva sata u istoj mrezi koja je otporna na greske. 
+Takodje, koristi se veoma mali opseg frekvencija, procesna moc, ali i podesavanje samog 
+protokola. (##[lazarc] There is very little bandwidth consumption, processing power, and 
+setup.##) IEEE 1588 standard postize sve ovo koristeci protokol preciznog vremena (##
+[lazarc] Precision time protocol.##), ili PTP. Vremenski protokol koji se koristi 
+sinhronizuje dva sata na mrezi podesavajuci satove ka "najkvalitetnijem" satu. IEEE 1588 
+definise ospege vrednosti za standardan set karakteristika satova. Algoritam najboljeg 
+sata, BMC algorithm, odlucuje koji sat na mrezi je "najkvalitetniji", odnosno koji sat na 
+mrezi je najtacniji, i najbolji kako bi se ostali uredjaji sinhronizovali na njega. BMC 
+algoritam onda sinhronizuje sve ostale satove (slave clocks) sa ovim satom na mrezi. 
+Ukoliko se BMC (Best Master Clock) ukloni iz mreze, ili BMC algoritam odluci da taj sat 
+nije vise najtacniji, algoritam redefinise novi "najkvalitetniji" sat, i prilagodi 
+vremena ostalih satova u skladu sa tim. Nije potrebno da se administrator mreze ukljucuje 
+u bilo kom trenutku kako bi se promenio najbolji sat u mrezi, zbog toga sto je ovaj 
+algoritam otporan na greske.
+
+U ovu svrhu koristi se Bidirekciona multikast komunikacija (##[lazarc] Bidirectional 
+Multicast Communication ##) od strane slave uredjaja kako bi se sinhronizovali na 
+najbolji sat, IEEE 1588 grandmaster clock. "Sync", Sinhronizacioni paket sadrzi vremenski 
+zig od najboljeg sata, koji predstavlja tacno vreme kada je paket poslat sa grandmaster 
+clock-a. "Follow up", Prateci paket takodje moze biti poslat sa grandmaster sata, koji 
+sadrzi vremenski zig "Sync" (sinhronizacionog) paketa. Ovakav princip razmene podataka 
+omogucava tacan vremenski zig sinhronizacionog paketa koji je prosledjen sa grandmaster 
+sata. Takodje, postoje slucajevi u kojima se ne otkriva tacno vreme slanja paketa, zbog 
+odredjenih smetnji na mrezi. Ovo je omoguceno kroz Collision detection i Random Back-off 
+mehanizama na Ethernet/IP komunikaciji. Samo onda kad je paket kompletno poslat, nemoguce 
+je promeniti sadrzaj paketa. 
+
+Grandmaster i Slave satovi na mrezi razmenjuju "Sync", Sihnronizacione pakete sa jedne na 
+drugu strane, i postavljaju vremenske zigove pri prijemu paketa. Kombinijuci razliku u 
+satova, kao i kasnjenje na mrezi, razlika izmedju slanja i prijema sinhronizacionih 
+paketa moze biti izracunata. Koristeci razliku koja je izracunata u ovom slucaju, sat 
+moze biti podesen sa novim vrednostima, i time se moze smanjiti razlika izmedju Master i 
+Slave satova u ovoj mrezi. Razlika izmedju master i slave sinhrozniacionih paketa, i 
+obrnuto, implicira da IEEE 1588 standard radi pod pretpostavkom da je propagacija paketa 
+po mrezi simetricna. To je zbog prepostavke da slave uredjaj moze da odredi i podesi 
+kasnjenje prilikom propagacije paketa po mrezi. Kako bi se kasnjenje na mrezi odredilo, 
+slave kreira "delay request", zahtev za odredjivanjem kasnjenje, i postavlja vremenski 
+zig prilikom slanja paketa. Master sat onda postavlja vremenski zig prilikom pristizanja 
+tog zahteva, i vraca ga ka Slave uredjaju, i to u obliku "delay response" paketa, 
+odgovora za kasnjenjem. Nakon toga, odredjuje se kasnjenje po linijama na mrezi, i 
+izracunava se iz ovih paketa koji se razmenjuju.
+
+Slanje i primanje sinhronizacionih paketa dozvoljava da Slave uredjaji tacno izmere 
+razliku izmedju lokalnog/Slave sata, i Master sata. Standardne metode podesavanja sata na 
+uredjajima nije opisano prema IEEE 1588 standardu; samo omogucava standardni protokol za 
+razmenu poruka izmedju uredjaja. Poenta ovoga je da se uredjaji i satovi razlicitih 
+proizvodjaca mogu sinhronizovati izmedju sebe.
+
+QUALITY OF SYNCHRONIZATION
