@@ -67,3 +67,36 @@ razmenu poruka izmedju uredjaja. Poenta ovoga je da se uredjaji i satovi razlici
 proizvodjaca mogu sinhronizovati izmedju sebe.
 
 QUALITY OF SYNCHRONIZATION
+Postoje nekoliko faktora koji mogu uticati na egzaktnost sinhronizacije izmedju dva 
+uredjaja unutar IEEE 1588 mreze. Promene frekvencije na uredjaju koji daje tacno vreme, 
+koje se moze desiti izmedju dva sinhronizaciona paketa "Sync", mogu uzrokovati da se 
+izgubi sinhronizacija sa ostalim uredjajima u istom sistemu. Kako bi se predupredila 
+svaka mogucnost za gubljenje sinhronizacije, (##[lazarc] High stability ##) mogu se 
+koristiti uredjaji sa veoma velikom stabilnoscu, kao i da se skrati vreme izmedju razmene 
+sinhronizacionih paketa. Kako bi se jos vise unpredila sinhronizacija, mogu se koristiti 
+druge vrste oscilatora u uredjajima, narocito Temperature Controlled Crystal Oscillators 
+(TXCOs) i Oven Controlled Crystal Oscillators (OCXOs). Rezulucija sata moze uticati na 
+preciznost vremenskih zigova unutar sinhronizacionih paketa. Dziter (##[lazarc] Jitter ##)
+ iz susednih uredjaja u mrezi, kao sto su habovi i svicevi (##[lazarc] hubs and switches 
+ ##), takodje mogu uticati na preciznost sinhronizacije.
+Kvalitet IEEE 1588 mreznog sistema i kako je podesen moze takodje uticati na kvalitet 
+sinhronizacije. Kako bi se podesi sistem sa sto boljom sinhronizacijom, mora se napraviti 
+kompromis izmedju egzaktnosti sinhronizacije, cene, kao i razdaljine izmedju uredjaja u 
+sistemu. Za sporije dogadjaje unutar sistema koji ne zavise od vremena, standardna NTP 
+sinhronizacija preko interneta, koja daje sinhronizaciju na nivou milisekunde, 
+zadovoljava sve potrebe. IEEE 1588 je i dalje izvanredna alternativa za sisteme koji 
+zahteva sinronizaciju na nivou ispod mikroseunde.
+
+NETWORK HIERARCHIES
+IEEE 1588 sporedni satovi (##[lazarc] boundary clocks##), koji se takodje i nazivaju transparentni svicevi (##[lazarc] transparent switches ##), pruzaju efektivan nacin za smanjenje dzitera (##[lazarc] jitter ##) unutar mreznog sistema baziranog na IEEE 1588 standardu. Svic (##[lazarc] switch ##), koji se koristi kao sporedni sat (##[lazarc] boundary clock ##), pokrece PTP protokol i sinhronizuje se na master sat (##[lazarc] master clock ##). Sporedni sat (##[lazarc] boundary clock ##), u navratima (##[lazarc] in turns ##) preuzima ulogu master sata za sve slejvove unutar iste mreze. Koristeci ovo podesavanje mreze, sva interna kasnjenja i dziter mogu biti kompenzovani i ne uticu na egzaktnost sinhronizacije.
+
+Delay_Resp, Delay_Req, Follow_up i Sync poruke se ne prenose kroz sporedne satove. Sporedni sat se ponasa kao obican sat u smislu sinhronizacije i koristi algoritam najboljeg sata unutar podmreze. Unutar podmreze koja se posmatra, ovaj uredjaj je slejv. Ovo ce uticati na to da se svi ostali uredjaji koji se povezuju na sporedni sat sinhronisu svoje vreme prema njemu. Hijerarhija Roditelj-Dete (##[lazarc] Parent-Child hierarchy) na master-slejv sate je odredjena prema sporednim satovima. (##[lazarc] If cyclic path occur in the network hierarchy, the best master clock algorithm lowers the logical hierarchy to an acyclic graph.##)
+Naravno, postoji alternativa za sporedne sate, i to je koriscenje transparentnih sviceva (##[lazarc] switches ##). Transparentni svic se ne ponasa kao PTP cvor unutar IEEE 1588 sistema. Umesto toga, transparetni svic podesava vremenski deo PTP paketa kako bi se kompenzovalo kasnjenje koje unosi svic. Transparetni svic nakon toga preracunava koliko je vremena sinhronizacioni 'Sync' paket proveo unutar svica, i modifikuje vremenski zig unutar sledeceg 'Follow_up' paketa kako bi se nadoknadilo kasnjenje. PTP cvorovi mogu raditi kao da su deo veceg podsistema lokalne mreze, i to kao da su povezani habovima (##[lazarc] Hubs ##) koristeci transparentne sviceve.
+
+USES FOR IEEE 1588
+Precizna sinhronizacija se moze iskoristiti u sledecim aplikacijama:
+- Telekomunikacije
+- Energetska postrojenja
+- Industrijska automacija
+- Testiranje i merenja
+- Robotska kontrola
