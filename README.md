@@ -9,10 +9,10 @@ Potrebno opisati:
 
 * APstrakt
 * Uvod
-    - Zasto je bitno da se to radi?
-    - Kako se radi?
-    - Sta se postize ovim nacinom rada?
-    - U cemu je poboljsanje u odnosu na prethodne nacine rada?
+    - Zasto je bitno da se to radi? [doen, some parts, recheck]
+    - Kako se radi? [done, recheck]
+    - Sta se postize ovim nacinom rada? [done, reheck]
+    - U cemu je poboljsanje u odnosu na prethodne nacine rada? [done, recheck]
 * Opis PTP-a
     - Opis PTP-a (Precision_Time_Protocol)
         - Opsti opis [done]

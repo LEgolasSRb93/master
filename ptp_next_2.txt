@@ -2,10 +2,115 @@ From:
 https://www.masterclock.com/support/library/network-timing-ntp-vs-ptp/
 
 NETWORK TIMING TECHNOLOGY: NTP vs. PTP
-Vremenska sinhrnozacija igra fundamentalnu ulogu u svakoj mrezi, ali je ipak najcesce dodata kao naknadna funkcionalnost. Ipak, moze znaciti razliku izmedju egzaktnog odredjivanja gresaka unutar sistema, u tacnim vremenskim trenucima, i nepostojanje ideje zasto se server ponasa onako kako nije predvidjeno. (##[lazarc] Time synchronization serves a fundamental role in any network, but it's too often added as an afterthought. However, it can mean the difference between correctly troubleshooting a conflict in minutes and having no idea why the server is figuratively on fire. ##) Za finansijske i naucne institucije, vremenska sinhronizacija mora biti tacna na milijarditi, ili nekad na trilioniti deo sekunde, medjutim sve vise komercijalnih i industrijskih organizacija se sve vise zalazu za ideju da preciznost vremenske sinhronizacije bude u sub-milisecond opsegu.
-Zasto nije dovoljno da samo sinhronizujemo svoje uredjaje preko javno dostupnog NTP protokola. Nazalost, kasnjenje postoji svugde, i prosto je nemoguce postici savrsenu sinhrnoizaciju. Brzina svetlosti je brza, u vakumu, foton moze napraviti krug oko zemlje vise od 7 puta u sekundi, iako putuje aproksimativno 31% sporije kroz obicnu opticku mrezu, lako se moze preneti jedan bit informacije preko pola sveta za manje od desetine sekunde.
-Ali, svi znamo da idealan svet ne postoji. Dodati sviceve (##[lazarc] switches ##), rutere, i ostalu mreznu infrastrukturu, i ta desetina sekunde se uveca nekoliko puta. Bez specijalizovane opreme, nasa mreza lako moze dodati kasnjenje cak i vece od sekunde.
-Jos veca briga je sinhronizacija razlicitih uredjaja unutar iste mreze. Scenario u kom finansijska institucija koja ima tacno 100 deonica kompanije X na berzi. U nekom trenutku se pojavi informacija koja se tice kompanije X, i finansijska institucija odluci da proda tih 100 akcija ne samo jednom investitoru, vec nekoliko njih u razmaku od sekunde. Ali posto su serveri ove institucije nesihronizovani jedan na drugi, ne postoji uopste ideja kako odrediti koja je ponuda stigla prva. U ovom realnom scenariju sinhronizacija uredjaja unutar mreze je od vitalnog znacaja.
+Vremenska sinhrnozacija igra fundamentalnu ulogu u svakoj mrezi, ali je ipak najcesce 
+dodata kao naknadna funkcionalnost. Ipak, moze znaciti razliku izmedju egzaktnog 
+odredjivanja gresaka unutar sistema, u tacnim vremenskim trenucima, i nepostojanje ideje 
+zasto se server ponasa onako kako nije predvidjeno. (##[lazarc] Time synchronization 
+serves a fundamental role in any network, but it's too often added as an afterthought. 
+However, it can mean the difference between correctly troubleshooting a conflict in 
+minutes and having no idea why the server is figuratively on fire. ##) Za finansijske i 
+naucne institucije, vremenska sinhronizacija mora biti tacna na milijarditi, ili nekad na 
+trilioniti deo sekunde, medjutim sve vise komercijalnih i industrijskih organizacija se 
+sve vise zalazu za ideju da preciznost vremenske sinhronizacije bude u sub-milisecond 
+opsegu.
+Zasto nije dovoljno da samo sinhronizujemo svoje uredjaje preko javno dostupnog NTP 
+protokola. Nazalost, kasnjenje postoji svugde, i prosto je nemoguce postici savrsenu 
+sinhrnoizaciju. Brzina svetlosti je brza, u vakumu, foton moze napraviti krug oko zemlje 
+vise od 7 puta u sekundi, iako putuje aproksimativno 31% sporije kroz obicnu opticku 
+mrezu, lako se moze preneti jedan bit informacije preko pola sveta za manje od desetine 
+sekunde.
+Ali, svi znamo da idealan svet ne postoji. Dodati sviceve (##[lazarc] switches ##), 
+rutere, i ostalu mreznu infrastrukturu, i ta desetina sekunde se uveca nekoliko puta. Bez 
+specijalizovane opreme, nasa mreza lako moze dodati kasnjenje cak i vece od sekunde.
+Jos veca briga je sinhronizacija razlicitih uredjaja unutar iste mreze. Scenario u kom 
+finansijska institucija koja ima tacno 100 deonica kompanije X na berzi. U nekom trenutku 
+se pojavi informacija koja se tice kompanije X, i finansijska institucija odluci da proda 
+tih 100 akcija ne samo jednom investitoru, vec nekoliko njih u razmaku od sekunde. Ali 
+posto su serveri ove institucije nesihronizovani jedan na drugi, ne postoji uopste ideja 
+kako odrediti koja je ponuda stigla prva. U ovom realnom scenariju sinhronizacija 
+uredjaja unutar mreze je od vitalnog znacaja.
 
 NETWORK TIME PROTOCOL
-NTP, ili Network Time Protocol, 
+NTP, ili Network Time Protocol, je siroko prihvacen kao sredstvo za cuvanje vremena na 
+mrezi, i trenutno je u upotrebi cetvrta verzija samog protokola. Hijerarhijski sistem ima 
+razlicite slojeve koji se nazivaju STRATA (##[lazarc] strata eng. ##). Statum 0 uredjaji 
+su u samom vrhu i ukljucuju atomske satove, kao one koji se nalaze u GNSS satelitima.
+Stratum 1, ili primarni vremenski server, svaki od njih ima jedan na jedan direktnu 
+konekciju sa Stratum 1 satom, i postizu sinhronizaciju red mikrosekunde sa Stratum 0 
+satovim, i povezuju se na ostale Stratum 1 severe za brzu proveru satova i cuvanje 
+podataka. Stratum 2 serveri se mogu povezivati na vise primarnih vremenskih servera kako 
+bi se postigla veci level sinhronizacije i poboljsala preciznost, i tako dalje.NTP 
+podrzava maksimum od 15 strata uredjaja, ali svaki strata uredjaj unosi malu gresku u 
+sinhronizaciji sa Stratum 0 uredjajima.
+
+64-bitni vremenski zig je trenutno implementiran kako bi se podelio u dva 32-bitna dela. 
+    > Prva polovina broji broj sekundi do nesto preko 136 godina.
+    > Druga polovina predstavlja deo sekunde do razmere pikosekunde
+
+Predlozena je promena na 128-o bitne vremenske zigove u NTPv4 protokolu, i trebalo bi da 
+poveca vremensku razmeru na nesto manje od 600 milijardi godina, pri cemu bi vremenska 
+rezolucija bila manja od femtosekunde.
+
+PRECISION TIME PROTOCOL
+PTP, ili Precision time protokol, je jos jedan standard za sinhronizaciju vremena preko 
+mreze, ali umesto sinhronizacije reda velicine milisekunde, PTP mreze mogu da postignu 
+sinhronizaciju reda velicine nanosekunde, ili cak pikosekunde. Za vecinu komercijalnih i 
+industrijskih aplikacija, NTP je vise nego precizan, ali ukoliko je potrebna tacnija 
+sinhronizacija i tacnije obelezavanje vremena, potrebno je migrirati sistem na PTP.
+
+Zbog cega je PTP toliko tacan? Koristi obelezavanje paketa hardverskim vremenskim 
+zigovima, umesto softverskih, i kao svaki fini naucni instrument, PTP oprema je 
+specijalizovana za samo jednu specijalizovanu svrhu: ocuvanje sinhronizacije izmedju 
+uredjaja. Samo iz ovih razloga, PTP mreze imaju mnogo tacniju vremensku rezoluciju, i ne 
+kao NTP uredjaji, PTP uredjaji ce ustvari ukljuciti vreme koje svaka od sinhronizacionih 
+poruka provede u svakom od uredjaja, sto ukljucuje i kasnjenje u uredjaju.
+
+Svaka od PTP razmena ukljucuje seriju od 4 poruke koje se razmenjuju izmedju master-a i 
+slave-a:
+    > Inicijalna sinhronizaciona poruka od mastera ka slejvu {Sync message}
+    > Poruka koja prati sinhronizacionu poruku od mastera ka slejvu {Follow_up message}
+    > Poruka sa zahtevom za odredjivanje kasnjenja od slejva ka masteru {Delay_Req 
+    message}
+    > Finalni odgovor sa kasnjenjem od mastera ka slejvu {Delay_Resp message}
+Ova razmena pruza cetiri razlicita vremena:
+    > T1 -> vreme kad master posalje inicijalnu sinhronizacionu poruku
+    > T2 -> vreme kad slejv dobije inicijalnu sinhronizacionu poruku
+    > T3 -> vreme kad slejv posalje poruku sa zahtevom za kasnjenjem
+    > T4 -> vreme kad master dobije zahtev za kasnjenjem
+Master salje sva 4 vremenska ziga ka slejvu tokom faze odgovora na zahtev za kasnjenjem, 
+i slejv moze sa tim vremenima da izracuna kasnjenje po mrezi izmedju mastera i slejva u 
+oba smera. Imajuci specijalizovani hardver koji moze da uhvati vremena lokalnog sata, 
+slejv uredjaji mogu izbeci dodatno kasnjenje koje je uslovljeno lokalnim operativnim 
+sistemom.
+
+NTP mreze imaju dodatno kasnjenje i manju preciznost jednostavno zbog toga sto su 
+softverski bazirane, i svi zahtevi za vremenima moraju da cekaju na lokalni operativni 
+sistem. Za vecinu kompanija, NTP pruza dovoljno tacnu rezoluciju vrmena kako bi se resili 
+svi konflikti u dogledno vrmene, dok neke organizacije zahtevaju dosta veci nivo 
+sinhronizacije.
+
+WHY BOTHER WITH A TIME SERVER AT ALL?
+Timestamping and client synchronization is vital for your network, but some network 
+engineers still feel like they can get away with simply syncing their servers to a public 
+internet clock. While perfectly fine for consumer devices like smartphones, internet 
+clocks are poorly suited for business networks for one simple reason: security.
+
+To connect your server to an internet clock requires you to first open up port 123 on 
+your firewall. Will something horrible happen as a result? We don't know, but we don't 
+know in the same way that we don't know if a burglar will break in because you left the 
+front door unlocked on your home. Why take the chance? A dedicated NTP server keeps your 
+network secure while providing more accurate timestamping.
+
+WHAT HAPPENS IF MY TIME SERVER IS DISCONNECTED?
+No network is perfect, and all you can hope to do is minimize downtime instead of 
+eliminating it. If your NTP or PTP time server is unable to connect to a GPS satellite or 
+other input for whatever reason, you can rest assured that it will continue to 
+synchronize your devices and maintain accurate timestamping.
+
+For example, our NTP100-GPS NTP server has a holdover stability of 3 seconds per year, 
+meaning that your server will still be synchronized to within 3 seconds of UTC after an 
+entire year in the dark. The high-stability model with an oven-controlled crystal 
+oscillator boasts even greater holdover stability of 250 milliseconds per year — that's 
+less than 1 millisecond per day. Our HSO-3 oscillator option, which is only available on 
+our GMR5000 NTP Server and PTP Grandmaster, further reduces drift to a maximum of 1 
+millisecond per year. 
