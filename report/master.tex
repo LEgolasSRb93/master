@@ -10,7 +10,7 @@
 
 \addto\captionsserbian{\renewcommand{\bibname}{Literatura}}
 
-\title{Implementacija}
+\title{Implementacija vremenske sinhronizacije u Namenskim ra\v{c}unarskim sistemima}
 \author{Lazar Caković}
 \indeks{3083/2016}
 \date{septembar 2018.}
@@ -682,46 +682,45 @@
 
 	\chapter{Hardverska implementacija}
 
-	Razvojno okruzenje koje je korisceno za hardversku implementaciju je razvojna ploca
-	SAMA5D27-SOM1-EK1 proizvodjaca Microchip. Na ploci se nalazi SAMA5D27 SOM (System on 
-	Module) modul koji je kljucan za implementaciju. Na modulu se nalazi SAMA5D27-D1G-CU SIP 
-	(System in Package) koji sadrzi 1 Gbit DDR2 SDRAM memorije. Modul nudi puzdanu i 
-	niskobudzetnu platformu	za razvoj namenskih racunarskih sistema koji ce na kraju i 
-	zavrsiti u finalnoj proizvodnji, kao i malu formu, dopunjenu sa velikim brojem interfejsa 
-	koji se mogu koristiti u delu projektovanja krajnjeg sistema.
+	Razvojno okru\v{z}enje koje je kori\v{s}\'{c}eno za hardversku implementaciju je razvojna 
+	plo\v{c}a SAMA5D27-SOM1-EK1 proizvodja\v{c}a Microchip. Na plo\v{c}i se nalazi SAMA5D27 
+	SOM (System on Module) modul koji je klju\v{c}an za implementaciju. Na modulu se nalazi 
+	SAMA5D27-D1G-CU SIP (System in Package) koji sadr\v{z}i 1 Gbit DDR2 SDRAM memorije. Modul 
+	nudi puzdanu i niskobud\v{z}etnu platformu	za razvoj namenskih ra\v{c}unarskih sistema 
+	koji ce na kraju i zavr\v{s}iti u finalnoj proizvodnji, kao i malu formu, dopunjenu sa 
+	velikim brojem interfejsa koji se mogu koristiti u delu projektovanja krajnjeg sistema.
 
 	\begin{figure}[htb]
 		\centering
 		\includegraphics[scale=.7]{../pic/hw_top_view.png}
-		\caption{Razvojna ploca SAMA5D27-SOM1-EK1 (pogled odozgo)}
+		\caption{Razvojna plo\v{c}a SAMA5D27-SOM1-EK1 (pogled odozgo)}
 		\label{fig:hw_top_view}
 	\end{figure}
 
-
 	SOM je potpuno opremljen industrijski sertifikovan kompjuter dizajniran za integraciju
-	korisnicke aplikacije. SOM modul je namenski napravljen kao mala hardverska platforma
-	opremljena sirokim spektrom modula za brzo povezivanje kako bi podrzali	projektovanje 
-	podrske	za razne IoT (Internet of Things) aplikacija, prenosnih uredjaja, ali i aplikacija 
-	u industrijske svrhe. SOM integrise 1Gbit DDR2 SDRAM i QSPI memoriju kao 10/100 Mbit 
-	Ethernet interfejs. Takodje, SOM poseduje i 128 GPIO pinova (\#\# [lazarc]) koji	
-	obezbedjuju pristup	SOM-a za razlicite upotrebe. Svi GPIO pinovi su nezavisni, i mogu se 
-	konfigurisati kao ulazi	ili izlazi, sa ili bez PULL-UP otpornika. Razvojna ploca poseduje 
-	i	sirok spektar periferija, kao i korisnicki interfejs i nacin za prosirenje 
-	funkcionalnosti, ukljucujuci i dva microBUS Click interjesa firme Mikroelektronika kojim 
-	se dobija mogucnost za	prosirenje funkcionalnosti svim modulima koje ova firma nudi u 
-	svom asortimanu.
+	korisni\v{c}ke aplikacije. SOM modul je namenski napravljen kao mala hardverska platforma
+	opremljena \v{s}irokim spektrom modula za brzo povezivanje kako bi podr\v{z}ali	
+	projektovanje podr\v{s}ke za razne IoT (Internet of Things) aplikacije, prenosnih uredjaja, 
+	ali i aplikacija u industrijske svrhe. SOM integri\v{s}e 1Gbit DDR2 SDRAM i QSPI memoriju 
+	kao 10/100 Mbit Ethernet interfejs. Takodje, SOM poseduje i 128 GPIO pinova (\#\# [lazarc]) 
+	koji obezbedjuju pristup SOM-a za razli\v{c}ite upotrebe. Svi GPIO pinovi su nezavisni, i 
+	mogu se konfigurisati kao ulazi	ili izlazi, sa ili bez PULL-UP otpornika. Razvojna plo\v{c}a 
+	poseduje  i \v{s}irok spektar periferija, kao i korisni\v{c}ki interfejs i na\v{c}in za 
+	pro\v{s}irenje funkcionalnosti, uklju\v{c}uju\'{c}i i dva microBUS Click interfejsa firme 
+	Mikroelektronika kojim se dobija mogu\'{c}nost za pro\v{s}irenje funkcionalnosti svim 
+	modulima koje ova firma nudi u svom asortimanu.
 
 	\begin{figure}[htb]
 		\centering
 		\includegraphics[scale=.7]{../pic/hw_modules.png}
-		\caption{Moduli - Razvojna ploca SAMA5D27-SOM1-EK1}
+		\caption{Moduli - Razvojna plo\v{c}a SAMA5D27-SOM1-EK1}
 		\label{fig:hw_modules}
 	\end{figure}
 
 	Na samom SAMA5D27-SOM1 postoje i:
 	\begin{itemize}
-		\item Ultra mali SIP (SAMA5D27-D1G-CU) koji sadrzi stedljivi SAMA5D27 Arm Cortex A5
-		procesor i 1Gbit DDR2 SDRAM memoriju
+		\item Ultra mali SIP (SAMA5D27-D1G-CU) koji sadr\v{z}i \v{s}tedljivi SAMA5D27 Arm Cortex 
+		A5 procesor i 1Gbit DDR2 SDRAM memoriju
 		\item SST26VF064 64 Mb QSPI Flash memoriju
 		\item 24AA02E48 2 Kb serijski E2PROM (Electrically Erased Programmed Read Only Memory) 
 		sa programiranom EUI identifikacijom pristupa
@@ -736,33 +735,35 @@
 		\label{fig:hw_som_modules}
 	\end{figure}
 
-	Razvojno okruzenje SAMA5D27-SOM1-EK1 je veoma mocno i moze se koristiti za sirok spektar
-	aplikacija. Najcesce je izbor za razvoj aplikativnog softvera u namenskim racunarskim
-	sistemima, uz koriscenje Embedded Linux operativnog sistema, i s tim ciljem se i bira. Za 
-	ovu	implementaciju nije koriscen u tom smislu, vec je koriscen sa drugim operativnim 
-	sistemom kojim je moguce istaci neke druge njegove karakteristike. Ali ono sto je najvise 
-	interesantno za ovu	primenu je postojanje TSU (Timestamping unit) za harversku podrsku 
-	PTP-a. I to u sklopu periferije za povezivanje preko Ethernet-a, cime je omugceno 
-	prepoznavanje PTP poruka koje dolaze na interfejs.
+	Razvojno okru\v{z}enje SAMA5D27-SOM1-EK1 je veoma mo\'{c}no i mo\v{z}e se koristiti za \v{s}
+	irok spektar aplikacija. Naj\v{c}e\v{s}\'{c}e je izbor za razvoj aplikativnog softvera u 
+	namenskim ra\v{c}unarskim sistemima, uz kori\v{s}\'{c}enje Embedded Linux operativnog 
+	sistema, i s tim ciljem se i bira. Za ovu implementaciju nije kori\v{s}\'{c}en u tom smislu, 
+	ve\'{c} je kori\v{s}\'{c}en sa drugim operativnim sistemom kojim je mogu\'{c}e ista\'{c}i 
+	neke druge njegove karakteristike. Ali ono sto je najvi\v{s}e interesantno za ovu primenu je 
+	postojanje TSU (Timestamping unit) za harversku podr\v{s}ku PTP-a. I to u sklopu periferije 
+	za povezivanje preko Ethernet-a, cime je omogu\'{c}eno prepoznavanje PTP poruka koje dolaze 
+	na interfejs.
 
 	\section{Time stamping unit - TSU}
-	IEEE-1588 je standard za preciznu sinhronizaciju vremena u lokalnim mrezama. Radi se o 
-	razmeni	preciznog vremena izmedju dva uredjaja u lokalnoj mrezi. PTP poruke se mogu 
-	prenositi preko	IEEE802.3/Ethernet, IPv4 ili IPv6 protokola kako je to vec opisano u 
-	odeljcima pre. Periferija unutar razvojnog okruzenja GMAC oznacava tacku vremenske oznake 
-	poruke (na pocetku slanja i na kraju slanja) poruke. IEEE 802.1AS je podskup IEEE 1588 
-	standarda. Jedina razlika je u adresi koja sluzi za slanje PTP poruka svim uredjajima u 
-	lokalnoj mrezi (Multicast). GMAC periferija	je dizajnirana tako da prepoznaje poruke koje 
-	su kljucne za PTP protokol. Kao sto je vec navedeno, sinhronizacija izmedju dva uredjaja 
-	se izvodi u dva stadijuma, odredjivanje razlike	(offset) izmedju dva sata (na strani 
-	Master i Slave uredjaja), nakon cega se salje tacno	kasnjenje na linijama za prenos 
-	podataka, cime se tacno sinhronizuju dva sata. Hardverski moduli koji pomazu u ovoj 
-	razmeni poruka odredjuju tacno vreme kada je poruka stigla, i kada je poruka poslata. Sto 
-	je kljucno za odredjivanje vremena kojim se izracunavaju razlika i kasnjenje. Pojava ovih 
-	poruka uzrokuje prijavljivanje hardverskih prekida, tako da je moguce operisati sa 
-	vremenima koja se dobijaju tako da se dobija fina sinhronizacija vremena dva uredjaja.
-	Podrska ovom protokolu u hardveru se ogleda u postojanju TSU(Timestamping unit) periferije 
-	koja se sastoji od tajmera i registara u koje se smestaju tacna vremena u trenucima kada 
+	IEEE-1588 je standard za preciznu sinhronizaciju vremena u lokalnim mre\v{z}ama. Radi se o 
+	razmeni	preciznog vremena izmedju dva uredjaja u lokalnoj mre\v{z}i. PTP poruke se mogu 
+	prenositi preko	IEEE802.3/Ethernet, IPv4 ili IPv6 protokola kako je to ve\'{c} opisano u 
+	odeljcima pre. Periferija unutar razvojnog okru\v{z}enja GMAC ozna\v{c}ava ta\v{c}ku 
+	vremenske oznake poruke (na po\v{c}etku slanja i na kraju slanja) poruke. IEEE 802.1AS je 
+	podskup IEEE 1588 standarda. Jedina razlika je u adresi koja slu\v{z}i za slanje PTP poruka 
+	svim uredjajima u lokalnoj mrezi (Multicast). GMAC periferija je dizajnirana tako da 
+	prepoznaje poruke koje su klju\v{c}ne za PTP protokol. Kao \v{s}to je ve\'{c} navedeno, 
+	sinhronizacija izmedju dva uredjaja se izvodi u dva stadijuma, odredjivanje razlike	(offset) 
+	izmedju dva sata (na strani Master i Slave uredjaja), nakon \v{c}ega se \v{s}alje ta\v{c}no	
+	ka\v{s}njenje na linijama za prenos podataka, \v{c}ime se ta\v{c}no sinhronizuju dva sata. 
+	Hardverski moduli koji poma\v{z}u u ovoj razmeni poruka odredjuju ta\v{c}no vreme kada je 
+	poruka stigla, i kada je poruka poslata. \v{S}to je klju\v{c}no za odredjivanje vremena 
+	kojim se izra\v{c}unavaju razlika i ka\v{s}njenje. Pojava ovih poruka uzrokuje 
+	prijavljivanje hardverskih prekida, tako da je mogu\'{c}e operisati sa vremenima koja se 
+	dobijaju tako da se dobija fina sinhronizacija vremena dva uredjaja. Podr\v{s}ka ovom 
+	protokolu u hardveru se ogleda u postojanju TSU(Timestamping unit) periferije 
+	koja se sastoji od tajmera i registara u koje se sme\v{s}taju tacna vremena u trenucima kada 
 	stignu ili odu poruke koje su kljucne za dobijanje tacnog vremena. Prekid se prijavljuje 
 	kada se ovi	registri osveze vremenom slanja ili primanja poruke bitne za PTP protokol.
 	Tajmer je implemntiran kao 94-bitni brojac, u kome visih 48 bita broje sekunde, narednih 30
