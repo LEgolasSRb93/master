@@ -764,17 +764,18 @@
 	dobijaju tako da se dobija fina sinhronizacija vremena dva uredjaja. Podr\v{s}ka ovom 
 	protokolu u hardveru se ogleda u postojanju TSU(Timestamping unit) periferije 
 	koja se sastoji od tajmera i registara u koje se sme\v{s}taju tacna vremena u trenucima kada 
-	stignu ili odu poruke koje su kljucne za dobijanje tacnog vremena. Prekid se prijavljuje 
-	kada se ovi	registri osveze vremenom slanja ili primanja poruke bitne za PTP protokol.
-	Tajmer je implemntiran kao 94-bitni brojac, u kome visih 48 bita broje sekunde, narednih 30
-	bita nanosekunde, i preostalih 16 bita broje vreme ispod nanosekunda. Nizih 46 bita se 
-	prevrte	(roll-over) kad se izbroji tacno jedna sekunda. Takodje, prijavljuje se hardverski 
-	prekid nakon sto se izbroji jedna sekunda. Vrednosti tajmera, kao i parametri za njegovo 
-	koji je glavni takt	unutar procesora, i njime se takodje moze manipulisati.
-	Promene podesavanja tajmera unutar TSU su od velike vaznosti za tacnu sinhronizuju dva
-	uredjaja. Ova periferija najvise utice na tacno vreme koje je potrebno sinhronizovati, i
-	takodje daje informacije o tacnom vremenu na uredjaju koji se koristi. Vise detalja o samoj
-	implemntaciji i koriscenju ove periferije bice dato u delu softverske implementacije.
+	stignu ili odu poruke koje su klju\v{c}ne za dobijanje ta\v{c}nog vremena. Prekid se 
+	prijavljuje kada se ovi	registri osve\v{z}e vremenom slanja ili primanja poruke bitne za PTP 
+	protokol. Tajmer je implemntiran kao 94-bitni broja\v{c}, u kome vi\v{s}ih 48 bita broje 
+	sekunde, narednih 30 bita nanosekunde, i preostalih 16 bita broje vreme ispod nanosekunda. 
+	Ni\v{z}ih 46 bita se prevrte (roll-over) kad se izbroji ta\v{c}no jedna sekunda. Takodje, 
+	prijavljuje se hardverski prekid nakon sto se izbroji jedna sekunda. Vrednosti tajmera, kao 
+	i parametri za njegovo (##[lazarc] CHECK! ##) koji je glavni takt unutar procesora, i njime 
+	se takodje moze manipulisati. Promene pode\v{s}avanja tajmera unutar TSU su od velike 
+	va\v{z}nosti za ta\v{c}nu sinhronizuju dva uredjaja. Ova periferija najvi\v{s}e uti\v{c}e na 
+	ta\v{c}no vreme koje je potrebno sinhronizovati, i takodje daje informacije o ta\v{c}nom 
+	vremenu na uredjaju koji se koristi. Vi\v{s}e detalja o samoj implemntaciji i 
+	kori\v{s}\'{c}enju ove periferije bi\'{c}e dato u delu softverske implementacije.
 
 	\newpage
 
