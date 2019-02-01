@@ -14,14 +14,15 @@ Potrebno opisati:
     - Sta se postize ovim nacinom rada? [done, reheck]
     - U cemu je poboljsanje u odnosu na prethodne nacine rada? [done, recheck]
 * Opis PTP-a
+    - Uvod o tome sta je PTP, i nakon opis sta je sve potrebno da bi se skontao i odredio PTP.
     - Opis PTP-a (Precision_Time_Protocol)
         - Opsti opis [done]
         - Opis poruka [done]
         - Opis sinhronizacije [done]
-        - hardverski TSU []
+        - hardverski TSU -> Zasto je bitno da i hardver podrzava sve? []
         - Slike []
-    - Opis OSI modela [done, check]
-    - Opis TCP/IP modela [done sth, check]
+    - Opis OSI modela [done] -> mora malo da se doradi, ubaci slike
+    - Opis TCP/IP modela [done] -> proveri greske, ubaci slike
 * Opis operativnog sistema
     - FreeRTOS opis [done, basics]
     - lwIP opis [done, check for more detail]
@@ -29,7 +30,8 @@ Potrebno opisati:
     - Zasto je odabran ovaj hardver? [done]
     - Koje su dobre strane koriscenja? [done]
     - Hadverska ubrzanja? [done]
-    - Zasto je bitno da i hardver podrzava sve? []
+    > [DONE] -> proveren tekst, primecene sitne greske koje treba ispraviti.
+    > [HINT] -> pogledati jos jednom datasheet i dodati delove o brojanju sekundi, i primerima za podesavanje vremena.
 * Softverska implementacija
     - Nacin na koji je odradjeno sve []
 * Zakljucak

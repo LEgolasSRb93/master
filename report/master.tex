@@ -204,9 +204,8 @@
 	se cuvaju, to se nalazi samo u aplikaciji. Aplikacijski sloj nema nacina za odredjivanje 
 	resursa u mrezi.
 
-	\section{TCP/IP model}
-	Internet protocol suite:
-
+	\section{Internet protocol suite \(TCP/IP model\)}
+	
 	Internet protocol suite je konceptualni model i set komunikacionih protokola koji se 
 	koriste za Internet i slicne kompjuterske mreze. Opste je poznat kao TCP/IP zbog toga sto 
 	su osnovni protokoli u ovom modelu TCP (Transmission Control Protocol) i IP (Internet 
@@ -229,7 +228,65 @@
 	model koji prethodi OSI modelu, koji je dosta detaljniji i opisuje vise u mreznom sistemu.
 
 	Key architectural principles:
-	(\#\#[lazarc] nastavi \#\#)
+	Princip od kraja do kraja je evoluirao tokom vremena. Njegov prvobitni izraz je stavio 
+	odrzavanje stanja i sveobuhvatne inteligencije na ivice, i pretpostavio da internet koji je 
+	povezivao krajeve nije zadrzao nikakvo stanje i koncentrisao se na brzinu i jednostavnost. 
+	Potrebe za zastitnim zidovima (\#\#[lazarc] firewalls \#\#), prevodiocima mreznih adresa, 
+	kesiranju veb sadrzaja i slicno, su izazvale promene u ovom principu.
+
+	Princip robusnosti kaze: "Uopsteno, implementacija mora biti konzervativna u ponasanju 
+	prilikom slanja i liberalna u svom ponasanju prilikom prijema. Sto znaci, da mora biti 
+	oprezna pri slanju dobro formiranih paketa (\#\#[lazarc] datagrams \#\#), ali mora 
+	prihvatiti bilo koji paket koji moze protumaciti. (na primer, ne primecivati tehnicke greske 
+	gde nije poznato sta ih uzrokuje.)". "Drugi deo principa je gotovo jednako vazan: softver na 
+	drugim uredjajima moze sadrzati razlike koji cine nerazumnim da se iskoriste legalne, ali 
+	nejasne karakteristike protokola".
+
+	Enkapsulacija se koristi za obezbedjivanje apstrakcije protokola i usluga. Enkapsulacija je 
+	obicno uskladjena sa podelom unutar protokola na slojeve funkcionalnosti. Uopsteno, 
+	aplikacija (najvisi nivo modela) koristi skup protokola za slanje svojih podataka kroz 
+	slojeve. Podaci se dalje enkapsuliraju na svakom sloju.
+
+	Rani dokumenti o ovom protokolu, govore o cetvoroslojevnom protokolu. Sto je u upotrebi i 
+	danas. I oni su unutar protokola korisceni u istom redosledu u kom ce i ovde biti navedeni.
+
+	\begin{itemize}
+		\item Aplikativni sloj (Application layer)
+		Aplikativni sloj je opseg unutar kog aplikacije kreiraju korisnicke podatke i prenose 
+		ove podatke drugim aplikacijama na istom ili drugom uredjaju (hostu). Aplikacije ili 
+		procesi, koriste usluge koje pruzaju donji slojevi, posebno transportni sloj koji 
+		obezbedjuje pouzdane ili nepouzdane veze ka drugim procesima. Komunikacione partnere 
+		karakterise arhitektura aplikacije, kao sto su model klijent-server i umrezavanje 
+		ravnopravnih korisnika. Ovo je sloj u kome su svi protokoli viseg nivoa, kao sto su SMTP,
+		 FTP, SSH, HTTP, i td. Procesi se adresiraju preko portova koji u sustini predstavljaju 
+		 usluge.
+		\item Transportni sloj (Transport layer)
+		Transportni sloj obavlja komunikacije izmedju domacina, ili domacina na istim ili 
+		razlicitim uredjajima (hostovima) i na lokalnoj mrezi ili udaljenim mrezama razdvojenim 
+		od rutera. Ovaj sloj obezbedjuje kanal za komunikacione potrebe aplikacija. UDP je 
+		osnovni protokol transportnog sloja koji pruza nepouzdanu uslugu sa paketima. Protokol 
+		za kontrolu prenosa (TCP) omogucava kontrolu protoka, uspostavljanje veze i pouzdan 
+		prenos podataka.
+		\item Internet sloj (Internet layer)
+		Internet sloj razmenjuje pakete preko mreze. Ovaj sloj obezbedjuje uniforman mrezni 
+		interfejs koji skriva stvarnu topologiju (raspored) osnovnih mreznih veza. Zbog toga se 
+		naziva i slojem koji uspostavlja rad na mrezi. Zaista, ovaj sloj definise i uspostavlja 
+		internet. Ovaj sloj definise strukture adresiranja i usmeravanja koje se koriste za 
+		pakete TCP/IP protokola. Primarni protokol u ovom opsegu je Internet protokol, koji 
+		definise IP adrese. Njegova sledeca funkcija u usmeravanju je da prenosi pakete pakete 
+		na sledeci IP ruter koji ima vezu sa mrezom blize kranjem odredistu podataka.	
+		\item Sloj veze (Link layer)
+		Sloj veze definise metode umrezavanja u okviru lokalne mrezne veze na kojoj uredjaji 
+		(hostovi) komuniciraju bez rutera u medjukomunikaciji. Ovaj sloj ukljucuje protokole 
+		koji se koriste za opisivanje topologije lokalne mreze i potrebnih interfejsa da bi se 
+		zavrsio prenos paketa sa Internet sloja na ostale uredjaje.
+	\end{itemize}
+
+	Slojevi protokola blizu vrha su logicno blizi korisnickoj aplikaciji, dok su oni blize dnu 
+	logicki blizi fizickom prenosu podataka. Pregled slojeva u smislu pruzanja i koriscenja 
+	usluge je metoda aplikacije koja izoluje gornje slojeve protokola od detalja kao sto je 
+	prenos bitova, detekcije loseg prenosa, na primer, dok su nizi slojevi izolovani od detalja 
+	aplikacije i principa rada aplikacije.
 
 	\section{Precission Time Protocol}
 	Precision Time Protocol (PTP) (prevod: protokol preciznog vremena) je protokol
@@ -249,7 +306,7 @@
 	potrebna preciznost izvan one koja je dostupna NTP protokolom. Takodje je dizajniran za
 	aplikacije koje se ne mogu nositi sa cenom GPS prijemnika na svakoj uredjaju, ili sa onima 
 	u kojima nije moguce dobijanje GPS signala."
-	====
+	>>
 	"IEEE 1588 is designed to fill a niche not well served by either of the two dominant 
 	protocols, NTP and GPS. IEEE 1588 is designed for local systems requiring accuracies 
 	beyond those attainable using NTP. It is also designed for applications that cannot bear 
@@ -440,7 +497,7 @@
 	koliko ce se dobro sinhronizovati dva uredjaja.
 
 	\#\# [lazarc] Pogledaj jos da se ubaci sa Teams za Valeo
-
+	
 	\newpage
 
 	\chapter{Operativni sistem}
@@ -702,7 +759,7 @@
 	opremljena \v{s}irokim spektrom modula za brzo povezivanje kako bi podr\v{z}ali	
 	projektovanje podr\v{s}ke za razne IoT (Internet of Things) aplikacije, prenosnih uredjaja, 
 	ali i aplikacija u industrijske svrhe. SOM integri\v{s}e 1Gbit DDR2 SDRAM i QSPI memoriju 
-	kao 10/100 Mbit Ethernet interfejs. Takodje, SOM poseduje i 128 GPIO pinova (\#\# [lazarc]) 
+	kao 10/100 Mbit Ethernet interfejs. Takodje, SOM poseduje i 128 GPIO pinova  
 	koji obezbedjuju pristup SOM-a za razli\v{c}ite upotrebe. Svi GPIO pinovi su nezavisni, i 
 	mogu se konfigurisati kao ulazi	ili izlazi, sa ili bez PULL-UP otpornika. Razvojna plo\v{c}a 
 	poseduje  i \v{s}irok spektar periferija, kao i korisni\v{c}ki interfejs i na\v{c}in za 
@@ -770,7 +827,7 @@
 	sekunde, narednih 30 bita nanosekunde, i preostalih 16 bita broje vreme ispod nanosekunda. 
 	Ni\v{z}ih 46 bita se prevrte (roll-over) kad se izbroji ta\v{c}no jedna sekunda. Takodje, 
 	prijavljuje se hardverski prekid nakon sto se izbroji jedna sekunda. Vrednosti tajmera, kao 
-	i parametri za njegovo (##[lazarc] CHECK! ##) koji je glavni takt unutar procesora, i njime 
+	i parametri za njegovo (\#\#[lazarc] CHECK! \#\#) koji je glavni takt unutar procesora, i njime 
 	se takodje moze manipulisati. Promene pode\v{s}avanja tajmera unutar TSU su od velike 
 	va\v{z}nosti za ta\v{c}nu sinhronizuju dva uredjaja. Ova periferija najvi\v{s}e uti\v{c}e na 
 	ta\v{c}no vreme koje je potrebno sinhronizovati, i takodje daje informacije o ta\v{c}nom 
@@ -784,6 +841,10 @@
 	\newpage
 
 	\chapter{Zaključak}
+
+	\newpage
+
+	\chapter{CHECK}
 
 	\newpage
 
