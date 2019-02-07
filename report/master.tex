@@ -288,215 +288,6 @@
 	prenos bitova, detekcije loseg prenosa, na primer, dok su nizi slojevi izolovani od detalja 
 	aplikacije i principa rada aplikacije.
 
-	\section{Precission Time Protocol}
-	Precision Time Protocol (PTP) (prevod: protokol preciznog vremena) je protokol
-	koriscen za sinhronizaciju satova preko kompjuterske mreze. U lokalnoj
-	kompjuterskoj mrezi (local area connection), postize se precisznost sata i u rangu
-	ispod mikrosekunde, sto ga cini pogodnim za merenja i kontrolne sisteme.
-
-	PTP je originalno definisan u IEEE 1588-2002 standardu, i zvanicno nazvan
-	"Standard for a Precision Clock Synchronization Protocol for Networked Measurement
-	and Control Systems" i objavljen 2002 godine. U 2008 godini, IEEE 1588-2002 je
-	objavljen kao preradjen standard, poznat i kao PTP Version 2, sa poboljsanom tacnoscu,
-	preciznoscu i robusnoscu, medjutim nije kompatibilan sa prethodnom verzijom koja je 
-	objavljena 2002 godine.
-
-	"IEEE 1588 je dizajniran da popuni prazninu koja nije dobro obradjena ni jednim od dva
-	dominantna protokola, NTP i GPS. IEEE 1588 je dizajniran za lokalne sisteme u kojima je
-	potrebna preciznost izvan one koja je dostupna NTP protokolom. Takodje je dizajniran za
-	aplikacije koje se ne mogu nositi sa cenom GPS prijemnika na svakoj uredjaju, ili sa onima 
-	u kojima nije moguce dobijanje GPS signala."
-	>>
-	"IEEE 1588 is designed to fill a niche not well served by either of the two dominant 
-	protocols, NTP and GPS. IEEE 1588 is designed for local systems requiring accuracies 
-	beyond those attainable using NTP. It is also designed for applications that cannot bear 
-	the cost of a GPS receiver at each node, or for which GPS signals are inaccessible." - 
-	Eidson, John C. (April
-	2006). Measurement, Control and Communication Using IEEE 1588. Springer. ISBN 
-	1-84628-250-0.
-
-	Arhitektura:
-	IEEE 1588 standard opisuje hijerarhijsku master-slave arhitekturu za distribuciju vremena. 
-	Pod	ovom arhitekturom podrazumeva se distribucija vremena u sistemu koji se sastoji od 
-	jednog ili vise komunikacionih medijuma (segmenata koji su povezani na mrezu), i jednog 
-	ili vise izvora	tacnog vremena. \#Obicni uredjaj\# Izvor "obicnog" vremena ("ordinary 
-	clock") je uredjaj sa jednim pristupom mrezi i ima jednu od dve uloge, ili je izvor  
-	(master) tacnog vremena, ili ceka na tacno vreme (slave) u komunikaciji na mrezi. 
-	\#Sporedni uredjaj\# Granicni sat (Boundary	clock) ima vise pristupa, na razlicite mreze, 
-	i moze precizno sinhronizovati jedan segment mreze na drugi. Master sinhronizacije se bira 
-	za svaki segment mreze u sistemu. \#Glavni	uredjaj\# Referentno vreme koje se uzima za 
-	izvor sinhronizacionog sata se zove Grandmaster	clock. Grandmaster dostavlja 
-	sinhronizacione informacije do svih uredjaja koji su povezani na istu mrezu sa njim. 
-	Ukoliko se u nekom delu mreze nalazi Boundary clock on prosledjuje tacno vreme ka ostalim 
-	uredjajima koji su direktno na njega povezani.
-
-	\# mora slika ovde kako izgleda arhitekura tacno
-
-	Simplifikovano, PTP sistem se sastoji od Ordinary clocks \#Obicnog uredjaja\# poveznih na
-	jednostavnu mrezu, i bez Boundary clocks \#Sporednih uredjaja\#. Grandmaster se bira, i svi
-	ostali uredjaji se direktno sinhronisu na njega.
-
-	IEEE 1588-2008 predstavljaju Clock koji je povezan sa mreznom opremom koja prenosi PTP 
-	poruke.	Transparent clock \#Transparentni uredjaj\# modifikuje PTP poruke koje prolaze 
-	kroz uredjaj. Vremenski pecati (TIMESTAMPs) u porukama su modifikovani tako da se uzme u 
-	obzir i vreme za koje poruka prolazi kroz dodatne uredjaje u komunikaciji. Ova sema 
-	komunikacije povecava distribuciju preciznosti tako sto se kompenzuje promenljivost 
-	dostave podataka preko mreze.
-
-	PTP tipicno koristi EPOCH vreme, standardno vreme za UNIX sisteme (1 Januar 1970 kao 
-	pocetak	racunanja vremena). Dok je UNIX vreme bazirano na Univerzalnom vremenu UTC, i mora 
-	da postoji sekunda preskoka (\#Ovo dodati, mozda u uvod\#), PTP je baziran na 
-	Medjunarodnom Atomskom Vremenu (TAI - International Atomic Time). PTP Grandmaster daje 
-	trenutnu razliku izmedju UTC i TAI,	kako bi UTC vreme moglo da se izracuna od primljenog 
-	PTP vremena.
-
-	\# mora slika da se vidi razlika izmedju UTC i PTP, TAI
-
-	Detalji protokola:
-	Sinhronizacija i obrada u PTP sistemu se postize razmenom poruka preko komunikacionog 
-	medijuma. Do sad, PTP standard propisuje samo ove tipove poruka.
-
-	- Sync, Follow\_Up, Delay\_Req i Delay\_Resp poruke se koriste u Ordinary i Boundary 
-	uredjajima i sluze samo za komunikaciju informacija o vremenu koje se koriste za 
-	sinhronizaciju uredjaja na mrezi.
-	- Pdelay\_Req, Pdelay\_Resp i Pdelay\_Res\_Follow\_Up se koriste u Transparent Clock 
-	uredjajima da mere kasnjenje kroz uredjaj tako da se moze iskoristiti u kompenzaciji 
-	vremena u sistemu. Transparent Clock i definicija ovih poruka nisu dostupne u IEEE 
-	1588-2002 standardu.
-	- Announce poruke se koriste i Best master clock algorithm u IEEE 1588-2002 standardu za
-	algoritam odredjivanja najtacnijeg sata na mrezi, i to kako bi se izgradila hijerarhija
-	uredjaja i kako bi se odredio Grandmaster.
-	- Management poruke se koriste u upravljanju mrezom za posmatranje performansi na mrezi,
-	konfiguraciju mreze i odrzavanje PTP sistema.
-	- Signalne poruke se koriste u komunikaciji izmedju uredjaja koje nisu vremenski kriticne.
-	Signalne poruke su uvedene u IEEE 1588-2002 standard.
-
-	Poruke se karakterizuju kao Event i General, odnosno poruke dogadjaja i opste poruke. Event
-	poruke su vremenski kriticne i to u preciznosti predaje i prijema preciznosti vremenskih 
-	pecata (TIMESTAMPs) i direktno uticu na distribuciju preciznosti vremena. (JOS JEDNOM 
-	POGLEDAJ OVAJ PREVOD). Sync, Delay\_Req, Pdelay\_Req i Pdelay\_resp su poruke dogadjaja. 
-	Opste poruke su ubicajene jedinice protokola, zato sto podaci u ovim porukama su od 
-	znacaja za PTP, ali njihovi vremenski pecati za predaju i prijem nisu.Announce, Follow\_Up,
-	Delay\_Resp, Pdelay\_Resp\_Follow\_Up, Management i Signalne poruke su opste poruke.
-
-	Prenos poruka:
-	PTP poruke mogu da koriste UDP (User datagram portocol) preko Internet protokola (UDP/IP) 
-	za prenos poruka. IEEE 1588-2002, koristi samo IPv4 prenos, ali je ovo prosireno da 
-	ukljucuje i IPv6 u IEEE 1588-2008 standardu. U IEEE 1588-2002, sve PTP poruke se salju u 
-	Multicast (modulu objavljivanja na mrezi) (\#pogldedaj opet ovaj prevod\#), dok se u IEEE 
-	1588-2008 je uveo kao opciju.
-
-	\section{Algoritam najboljeg sata (Best master clock algorithm)}
-	BMC algoritam obavlja deljenu selekciju najboljeg kandidata za tacno vreme prema sledecim
-	karakteristikama:
-
-	- Identifikator: Univerzalni jednistveni identifikator za sat. Tipicno je baziran na MAC 
-	adresi uredjaja.
-	- Kvalitet: Obe verzije IEEE 1588 standarda pokusavaju da kvantifikuju kvalitet sata na 
-	osnovu ocekivanih devijacija u vremenu, tehnologije koja je koriscena za implemntaciju 
-	vremena ili lokacije u hijerarhiji satova, u semi kvaliteta satova (clock stratum scheme).
-
-	- Prioritet: Administrativno dodeljen prioritetni znak koji BMC koristi kako bi sto bolje
-	odredio Grandmaster u PTP domenu. Dok je IEEE 1588-2002 standard imao samo jednu logicku
-	promenljivu kako bi odredio prioritet, IEEE 1588-2008 ima dva 8-bitna polja prioriteta.
-
-	- Varijansa: Procena stabilnosti sata zasnovana na zapazanju njegovog ucinka prema PTP 
-	refernci.
-
-	IEEE 1588 koristi hijerarhijski algoritam selekcije zasnovan na sledecim osobinama, u
-	naznacenom redosledu:
-
-	- Prioritet 1: korisnik moze dodeliti specifican staticki dizajniran prioritet svakom satu 
-	pre	svega odredjujuci prioritet medju njima. Manje vrednosti prioriteta oznacavaju veci 
-	prioritet.
-	- Klasa: Svaki sat je clan odredjene klase, svaka klasa dobija svoj prioritet.
-	- Preciznost: Preciznost izmedju sata i UTC, u nanosekundama.
-	- Varijansa: Varijabilnost sata.
-	- Prioritet 2: Definisan prioritet, definisuci redosled rezervne kopije u slucaju da drugi
-	kriterijumi nisu dovoljni. Manje vrednosti prioriteta oznacavaju veci prioritet.
-	- Jedinstveni identifikator: selekcija zasnovana na MAC adresi se koristi kao metod 
-	odlucivanja	kada su sve ostale osobine iste.
-
-	Svojstva sata se daju u IEEE 1588-2002 porukama za sinhronizaciju (Sync messages) i u IEEE
-	1588-2008 u porukama za oglasavanje (Announce messages). Trenutni Master clock (\#\#
-	[lazarc] [prevod]\#\#) prenosi sve informacije u rednovnim intervalima. Sat koji sebe 
-	smatra boljim od trenutnog Master sata prenosice ove informacije kako bi se pozvali svi 
-	uredjaji za pormenu	Master sata. Kada trenutni Master prepozna bolji sat, tada Master sat 
-	zaustavlja emitovanje poruka za sinhronizaciju (Sync Messages), ili poruke ograsavanja 
-	(Announce messages), u zavisnosti od verzije protokola, i bolji sat preuzima ulogu Master 
-	sata. BMC algoritam uzima u obzir samo osobine koje su vec poznate, i koje su deklarisali 
-	sami satovi, i ne uzima u obzir	kvalitet veze na mrezi.
-
-	\section{Sinhronizacija (Synchronization)}
-
-	Koristeci BMC algoritam, PTP bira Master sat za IEEE 1588 domen i za svaki segment mreze 
-	unutar tog domena.
-	Satovi odredjuju razliku izmedju njih (offset) i Master-a na mrezi. Neka promenjiva $t$
-	predstavlja fizicki vreme. Za dati Slave uredjaj, razlika $o(t)$ u vremenu $t$ se definise 
-	kao:
-	$o(t) = s(t) - m(t)$
-	gde $s(t)$ predstavlja vreme mereno satom na Slave uredjaju u vremenu $t$, dok $m(t)$
-	predstavlja vreme mereno satom na Master uredjaju u vremenu $t$.
-
-	Master uredjaj periodicno objavljuje (Broadcasts) trenutno vreme kao poruku ostalim 
-	uredjajima na mrezi. IEEE 1588-2002 protokolom je definisana objava vremena na svaku 
-	sekundu. Dok je IEEE 1588-2008 protokolom dozvoljeno i do 10 objava vremena u jednoj 
-	sekundi.
-
-	\#\# [lazarc] [slika] sync
-
-	Svaka objava vremena krece u vremenskom trenutku $T_1$, i to Sync porukom koju salje Master
-	uredjaj svim uredjajima u domenu. Uredjaj koji prima ovu poruku pamti vreme $T_1'$ u kom je
-	primio Sync poruku. Master moze naknadno poslati Follow\_up poruku u kojoj ce se nalaziti 
-	tacno vreme $T_1$ u kom je poslata prethodna poruka. Nemaju svi Master uredjaji sposobnost 
-	da posalju tacne vremenske oznake unutar Sync poruke. Tek nakon sto je prenos zavrsen, oni 
-	mogu dobaviti tacne vremenske trenutke stizanja Sync poruke iz hardvera za povezivanje na 
-	mrezu. Maste uredjaji sa ovim ogranicenjima salju Follow\_up poruke kako bi preneli vreme 
-	$T_1$. Master uredjaji koji poseduju PTP mogucnosti unutar hardvera za povezivanje mogu 
-	ubaciti tacne vremenske oznake unutar Sync poruka, i ne moraju koristiti Follow\_up poruke.
-
-	Kako bi se tacno sinhronizovali na Master uredjaj, satovi moraju individualno odrediti 
-	vreme prenosa poruka kroz medijum za povezivanje. Vreme progresije poruke kroz medijum za 
-	povezivanje	se radi merenjem vremena koje je potrebno da poruka ode od svakog uredjaja do 
-	njihovog Mastera u domenu, i da se vrati nazad. Ovu razmenu iniciraju Slave uredjaji i pri 
-	tome mere vreme	progresije poruke $d$. Razmena poruka pocinje tako sto Slave uredjaj salje 
-	Delay\_Req poruku u	vremenskom trenutku $T_2$ ka svom Master uredjaju. Master uredjaj 
-	primi ovu poruku, i kao	odgovor posalje tacnu vremensku oznaku kada je primio Delay\_Req 
-	poruku. Poruka odgovora	Delay\_Resp sadrzi tacno vreme $T_2'$ u kome je primljena poruka 
-	Delay\_Req.
-
-	Nakon razmene ovih poruka Slave uredjaj ima spoznaju o cetiri vremenska trenutka $T_1$, 
-	$T_1'$,	$T_2$ i $T_2'$.
-
-	Ukoliko je $d$ vreme koje je potrebno Sync poruci da prodje kroz medijum za povezivanje, a 
-	$\tilde{o}$	konstantna razlika satova izmedju Master i Slave uredjaja, onda je:
-	\begin{equation}
-		T_1' - T_1 = \tilde{o} + d
-	\end{equation}
-
-	i
-
-	\begin{equation}
-			T_2' - T_2 = -\tilde{o} + d
-	\end{equation}.
-
-	Odakle je:
-
-	\begin{equation}
-		\tilde{o}=\frac{1}{2}(T_1' - T_1 - T_2' + T_2)
-	\end{equation}.
-
-	Sada dva uredjaja znaju koliki je ofset $\tilde{o}$ prilikom prenosa i mogu se ispraviti 
-	tako da budu u skladu sa Master uredjajem.
-
-	Jedna pretpostavka je da se prenos poruka odvija u periodu vremena koji je tako mali, da se
-	razlika moze smatrati konstantnom u tom periodu. Jos jedna pretpostavka je da je vreme 
-	koje je	potrebno da poruka stigne od Master do Slave uredjaja ista kao i u obrnutom smeru. 
-	I na kraju,	pretpostavka je da i Master i Slave uredjaji mogu da precizno mere vremenske 
-	trenutke u kojima salju ili primaju poruke. Stepen primene ovih pretpostavki utice na to 
-	koliko ce se dobro sinhronizovati dva uredjaja.
-
-	\#\# [lazarc] Pogledaj jos da se ubaci sa Teams za Valeo
 	
 	\newpage
 
@@ -845,6 +636,572 @@
 	\newpage
 
 	\chapter{CHECK}
+	\section{Precission Time Protocol}
+	Precision Time Protocol (PTP) (prevod: protokol preciznog vremena) je protokol
+	koriscen za sinhronizaciju satova preko kompjuterske mreze. U lokalnoj
+	kompjuterskoj mrezi (local area connection), postize se precisznost sata i u rangu
+	ispod mikrosekunde, sto ga cini pogodnim za merenja i kontrolne sisteme.
+
+	PTP je originalno definisan u IEEE 1588-2002 standardu, i zvanicno nazvan
+	"Standard for a Precision Clock Synchronization Protocol for Networked Measurement
+	and Control Systems" i objavljen 2002 godine. U 2008 godini, IEEE 1588-2002 je
+	objavljen kao preradjen standard, poznat i kao PTP Version 2, sa poboljsanom tacnoscu,
+	preciznoscu i robusnoscu, medjutim nije kompatibilan sa prethodnom verzijom koja je 
+	objavljena 2002 godine.
+
+	"IEEE 1588 je dizajniran da popuni prazninu koja nije dobro obradjena ni jednim od dva
+	dominantna protokola, NTP i GPS. IEEE 1588 je dizajniran za lokalne sisteme u kojima je
+	potrebna preciznost izvan one koja je dostupna NTP protokolom. Takodje je dizajniran za
+	aplikacije koje se ne mogu nositi sa cenom GPS prijemnika na svakoj uredjaju, ili sa onima 
+	u kojima nije moguce dobijanje GPS signala."
+	>>
+	"IEEE 1588 is designed to fill a niche not well served by either of the two dominant 
+	protocols, NTP and GPS. IEEE 1588 is designed for local systems requiring accuracies 
+	beyond those attainable using NTP. It is also designed for applications that cannot bear 
+	the cost of a GPS receiver at each node, or for which GPS signals are inaccessible." - 
+	Eidson, John C. (April
+	2006). Measurement, Control and Communication Using IEEE 1588. Springer. ISBN 
+	1-84628-250-0.
+
+	Arhitektura:
+	IEEE 1588 standard opisuje hijerarhijsku master-slave arhitekturu za distribuciju vremena. 
+	Pod	ovom arhitekturom podrazumeva se distribucija vremena u sistemu koji se sastoji od 
+	jednog ili vise komunikacionih medijuma (segmenata koji su povezani na mrezu), i jednog 
+	ili vise izvora	tacnog vremena. \#Obicni uredjaj\# Izvor "obicnog" vremena ("ordinary 
+	clock") je uredjaj sa jednim pristupom mrezi i ima jednu od dve uloge, ili je izvor  
+	(master) tacnog vremena, ili ceka na tacno vreme (slave) u komunikaciji na mrezi. 
+	\#Sporedni uredjaj\# Granicni sat (Boundary	clock) ima vise pristupa, na razlicite mreze, 
+	i moze precizno sinhronizovati jedan segment mreze na drugi. Master sinhronizacije se bira 
+	za svaki segment mreze u sistemu. \#Glavni	uredjaj\# Referentno vreme koje se uzima za 
+	izvor sinhronizacionog sata se zove Grandmaster	clock. Grandmaster dostavlja 
+	sinhronizacione informacije do svih uredjaja koji su povezani na istu mrezu sa njim. 
+	Ukoliko se u nekom delu mreze nalazi Boundary clock on prosledjuje tacno vreme ka ostalim 
+	uredjajima koji su direktno na njega povezani.
+
+	\# mora slika ovde kako izgleda arhitekura tacno
+
+	Simplifikovano, PTP sistem se sastoji od Ordinary clocks \#Obicnog uredjaja\# poveznih na
+	jednostavnu mrezu, i bez Boundary clocks \#Sporednih uredjaja\#. Grandmaster se bira, i svi
+	ostali uredjaji se direktno sinhronisu na njega.
+
+	IEEE 1588-2008 predstavljaju Clock koji je povezan sa mreznom opremom koja prenosi PTP 
+	poruke.	Transparent clock \#Transparentni uredjaj\# modifikuje PTP poruke koje prolaze 
+	kroz uredjaj. Vremenski pecati (TIMESTAMPs) u porukama su modifikovani tako da se uzme u 
+	obzir i vreme za koje poruka prolazi kroz dodatne uredjaje u komunikaciji. Ova sema 
+	komunikacije povecava distribuciju preciznosti tako sto se kompenzuje promenljivost 
+	dostave podataka preko mreze.
+
+	PTP tipicno koristi EPOCH vreme, standardno vreme za UNIX sisteme (1 Januar 1970 kao 
+	pocetak	racunanja vremena). Dok je UNIX vreme bazirano na Univerzalnom vremenu UTC, i mora 
+	da postoji sekunda preskoka (\#Ovo dodati, mozda u uvod\#), PTP je baziran na 
+	Medjunarodnom Atomskom Vremenu (TAI - International Atomic Time). PTP Grandmaster daje 
+	trenutnu razliku izmedju UTC i TAI,	kako bi UTC vreme moglo da se izracuna od primljenog 
+	PTP vremena.
+
+	\# mora slika da se vidi razlika izmedju UTC i PTP, TAI
+
+	Detalji protokola:
+	Sinhronizacija i obrada u PTP sistemu se postize razmenom poruka preko komunikacionog 
+	medijuma. Do sad, PTP standard propisuje samo ove tipove poruka.
+
+	- Sync, Follow\_Up, Delay\_Req i Delay\_Resp poruke se koriste u Ordinary i Boundary 
+	uredjajima i sluze samo za komunikaciju informacija o vremenu koje se koriste za 
+	sinhronizaciju uredjaja na mrezi.
+	- Pdelay\_Req, Pdelay\_Resp i Pdelay\_Res\_Follow\_Up se koriste u Transparent Clock 
+	uredjajima da mere kasnjenje kroz uredjaj tako da se moze iskoristiti u kompenzaciji 
+	vremena u sistemu. Transparent Clock i definicija ovih poruka nisu dostupne u IEEE 
+	1588-2002 standardu.
+	- Announce poruke se koriste i Best master clock algorithm u IEEE 1588-2002 standardu za
+	algoritam odredjivanja najtacnijeg sata na mrezi, i to kako bi se izgradila hijerarhija
+	uredjaja i kako bi se odredio Grandmaster.
+	- Management poruke se koriste u upravljanju mrezom za posmatranje performansi na mrezi,
+	konfiguraciju mreze i odrzavanje PTP sistema.
+	- Signalne poruke se koriste u komunikaciji izmedju uredjaja koje nisu vremenski kriticne.
+	Signalne poruke su uvedene u IEEE 1588-2002 standard.
+
+	Poruke se karakterizuju kao Event i General, odnosno poruke dogadjaja i opste poruke. Event
+	poruke su vremenski kriticne i to u preciznosti predaje i prijema preciznosti vremenskih 
+	pecata (TIMESTAMPs) i direktno uticu na distribuciju preciznosti vremena. (JOS JEDNOM 
+	POGLEDAJ OVAJ PREVOD). Sync, Delay\_Req, Pdelay\_Req i Pdelay\_resp su poruke dogadjaja. 
+	Opste poruke su ubicajene jedinice protokola, zato sto podaci u ovim porukama su od 
+	znacaja za PTP, ali njihovi vremenski pecati za predaju i prijem nisu.Announce, Follow\_Up,
+	Delay\_Resp, Pdelay\_Resp\_Follow\_Up, Management i Signalne poruke su opste poruke.
+
+	Prenos poruka:
+	PTP poruke mogu da koriste UDP (User datagram portocol) preko Internet protokola (UDP/IP) 
+	za prenos poruka. IEEE 1588-2002, koristi samo IPv4 prenos, ali je ovo prosireno da 
+	ukljucuje i IPv6 u IEEE 1588-2008 standardu. U IEEE 1588-2002, sve PTP poruke se salju u 
+	Multicast (modulu objavljivanja na mrezi) (\#pogldedaj opet ovaj prevod\#), dok se u IEEE 
+	1588-2008 je uveo kao opciju.
+
+	\section{Algoritam najboljeg sata \(Best master clock algorithm\)}
+	BMC algoritam obavlja deljenu selekciju najboljeg kandidata za tacno vreme prema sledecim
+	karakteristikama:
+
+	- Identifikator: Univerzalni jednistveni identifikator za sat. Tipicno je baziran na MAC 
+	adresi uredjaja.
+	- Kvalitet: Obe verzije IEEE 1588 standarda pokusavaju da kvantifikuju kvalitet sata na 
+	osnovu ocekivanih devijacija u vremenu, tehnologije koja je koriscena za implemntaciju 
+	vremena ili lokacije u hijerarhiji satova, u semi kvaliteta satova (clock stratum scheme).
+
+	- Prioritet: Administrativno dodeljen prioritetni znak koji BMC koristi kako bi sto bolje
+	odredio Grandmaster u PTP domenu. Dok je IEEE 1588-2002 standard imao samo jednu logicku
+	promenljivu kako bi odredio prioritet, IEEE 1588-2008 ima dva 8-bitna polja prioriteta.
+
+	- Varijansa: Procena stabilnosti sata zasnovana na zapazanju njegovog ucinka prema PTP 
+	refernci.
+
+	IEEE 1588 koristi hijerarhijski algoritam selekcije zasnovan na sledecim osobinama, u
+	naznacenom redosledu:
+
+	- Prioritet 1: korisnik moze dodeliti specifican staticki dizajniran prioritet svakom satu 
+	pre	svega odredjujuci prioritet medju njima. Manje vrednosti prioriteta oznacavaju veci 
+	prioritet.
+	- Klasa: Svaki sat je clan odredjene klase, svaka klasa dobija svoj prioritet.
+	- Preciznost: Preciznost izmedju sata i UTC, u nanosekundama.
+	- Varijansa: Varijabilnost sata.
+	- Prioritet 2: Definisan prioritet, definisuci redosled rezervne kopije u slucaju da drugi
+	kriterijumi nisu dovoljni. Manje vrednosti prioriteta oznacavaju veci prioritet.
+	- Jedinstveni identifikator: selekcija zasnovana na MAC adresi se koristi kao metod 
+	odlucivanja	kada su sve ostale osobine iste.
+
+	Svojstva sata se daju u IEEE 1588-2002 porukama za sinhronizaciju (Sync messages) i u IEEE
+	1588-2008 u porukama za oglasavanje (Announce messages). Trenutni Master clock (\#\#
+	[lazarc] [prevod]\#\#) prenosi sve informacije u rednovnim intervalima. Sat koji sebe 
+	smatra boljim od trenutnog Master sata prenosice ove informacije kako bi se pozvali svi 
+	uredjaji za pormenu	Master sata. Kada trenutni Master prepozna bolji sat, tada Master sat 
+	zaustavlja emitovanje poruka za sinhronizaciju (Sync Messages), ili poruke ograsavanja 
+	(Announce messages), u zavisnosti od verzije protokola, i bolji sat preuzima ulogu Master 
+	sata. BMC algoritam uzima u obzir samo osobine koje su vec poznate, i koje su deklarisali 
+	sami satovi, i ne uzima u obzir	kvalitet veze na mrezi.
+
+	\section{Sinhronizacija (Synchronization)}
+
+	Koristeci BMC algoritam, PTP bira Master sat za IEEE 1588 domen i za svaki segment mreze 
+	unutar tog domena.
+	Satovi odredjuju razliku izmedju njih (offset) i Master-a na mrezi. Neka promenjiva $t$
+	predstavlja fizicki vreme. Za dati Slave uredjaj, razlika $o(t)$ u vremenu $t$ se definise 
+	kao:
+	$o(t) = s(t) - m(t)$
+	gde $s(t)$ predstavlja vreme mereno satom na Slave uredjaju u vremenu $t$, dok $m(t)$
+	predstavlja vreme mereno satom na Master uredjaju u vremenu $t$.
+
+	Master uredjaj periodicno objavljuje (Broadcasts) trenutno vreme kao poruku ostalim 
+	uredjajima na mrezi. IEEE 1588-2002 protokolom je definisana objava vremena na svaku 
+	sekundu. Dok je IEEE 1588-2008 protokolom dozvoljeno i do 10 objava vremena u jednoj 
+	sekundi.
+
+	\#\# [lazarc] [slika] sync
+
+	Svaka objava vremena krece u vremenskom trenutku $T_1$, i to Sync porukom koju salje Master
+	uredjaj svim uredjajima u domenu. Uredjaj koji prima ovu poruku pamti vreme $T_1'$ u kom je
+	primio Sync poruku. Master moze naknadno poslati Follow\_up poruku u kojoj ce se nalaziti 
+	tacno vreme $T_1$ u kom je poslata prethodna poruka. Nemaju svi Master uredjaji sposobnost 
+	da posalju tacne vremenske oznake unutar Sync poruke. Tek nakon sto je prenos zavrsen, oni 
+	mogu dobaviti tacne vremenske trenutke stizanja Sync poruke iz hardvera za povezivanje na 
+	mrezu. Maste uredjaji sa ovim ogranicenjima salju Follow\_up poruke kako bi preneli vreme 
+	$T_1$. Master uredjaji koji poseduju PTP mogucnosti unutar hardvera za povezivanje mogu 
+	ubaciti tacne vremenske oznake unutar Sync poruka, i ne moraju koristiti Follow\_up poruke.
+
+	Kako bi se tacno sinhronizovali na Master uredjaj, satovi moraju individualno odrediti 
+	vreme prenosa poruka kroz medijum za povezivanje. Vreme progresije poruke kroz medijum za 
+	povezivanje	se radi merenjem vremena koje je potrebno da poruka ode od svakog uredjaja do 
+	njihovog Mastera u domenu, i da se vrati nazad. Ovu razmenu iniciraju Slave uredjaji i pri 
+	tome mere vreme	progresije poruke $d$. Razmena poruka pocinje tako sto Slave uredjaj salje 
+	Delay\_Req poruku u	vremenskom trenutku $T_2$ ka svom Master uredjaju. Master uredjaj 
+	primi ovu poruku, i kao	odgovor posalje tacnu vremensku oznaku kada je primio Delay\_Req 
+	poruku. Poruka odgovora	Delay\_Resp sadrzi tacno vreme $T_2'$ u kome je primljena poruka 
+	Delay\_Req.
+
+	Nakon razmene ovih poruka Slave uredjaj ima spoznaju o cetiri vremenska trenutka $T_1$, 
+	$T_1'$,	$T_2$ i $T_2'$.
+
+	Ukoliko je $d$ vreme koje je potrebno Sync poruci da prodje kroz medijum za povezivanje, a 
+	$\tilde{o}$	konstantna razlika satova izmedju Master i Slave uredjaja, onda je:
+	\begin{equation}
+		T_1' - T_1 = \tilde{o} + d
+	\end{equation}
+
+	i
+
+	\begin{equation}
+			T_2' - T_2 = -\tilde{o} + d
+	\end{equation}.
+
+	Odakle je:
+
+	\begin{equation}
+		\tilde{o}=\frac{1}{2}(T_1' - T_1 - T_2' + T_2)
+	\end{equation}.
+
+	Sada dva uredjaja znaju koliki je ofset $\tilde{o}$ prilikom prenosa i mogu se ispraviti 
+	tako da budu u skladu sa Master uredjajem.
+
+	Jedna pretpostavka je da se prenos poruka odvija u periodu vremena koji je tako mali, da se
+	razlika moze smatrati konstantnom u tom periodu. Jos jedna pretpostavka je da je vreme 
+	koje je	potrebno da poruka stigne od Master do Slave uredjaja ista kao i u obrnutom smeru. 
+	I na kraju,	pretpostavka je da i Master i Slave uredjaji mogu da precizno mere vremenske 
+	trenutke u kojima salju ili primaju poruke. Stepen primene ovih pretpostavki utice na to 
+	koliko ce se dobro sinhronizovati dva uredjaja.
+
+	\#\# [lazarc] Pogledaj jos da se ubaci sa Teams za Valeo
+
+	\textbf{IZ PTP\_CONTINUE\_TO\_MERGE.TXT}
+
+	Algoritam odredjivanja najboljeg sata (Best master clock algorithm):
+	BMC algoritam obavlja deljenu selekciju najboljeg kandidata za tacno vreme prema sledecim 
+	karakteristikama:
+
+	\begin{itemize}
+		\item Identifikator: Univerzalni jednistveni identifikator za sat. Tipicno je baziran na 
+		MAC adresi uredjaja.
+		\item Kvalitet: Obe verzije IEEE 1588 standarda pokusavaju da kvantifikuju kvalitet sata 
+		na osnovu ocekivanih devijacija u vremenu, tehnologije koja je koriscena za 
+		implemntaciju vremena ili lokacije u hijerarhiji satova, u semi kvaliteta satova (clock 
+		stratum scheme).
+		\item Prioritet: Administrativno dodeljen prioritetni znak koji BMC koristi kako bi sto 
+		bolje odredio Grandmaster u PTP domenu. Dok je IEEE 1588-2002 standard imao samo jednu 
+		logicku promenljivu kako bi odredio prioritet, IEEE 1588-2008 ima dva 8-bitna polja 
+		prioriteta.
+		\item Varijansa: Procena stabilnosti sata zasnovana na zapazanju njegovog ucinka prema 
+		PTP refernci.
+	\end{itemize}
+
+	IEEE 1588 koristi hijerarhijski algoritam selekcije zasnovan na sledecim osobinama, u 
+	naznacenom redosledu:
+
+	\begin{itemize}
+		\item Prioritet 1: korisnik moze dodeliti specifican staticki dizajniran prioritet 
+		svakom satu, pre svega odredjujuci prioritet medju njima. Manje vrednosti prioriteta 
+		oznacavaju veci prioritet.
+		\item Klasa: Svaki sat je clan odredjene klase, svaka klasa dobija svoj prioritet.
+		\item Preciznost: Preciznost izmedju sata i UTC, u nanosekundama.
+		\item Varijansa: Varijabilnost sata.
+		\item Prioritet 2: Definisan prioritet, definisuci redosled rezervne kopije u slucaju da 
+		drugi kriterijumi nisu dovoljni. Manje vrednosti prioriteta oznacavaju veci prioritet.
+		\item Jedinstveni identifikator: selekcija zasnovana na MAC adresi se koristi kao metod 
+		odlucivanja kada su sve ostale osobine iste.
+	\end{itemize}
+
+	Svojstva sata se daju u IEEE 1588-2002 porukama za sinhronizaciju (Sync messages) i u 
+	IEEE 1588-2008 u porukama za oglasavanje (Announce messages). Trenutni Master clock (\#\#
+	[lazarc] [prevod]\#\#) prenosi sve informacije u rednovnim intervalima. Sat koji sebe 
+	smatra boljim od trenutnog Master sata prenosice ove informacije kako bi se pozvali svi 
+	uredjaji za pormenu Master sata. Kada trenutni Master prepozna bolji sat, tada Master sat 
+	zaustavlja emitovanje poruka za sinhronizaciju (Sync Messages), ili poruke ograsavanja 
+	(Announce messages), u zavisnosti od verzije protokola, i bolji sat preuzima ulogu Master 
+	sata. BMC algoritam uzima u obzir samo osobine koje su vec poznate, i koje su deklarisali 
+	sami satovi, i ne uzima u obzir kvalitet veze na mrezi.
+
+	Sinhronizacija (Synchronization):
+
+	Koristeci BMC algoritam, PTP bira Master sat za IEEE 1588 domen i za svaki segment mreze 
+	unutar tog domena. Satovi odredjuju razliku izmedju njih (offset) i Master-a na mrezi. Neka 
+	promenjiva $t$ predstavlja fizicki vreme. Za dati Slave uredjaj, razlika $o(t)$ u vremenu 
+	$t$ se definise kao:
+
+	$o(t) = s(t) - m(t)$
+	
+	gde $s(t)$ predstavlja vreme mereno satom na Slave uredjaju u vremenu $t$, dok $m(t)$ 
+	predstavlja vreme mereno satom na Master uredjaju u vremenu $t$.
+
+	Master uredjaj periodicno objavljuje \(Broadcasts\) trenutno vreme kao poruku ostalim 
+	uredjajima na mrezi. IEEE 1588-2002 protokolom je definisana objava vremena na svaku 
+	sekundu. Dok je IEEE 1588-2008 protokolom dozvoljeno i do 10 objava vremena u jednoj 
+	sekundi.
+
+	\#\# [lazarc] [slika] sync
+
+	Svaka objava vremena krece u vremenskom trenutku $T_{1}$, i to Sync porukom koju salje 
+	Master uredjaj svim uredjajima u domenu. Uredjaj koji prima ovu poruku pamti vreme $T_{1}'$ 
+	u kom je primio Sync poruku. Master moze naknadno poslati Follow\_up poruku u kojoj ce se 
+	nalaziti tacno vreme $T_{1}$ u kom je poslata prethodna poruka. Nemaju svi Master uredjaji 
+	sposobnost da posalju tacne vremenske oznake unutar Sync poruke. Tek nakon sto je prenos 
+	zavrsen, oni mogu dobaviti tacne vremenske trenutke stizanja Sync poruke iz hardvera za 
+	povezivanje na mrezu. Maste uredjaji sa ovim ogranicenjima salju Follow\_up poruke kako bi 
+	preneli vreme $T_{1}$. Master uredjaji koji poseduju PTP mogucnosti unutar hardvera za 
+	povezivanje mogu ubaciti tacne vremenske oznake unutar Sync poruka, i ne moraju koristiti 
+	\texttt{Follow\_up} poruke.
+
+	Kako bi se tacno sinhronizovali na Master uredjaj, satovi moraju individualno odrediti 
+	vreme prenosa poruka kroz medijum za povezivanje. Vreme progresije poruke kroz medijum za 
+	povezivanje se radi merenjem vremena koje je potrebno da poruka ode od svakog uredjaja do 
+	njihovog Mastera u domenu, i da se vrati nazad. Ovu razmenu iniciraju Slave uredjaji i 
+	pri tome mere vreme progresije poruke $d$. Razmena poruka pocinje tako sto Slave uredjaj 
+	salje \texttt{Delay\_Req} poruku u vremenskom trenutku $T_{2}$ ka svom Master uredjaju. 
+	Master uredjaj primi ovu poruku, i kao odgovor posalje tacnu vremensku oznaku kada je primio 
+	\texttt{Delay\_Req} poruku. Poruka odgovora Delay\_Resp sadrzi tacno vreme $T_{2}'$ u kome 
+	je primljena poruka \texttt{Delay\_Req}.
+
+	Nakon razmene ovih poruka Slave uredjaj ima spoznaju o cetiri vremenska trenutka $T_{1}$, 
+	$T_{1}'$, $T_{2}$ i $T_{2}'$.
+
+	Ukoliko je $d$ vreme koje je potrebno Sync poruci da prodje kroz medijum za povezivanje, 
+	a $~o$ konstantna razlika satova izmedju Master i Slave uredjaja, onda je:
+	$T_{1}' - T_{1} = ~o + d$ i $T_{2}' - T_{2} = -~o + d$.
+
+	Odakle je:
+
+	$~o=frac{1}{2}(T_{1}' - T_{1} - T_{2}' + T_{2})$.
+
+	Sada dva uredjaja znaju koliki je ofset $~o$ prilikom prenosa i mogu se ispraviti tako da 
+	budu u skladu sa Master uredjajem.
+
+	Jedna pretpostavka je da se prenos poruka odvija u periodu vremena koji je tako mali, da 
+	se razlika moze smatrati konstantnom u tom periodu. Jos jedna pretpostavka je da je vreme 
+	koje je potrebno da poruka stigne od Master do Slave uredjaja ista kao i u obrnutom 
+	smeru. I na kraju, pretpostavka je da i Master i Slave uredjaji mogu da precizno mere 
+	vremenske trenutke u kojima salju ili primaju poruke. Stepen primene ovih pretpostavki 
+	utice na to koliko ce se dobro sinhronizovati dva uredjaja.
+
+	\#\# [lazarc] Pogledaj jos da se ubaci sa Teams za Valeo
+
+	\textbf{IZ PTP\_NEXT\_1.TXT}
+
+	IEEE 1588 Unplugged – An introduction to IEEE 1588
+	
+	SYNOPSIS
+	Sinhronizacija postaje neophodna kada su uredjaji koji rade zajedno na odredjenoj 
+	udaljenosti moraju raditi u vezi jedni sa drugima. U ovim scenirijima, lokalni sat, ili 
+	Master Sat, sinhronizuje sve uredjaje u istom sistemu sa tim satom. Zbog ove potrebe za 
+	sinhronizacijom, IEEE 1588 standard je objavljen kao standardni protokol 2002. godine.
+	(\#\#[lazarc] However, prevod \#\#) Iako su dva sata unutar uredjaja podeseni da rade na 
+	istoj frekvenciji, ne postoji garancija da ce ostati sinhronizovani. Upravo zbog ovoga 
+	proces sinhronizacije je neprekidan. Nekoliko faktora mogu uticati na to da dva identicna 
+	sata izgube sinhronizaciju. Razlozi mogu biti razliciti, kao na primer razlika u 
+	temperaturi, starosti uredjaja, kao i frekvenciji na kojoj uredjaji rade, koja moze 
+	uticati na kvalitet sinhronizacije. Upravo iz ovih razloga je i nastala potreba za 
+	sinhronizacijom uredjaja.
+	
+	SYNCHRONIZATION
+	IEEE 1588 obezbedjuje sinhronizaciju dva sata u istoj mrezi koja je otporna na greske. 
+	Takodje, koristi se veoma mali opseg frekvencija, procesna moc, ali i podesavanje samog 
+	protokola. (\#\#[lazarc] There is very little bandwidth consumption, processing power, and 
+	setup.\#\#) IEEE 1588 standard postize sve ovo koristeci protokol preciznog vremena (\#\#
+	[lazarc] Precision time protocol.\#\#), ili PTP. Vremenski protokol koji se koristi 
+	sinhronizuje dva sata na mrezi podesavajuci satove ka "najkvalitetnijem" satu. IEEE 1588 
+	definise ospege vrednosti za standardan set karakteristika satova. Algoritam najboljeg 
+	sata, BMC algorithm, odlucuje koji sat na mrezi je "najkvalitetniji", odnosno koji sat na 
+	mrezi je najtacniji, i najbolji kako bi se ostali uredjaji sinhronizovali na njega. BMC 
+	algoritam onda sinhronizuje sve ostale satove (slave clocks) sa ovim satom na mrezi. 
+	Ukoliko se BMC (Best Master Clock) ukloni iz mreze, ili BMC algoritam odluci da taj sat 
+	nije vise najtacniji, algoritam redefinise novi "najkvalitetniji" sat, i prilagodi 
+	vremena ostalih satova u skladu sa tim. Nije potrebno da se administrator mreze ukljucuje 
+	u bilo kom trenutku kako bi se promenio najbolji sat u mrezi, zbog toga sto je ovaj 
+	algoritam otporan na greske.
+	
+	U ovu svrhu koristi se Bidirekciona multikast komunikacija (\#\#[lazarc] Bidirectional 
+	Multicast Communication \#\#) od strane slave uredjaja kako bi se sinhronizovali na 
+	najbolji sat, IEEE 1588 grandmaster clock. "Sync", Sinhronizacioni paket sadrzi vremenski 
+	zig od najboljeg sata, koji predstavlja tacno vreme kada je paket poslat sa grandmaster 
+	clock-a. "Follow up", Prateci paket takodje moze biti poslat sa grandmaster sata, koji 
+	sadrzi vremenski zig "Sync" (sinhronizacionog) paketa. Ovakav princip razmene podataka 
+	omogucava tacan vremenski zig sinhronizacionog paketa koji je prosledjen sa grandmaster 
+	sata. Takodje, postoje slucajevi u kojima se ne otkriva tacno vreme slanja paketa, zbog 
+	odredjenih smetnji na mrezi. Ovo je omoguceno kroz Collision detection i Random Back-off 
+	mehanizama na Ethernet\/IP komunikaciji. Samo onda kad je paket kompletno poslat, nemoguce 
+	je promeniti sadrzaj paketa. 
+	
+	Grandmaster i Slave satovi na mrezi razmenjuju "Sync", Sihnronizacione pakete sa jedne na 
+	drugu strane, i postavljaju vremenske zigove pri prijemu paketa. Kombinijuci razliku u 
+	satova, kao i kasnjenje na mrezi, razlika izmedju slanja i prijema sinhronizacionih 
+	paketa moze biti izracunata. Koristeci razliku koja je izracunata u ovom slucaju, sat 
+	moze biti podesen sa novim vrednostima, i time se moze smanjiti razlika izmedju Master i 
+	Slave satova u ovoj mrezi. Razlika izmedju master i slave sinhrozniacionih paketa, i 
+	obrnuto, implicira da IEEE 1588 standard radi pod pretpostavkom da je propagacija paketa 
+	po mrezi simetricna. To je zbog prepostavke da slave uredjaj moze da odredi i podesi 
+	kasnjenje prilikom propagacije paketa po mrezi. Kako bi se kasnjenje na mrezi odredilo, 
+	slave kreira "delay request", zahtev za odredjivanjem kasnjenje, i postavlja vremenski 
+	zig prilikom slanja paketa. Master sat onda postavlja vremenski zig prilikom pristizanja 
+	tog zahteva, i vraca ga ka Slave uredjaju, i to u obliku "delay response" paketa, 
+	odgovora za kasnjenjem. Nakon toga, odredjuje se kasnjenje po linijama na mrezi, i 
+	izracunava se iz ovih paketa koji se razmenjuju.
+	
+	Slanje i primanje sinhronizacionih paketa dozvoljava da Slave uredjaji tacno izmere 
+	razliku izmedju lokalnog\/Slave sata, i Master sata. Standardne metode podesavanja sata na 
+	uredjajima nije opisano prema IEEE 1588 standardu; samo omogucava standardni protokol za 
+	razmenu poruka izmedju uredjaja. Poenta ovoga je da se uredjaji i satovi razlicitih 
+	proizvodjaca mogu sinhronizovati izmedju sebe.
+	
+	QUALITY OF SYNCHRONIZATION
+	Postoje nekoliko faktora koji mogu uticati na egzaktnost sinhronizacije izmedju dva 
+	uredjaja unutar IEEE 1588 mreze. Promene frekvencije na uredjaju koji daje tacno vreme, 
+	koje se moze desiti izmedju dva sinhronizaciona paketa "Sync", mogu uzrokovati da se 
+	izgubi sinhronizacija sa ostalim uredjajima u istom sistemu. Kako bi se predupredila 
+	svaka mogucnost za gubljenje sinhronizacije, (\#\#[lazarc] High stability \#\#) mogu se 
+	koristiti uredjaji sa veoma velikom stabilnoscu, kao i da se skrati vreme izmedju razmene 
+	sinhronizacionih paketa. Kako bi se jos vise unapredila sinhronizacija, mogu se koristiti 
+	druge vrste oscilatora u uredjajima, narocito Temperature Controlled Crystal Oscillators 
+	(TXCOs) i Oven Controlled Crystal Oscillators (OCXOs). Rezulucija sata moze uticati na 
+	preciznost vremenskih zigova unutar sinhronizacionih paketa. Dziter (\#\#[lazarc] Jitter 
+	\#\#) iz susednih uredjaja u mrezi, kao sto su habovi i svicevi (\#\#[lazarc] hubs and 
+	switches \#\#), takodje mogu uticati na preciznost sinhronizacije. Kvalitet IEEE 1588 
+	mreznog sistema i kako je podesen moze takodje uticati na kvalitet sinhronizacije. Kako bi 
+	se podesi sistem sa sto boljom sinhronizacijom, mora se napraviti kompromis izmedju 
+	egzaktnosti sinhronizacije, cene, kao i razdaljine izmedju uredjaja u sistemu. Za sporije 
+	dogadjaje unutar sistema koji ne zavise od vremena, standardna NTP sinhronizacija preko 
+	interneta, koja daje sinhronizaciju na nivou milisekunde, zadovoljava sve potrebe. IEEE 
+	1588 je i dalje izvanredna alternativa za sisteme koji zahteva sinronizaciju na nivou ispod 
+	mikroseunde.
+	
+	NETWORK HIERARCHIES
+	IEEE 1588 sporedni satovi (\#\#[lazarc] boundary clocks\#\#), koji se takodje i nazivaju 
+	transparentni svicevi (\#\#[lazarc] transparent switches \#\#), pruzaju efektivan nacin za 
+	smanjenje dzitera (\#\#[lazarc] jitter \#\#) unutar mreznog sistema baziranog na IEEE 1588 
+	standardu. Svic (\#\#[lazarc] switch \#\#), koji se koristi kao sporedni sat (\#\#[lazarc] 
+	boundary clock \#\#), pokrece PTP protokol i sinhronizuje se na master sat (\#\#[lazarc] 
+	master clock \#\#). Sporedni sat (\#\#[lazarc] boundary clock \#\#), u navratima (\#\#
+	[lazarc] in turns \#\#) preuzima ulogu master sata za sve slejvove unutar iste mreze. 
+	Koristeci ovo podesavanje mreze, sva interna kasnjenja i dziter mogu biti kompenzovani i ne 
+	uticu na egzaktnost sinhronizacije.
+	
+	Delay\_Resp, Delay\_Req, Follow\_up i Sync poruke se ne prenose kroz sporedne satove. 
+	Sporedni sat se ponasa kao obican sat u smislu sinhronizacije i koristi algoritam 
+	najboljeg sata unutar podmreze. Unutar podmreze koja se posmatra, ovaj uredjaj je slejv. 
+	Ovo ce uticati na to da se svi ostali uredjaji koji se povezuju na sporedni sat 
+	sinhronisu svoje vreme prema njemu. Hijerarhija Roditelj-Dete (\#\#[lazarc] Parent-Child 
+	hierarchy \#\#) na master-slejv sate je odredjena prema sporednim satovima. (\#\#[lazarc] 
+	If cyclic path occur in the network hierarchy, the best master clock algorithm lowers the 
+	logical hierarchy to an acyclic graph.\#\#)	Naravno, postoji alternativa za sporedne sate, 
+	i to je koriscenje transparentnih sviceva (\#\#[lazarc] switches \#\#). Transparentni svic 
+	se ne ponasa kao PTP cvor unutar IEEE 1588 sistema. Umesto toga, transparetni svic podesava 
+	vremenski deo PTP paketa kako bi se kompenzovalo kasnjenje koje unosi svic. Transparetni 
+	svic nakon toga preracunava koliko je vremena sinhronizacioni 'Sync' paket proveo unutar 
+	svica, i modifikuje vremenski zig unutar sledeceg 'Follow\_up' paketa kako bi se 
+	nadoknadilo kasnjenje. PTP cvorovi mogu raditi kao da su deo veceg podsistema lokalne mreze
+	i to kao da su povezani habovima (\#\#[lazarc] Hubs \#\#) koristeci transparentne sviceve.
+	
+	USES FOR IEEE 1588
+	Precizna sinhronizacija se moze iskoristiti u sledecim aplikacijama:
+	\begin{itemize}
+		\item Telekomunikacije
+		\item Energetska postrojenja
+		\item Industrijska automacija
+		\item Testiranje i merenja
+		\item Robotska kontrola
+	\end{itemize}
+
+	\textbf{IZ PTP\_NEXT\_2.TXT}
+
+	NETWORK TIMING TECHNOLOGY: NTP vs. PTP
+	Vremenska sinhrnozacija igra fundamentalnu ulogu u svakoj mrezi, ali je ipak najcesce 
+	dodata kao naknadna funkcionalnost. Ipak, moze znaciti razliku izmedju egzaktnog 
+	odredjivanja gresaka unutar sistema, u tacnim vremenskim trenucima, i nepostojanje ideje 
+	zasto se server ponasa onako kako nije predvidjeno. (\#\#[lazarc] Time synchronization 
+	serves a fundamental role in any network, but it's too often added as an afterthought. 
+	However, it can mean the difference between correctly troubleshooting a conflict in 
+	minutes and having no idea why the server is figuratively on fire. \#\#) Za finansijske i 
+	naucne institucije, vremenska sinhronizacija mora biti tacna na milijarditi, ili nekad na 
+	trilioniti deo sekunde, medjutim sve vise komercijalnih i industrijskih organizacija se 
+	sve vise zalazu za ideju da preciznost vremenske sinhronizacije bude u sub-milisecond 
+	opsegu.
+	Zasto nije dovoljno da samo sinhronizujemo svoje uredjaje preko javno dostupnog NTP 
+	protokola. Nazalost, kasnjenje postoji svugde, i prosto je nemoguce postici savrsenu 
+	sinhrnoizaciju. Brzina svetlosti je brza, u vakumu, foton moze napraviti krug oko zemlje 
+	vise od 7 puta u sekundi, iako putuje aproksimativno 31\% sporije kroz obicnu opticku 
+	mrezu, lako se moze preneti jedan bit informacije preko pola sveta za manje od desetine 
+	sekunde.
+	Ali, svi znamo da idealan svet ne postoji. Dodati sviceve (\#\#[lazarc] switches \#\#), 
+	rutere, i ostalu mreznu infrastrukturu, i ta desetina sekunde se uveca nekoliko puta. Bez 
+	specijalizovane opreme, nasa mreza lako moze dodati kasnjenje cak i vece od sekunde.
+	Jos veca briga je sinhronizacija razlicitih uredjaja unutar iste mreze. Scenario u kom 
+	finansijska institucija koja ima tacno 100 deonica kompanije X na berzi. U nekom trenutku 
+	se pojavi informacija koja se tice kompanije X, i finansijska institucija odluci da proda 
+	tih 100 akcija ne samo jednom investitoru, vec nekoliko njih u razmaku od sekunde. Ali 
+	posto su serveri ove institucije nesihronizovani jedan na drugi, ne postoji uopste ideja 
+	kako odrediti koja je ponuda stigla prva. U ovom realnom scenariju sinhronizacija 
+	uredjaja unutar mreze je od vitalnog znacaja.
+
+	NETWORK TIME PROTOCOL
+	NTP, ili Network Time Protocol, je siroko prihvacen kao sredstvo za cuvanje vremena na 
+	mrezi, i trenutno je u upotrebi cetvrta verzija samog protokola. Hijerarhijski sistem ima 
+	razlicite slojeve koji se nazivaju STRATA (\#\#[lazarc] strata eng. \#\#). Statum 0 
+	uredjaji su u samom vrhu i ukljucuju atomske satove, kao one koji se nalaze u GNSS 
+	satelitima.	Stratum 1, ili primarni vremenski server, svaki od njih ima jedan na jedan 
+	direktnu konekciju sa Stratum 1 satom, i postizu sinhronizaciju red mikrosekunde sa Stratum 
+	0 satovima, i povezuju se na ostale Stratum 1 severe za brzu proveru satova i cuvanje 
+	podataka. Stratum 2 serveri se mogu povezivati na vise primarnih vremenskih servera kako 
+	bi se postigla veci level sinhronizacije i poboljsala preciznost, i tako dalje. NTP 
+	podrzava maksimum od 15 strata uredjaja, ali svaki strata uredjaj unosi malu gresku u 
+	sinhronizaciji sa Stratum 0 uredjajima.
+
+	64-bitni vremenski zig je trenutno implementiran kako bi se podelio u dva 32-bitna dela. 
+	\begin{itemize}
+		\item Prva polovina broji broj sekundi do nesto preko 136 godina.
+		\item Druga polovina predstavlja deo sekunde do razmere pikosekunde
+	\end{itemize}
+
+	Predlozena je promena na 128-o bitne vremenske zigove u NTPv4 protokolu, i trebalo bi da 
+	poveca vremensku razmeru na nesto manje od 600 milijardi godina, pri cemu bi vremenska 
+	rezolucija bila manja od femtosekunde.
+
+	PRECISION TIME PROTOCOL
+	PTP, ili Precision time protokol, je jos jedan standard za sinhronizaciju vremena preko 
+	mreze, ali umesto sinhronizacije reda velicine milisekunde, PTP mreze mogu da postignu 
+	sinhronizaciju reda velicine nanosekunde, ili cak pikosekunde. Za vecinu komercijalnih i 
+	industrijskih aplikacija, NTP je vise nego precizan, ali ukoliko je potrebna tacnija 
+	sinhronizacija i tacnije obelezavanje vremena, potrebno je migrirati sistem na PTP.
+
+	Zbog cega je PTP toliko tacan? Koristi obelezavanje paketa hardverskim vremenskim 
+	zigovima, umesto softverskih, i kao svaki fini naucni instrument, PTP oprema je 
+	specijalizovana za samo jednu specijalizovanu svrhu: ocuvanje sinhronizacije izmedju 
+	uredjaja. Samo iz ovih razloga, PTP mreze imaju mnogo tacniju vremensku rezoluciju, i ne 
+	kao NTP uredjaji, PTP uredjaji ce ustvari ukljuciti vreme koje svaka od sinhronizacionih 
+	poruka provede u svakom od uredjaja, sto ukljucuje i kasnjenje u uredjaju.
+
+	Svaka od PTP razmena ukljucuje seriju od 4 poruke koje se razmenjuju izmedju master-a i 
+	slave-a:
+	\begin{itemize}
+		\item Inicijalna sinhronizaciona poruka od mastera ka slejvu {Sync message}
+		\item Poruka koja prati sinhronizacionu poruku od mastera ka slejvu {Follow\_up message}
+		\item Poruka sa zahtevom za odredjivanje kasnjenja od slejva ka masteru {Delay\_Req 
+		message}
+		\item Finalni odgovor sa kasnjenjem od mastera ka slejvu {Delay\_Resp message}
+	\end{itemize}
+	Ova razmena pruza cetiri razlicita vremena:
+	\begin{itemize}
+		\item T1 -> vreme kad master posalje inicijalnu sinhronizacionu poruku
+		\item T2 -> vreme kad slejv dobije inicijalnu sinhronizacionu poruku
+		\item T3 -> vreme kad slejv posalje poruku sa zahtevom za kasnjenjem
+		\item T4 -> vreme kad master dobije zahtev za kasnjenjem
+	\end{itemize}
+	Master salje sva 4 vremenska ziga ka slejvu tokom faze odgovora na zahtev za kasnjenjem, 
+	i slejv moze sa tim vremenima da izracuna kasnjenje po mrezi izmedju mastera i slejva u 
+	oba smera. Imajuci specijalizovani hardver koji moze da uhvati vremena lokalnog sata, 
+	slejv uredjaji mogu izbeci dodatno kasnjenje koje je uslovljeno lokalnim operativnim 
+	sistemom.
+
+	NTP mreze imaju dodatno kasnjenje i manju preciznost jednostavno zbog toga sto su 
+	softverski bazirane, i svi zahtevi za vremenima moraju da cekaju na lokalni operativni 
+	sistem. Za vecinu kompanija, NTP pruza dovoljno tacnu rezoluciju vrmena kako bi se resili 
+	svi konflikti u dogledno vrmene, dok neke organizacije zahtevaju dosta veci nivo 
+	sinhronizacije.
+
+	WHY BOTHER WITH A TIME SERVER AT ALL?
+	Timestamping and client synchronization is vital for your network, but some network 
+	engineers still feel like they can get away with simply syncing their servers to a public 
+	internet clock. While perfectly fine for consumer devices like smartphones, internet 
+	clocks are poorly suited for business networks for one simple reason: security.
+
+	To connect your server to an internet clock requires you to first open up port 123 on 
+	your firewall. Will something horrible happen as a result? We don't know, but we don't 
+	know in the same way that we don't know if a burglar will break in because you left the 
+	front door unlocked on your home. Why take the chance? A dedicated NTP server keeps your 
+	network secure while providing more accurate timestamping.
+
+	WHAT HAPPENS IF MY TIME SERVER IS DISCONNECTED?
+	No network is perfect, and all you can hope to do is minimize downtime instead of 
+	eliminating it. If your NTP or PTP time server is unable to connect to a GPS satellite or 
+	other input for whatever reason, you can rest assured that it will continue to 
+	synchronize your devices and maintain accurate timestamping.
+
+	For example, our NTP100-GPS NTP server has a holdover stability of 3 seconds per year, 
+	meaning that your server will still be synchronized to within 3 seconds of UTC after an 
+	entire year in the dark. The high-stability model with an oven-controlled crystal 
+	oscillator boasts even greater holdover stability of 250 milliseconds per year — that's 
+	less than 1 millisecond per day. Our HSO-3 oscillator option, which is only available on 
+	our GMR5000 NTP Server and PTP Grandmaster, further reduces drift to a maximum of 1 
+	millisecond per year. 
 
 	\newpage
 
