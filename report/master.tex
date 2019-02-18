@@ -47,21 +47,27 @@
 	
 	\newpage
 
-	\chapter{Protokol}
+    \chapter{Protokol}
+    
+    U ovom odeljku \'{c}e biti dat pregled konceptualnih modela Ethernet komunikacije, kao i obja\v{s}njenje 
+    celog PTP protokola. Na po\v{c}etku \'{c}e biti predstavljen OSI konceptualni model, nakon njega TCP/IP 
+    model, i na kraju sam protokol koji je kori\v{s}cen. Ovaj pregled je dat u svrhu dobijanja slike o tome 
+    koliko je kompleksan sam stek (\#\# [lazarc] stack) koji se koristi, kao i da se dobije slika o nekim 
+    delovima koji \'{c}e kasnije biti spominjani.
 
 	\section{OSI model}
 
-	Open Systems Interconnection model (OSI model) je konceptualni model koji karakterise i
+	Open Systems Interconnection model (OSI model) je konceptualni model koji karakteri\v{s}e i
 	standardizuje komunikacione funkcije u telekomunikacionim ili kompjuterskim sistemima, i 
-	to bez obzira na unutrasnju strukturu uredjaja ili njihovu tehnologiju. Cilj ovog modela 
-	je da se postigne kompatibilnost razlicitih komunikacionih sistema sa standardnim 
+	to bez obzira na unutra\v{s}nju strukturu uredjaja ili njihovu tehnologiju. Cilj ovog modela 
+	je da se postigne kompatibilnost razli\v{c}itih komunikacionih sistema sa standardnim 
 	protokolima komunikacije. OSI model razdvaja komunikacione sisteme u apstraktne slojeve. 
 	Originalna verzija modela ima sedam slojeva.
 
-	Sloj unutar modela sluzi sloj iznad njega, i koristi sloj ispod njega u hijerarhiji. Na 
-	primer, sloj koji postize komunikaciju preko mreze bez gresaka, sluzi aplikacijama iznad 
-	koje ga koriste, i to dok poziva jednostavne funkcije za prijem i predaju paketa na mrezi. 
-	Dve instance istog sloja su vizualizovane tako sto su povezane horizontalno u istom sloju.
+	Sloj unutar modela slu\v{z}i sloj iznad njega, i koristi sloj ispod njega u hijerarhiji. Na 
+	primer, sloj koji posti\v{z}e komunikaciju preko mre\v{z}e bez gre\v{s}aka, slu\v{z}i aplikacijama iznad 
+	koje ga koriste, i to dok poziva jednostavne funkcije za prijem i predaju paketa na mre\v{z}i. 
+	Dve instance istog sloja su vizualizovane tako \v{s}to su povezane horizontalno u istom sloju.
 
 	Ovaj model je proizvod Open Systems Interconnection projekta u International Organization 
 	for Standardization (ISO), i ima oznaku ISO/IEC 7498-1.
@@ -72,35 +78,33 @@
 	(PDU - protocol data units) pomocu sloja N protokola. Svaki PDU sadrzi podatke od interesa 
 	(payload) (SDU - service data unit), zajedno sa zaglavljima koji odgovaraju protokolu.
 
-	Obrada podataka izmedju dva uredjaja koji su OSI-kompatibilni se odvija u sledecim 
+	Obrada podataka izmedju dva uredjaja koji su OSI-kompatibilni se odvija u slede\'{c}im 
 	koracima:
 	\begin{itemize}
-		\item Podaci koji se prenose se formiraju na najvisem sloju u uredjaju koji predaje 
-		podatke na mrezi (sloj N) u jedinicu protokola (PDU).
+		\item Podaci koji se prenose se formiraju na najvi\v{s}em sloju u uredjaju koji predaje 
+		podatke na mre\v{z}i (sloj N) u jedinicu protokola (PDU).
 		\item PDU se prosledjuje sloju N-1, gde je poznat kao SDU.
-		\item Na sloju N-1 se na SDU dodaju zaglavlja, na osnovu cega se formira PDU za sloj 
-		N-1. Nakon cega se prosledjuje na sloj N-2.
-		\item Ovaj postupak se ponavlja sve dok se ne dostigne najnizi sloj u modelu, nakon 
-		cega se podaci prenose ka uredjaju koji prima podatke.
-		\item Na strani prijemnog uredjaja se podaci prenose od najnizeg sloja u modelu, do
-		najviseg, gde se serije SDU struktura uspesno obradjuju, pri cemu se skidaju zaglavlja 
-		sa svakog sloja, dok se ne dostigne najvisi sloj u modelu, nakon cega su dostupni 
+		\item Na sloju N-1 se na SDU dodaju zaglavlja, na osnovu \v{c}ega se formira PDU za sloj 
+		N-1. Nakon \v{c}ega se prosledjuje na sloj N-2.
+		\item Ovaj postupak se ponavlja sve dok se ne dostigne najni\v{z}i sloj u modelu, nakon 
+		\v{c}ega se podaci prenose ka uredjaju koji prima podatke.
+		\item Na strani prijemnog uredjaja se podaci prenose od najni\v{z}eg sloja u modelu, do
+		najvi\v{s}eg, gde se serije SDU struktura uspe\v{s}no obradjuju, pri \v{c}emu se skidaju zaglavlja 
+		sa svakog sloja, dok se ne dostigne najvi\v{s}i sloj u modelu, nakon \v{c}ega su dostupni 
 		sirovi podaci.
 	\end{itemize}
 
-	\#\# [lazarc] dodati jos nesto o ovome ukoliko se nadje.
+	\subsection{Sloj 1: Fizi\v{c}ki sloj (Physical Layer)}
 
-	\subsection{Sloj 1: Fizicki sloj (Physical Layer)}
-
-	Fizicki sloj je odgovoran za prenos i prijem nestrukturiranih sirovih podataka izmedju 
-	uredjaja i fizickog medijuma za prenos. On pretvara digitalne bitove u elektricne, radio 
-	ili opticke signale. Specifikacije sloja definisu karakteristike poput nivoa napona, 
-	fizicke brzine prenosa podataka, maksimalne udaljenosti prenosa i fizickih konektora. Ovo 
-	ukljucuje raspored pinova, napona, linijske impedanse, specifikacije kablova, vremenskih 
-	signala i frekvencije za bezicne uredjaje. Kontrola brzine bitova se vrsi na fizickom 
-	nivou i moze definisati nacin komunikacije kao simpleks, polu dupleks ili dupleks 
-	komunikaciju. Komponente fizickog sloja mogu se opisati u smislu topologije mreze. 
-	Bluetooth, Ethernet i USB, sve imaju specifikacije za fizicki sloj.
+	Fizi\v{c}ki sloj je odgovoran za prenos i prijem nestrukturiranih sirovih podataka izmedju 
+	uredjaja i fizi\v{c}kog medijuma za prenos. On pretvara digitalne bitove u elektri\v{c}ne, radio 
+	ili opticke signale. Specifikacije sloja defini\v{s}u karakteristike poput nivoa napona, 
+	fizi\v{c}ke brzine prenosa podataka, maksimalne udaljenosti prenosa i fizi\v{c}kih konektora. Ovo 
+	uklju\v{c}uje raspored pinova, napona, linijske impedanse, specifikacije kablova, vremenskih 
+	signala i frekvencije za be\v{z}i\v{c}ne uredjaje. Kontrola brzine bitova se vr\v{s}i na fizi\v{c}kom 
+	nivou i mo\v{z}e definisati na\v{c}in komunikacije kao simpleks, polu dupleks ili dupleks 
+	komunikaciju. Komponente fizi\v{c}kog sloja mogu se opisati u smislu topologije mre\v{z}e. 
+	Bluetooth, Ethernet i USB, sve imaju specifikacije za fizi\v{c}ki sloj.
 
 	\subsection{Sloj 2: Sloj veze (Data Link Layer)}
 
@@ -770,12 +774,12 @@
 	koji ce na kraju i zavr\v{s}iti u finalnoj proizvodnji, kao i malu formu, dopunjenu sa 
 	velikim brojem interfejsa koji se mogu koristiti u delu projektovanja krajnjeg sistema.
 
-	\begin{figure}[htb]
-		\centering
-		\includegraphics[scale=.7]{../pic/hw_top_view.png}
-		\caption{Razvojna plo\v{c}a SAMA5D27-SOM1-EK1 (pogled odozgo)}
-		\label{fig:hw_top_view}
-	\end{figure}
+	% \begin{figure}[htb]
+	% 	\centering
+	% 	\includegraphics[scale=.7]{../pic/hw_top_view.png}
+	% 	\caption{Razvojna plo\v{c}a SAMA5D27-SOM1-EK1 (pogled odozgo)}
+	% 	\label{fig:hw_top_view}
+	% \end{figure}
 
 	SOM je potpuno opremljen industrijski sertifikovan kompjuter dizajniran za integraciju
 	korisni\v{c}ke aplikacije. SOM modul je namenski napravljen kao mala hardverska platforma
@@ -790,12 +794,12 @@
 	Mikroelektronika kojim se dobija mogu\'{c}nost za pro\v{s}irenje funkcionalnosti svim 
 	modulima koje ova firma nudi u svom asortimanu.
 
-	\begin{figure}[htb]
-		\centering
-		\includegraphics[scale=.7]{../pic/hw_modules.png}
-		\caption{Moduli - Razvojna plo\v{c}a SAMA5D27-SOM1-EK1}
-		\label{fig:hw_modules}
-	\end{figure}
+	% \begin{figure}[htb]
+	% 	\centering
+	% 	\includegraphics[scale=.7]{../pic/hw_modules.png}
+	% 	\caption{Moduli - Razvojna plo\v{c}a SAMA5D27-SOM1-EK1}
+	% 	\label{fig:hw_modules}
+	% \end{figure}
 
 	Na samom SAMA5D27-SOM1 postoje i:
 	\begin{itemize}
@@ -808,12 +812,12 @@
 		\item KSZ8081RNA Ethernet Phy 10/100 MHz RMII
 	\end{itemize}
 
-	\begin{figure}[htb]
-		\centering
-		\includegraphics[scale=.7]{../pic/hw_som_modules.PNG}
-		\caption{Moduli - SAMA5D27-SOM1}
-		\label{fig:hw_som_modules}
-	\end{figure}
+	% \begin{figure}[htb]
+	% 	\centering
+	% 	\includegraphics[scale=.7]{../pic/hw_som_modules.PNG}
+	% 	\caption{Moduli - SAMA5D27-SOM1}
+	% 	\label{fig:hw_som_modules}
+	% \end{figure}
 
 	Razvojno okru\v{z}enje SAMA5D27-SOM1-EK1 je veoma mo\'{c}no i mo\v{z}e se koristiti za \v{s}
 	irok spektar aplikacija. Naj\v{c}e\v{s}\'{c}e je izbor za razvoj aplikativnog softvera u 
