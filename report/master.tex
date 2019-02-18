@@ -861,13 +861,150 @@
 
 	\chapter{Softverska implementacija}
 
+    U ovom delu \'{c}e biti opisana softverska implementacija projekta, sa datim rezultatima na kraju 
+    odeljka. Rezultati se odnose na razliku u satovima dva uredjaja u sistemu koji je napravljen kako bi se 
+    prikazala funkcionalnost protkola, i izvr\v{s}ila sinhronizacija dva uredjaja unutar oglednog sistema.
+
+    \#\# Prikaz sistema, nparaviti sliku gde se vide Linux PC i ploca
+
+    Ogledni sistem za implementaciju protokola preciznog vremena se sastoji od PC-a, na kome se nalazi Ubuntu 
+    16.04 LTS operativni sistem, i razvojne plo\v{c}e SAMA5D27-SOM1-EK1. Povezivanje izmedju razvojne 
+    plo\v{c}e i PC-a je ostvareno preko standardnog UTP kabla (UTP - Unshielded-Twisted-Pair). Na PC-u se 
+    pokre\'{c}e Open source implementacija PTPd, odnosno deamon-a koji obavlja funkciju PTP protokola na 
+    standardnim operativnim sistemima. U ovom slu\v{c}aju je izabran PTPd kao najjednostavnija i 
+    najdostupnija verzija ovakvog programa koja se pravljena za operativne sisteme bazirane na Linux-u.
+
+    Kako je u nekim trenucima potrebno da vise uredjaja na mrezi dobija informacije potrebne za 
+    sinhronizaciju, sam PTP deamon je konfigurisan da radi u Master only modu, i takodje u Multicast modu. 
+    Sto znaci da je Linux PC u ovoj konfiguraciji oglednog sistema uvek Master i da svi uredjaji moraju da se 
+    sinhronisu na njegovo tacno vreme. Takodje, kako je PC jedini uredjaj na mrezi koji daje takve 
+    informacije, postavljen je u Mulitcast mod, tako da svi uredjaji dobijaju informacije, dok samo neki koji 
+    mogu da prepoznaju odredjene poruke, mogu da odgovore i sinhronisu se u potpunosti. S tim u vezi, dodata 
+    su jos neka podesavanja samog deamon-a, cime je odredjen period za odgovor sa slave strane, odnosno da 
+    ukoliko ne dodje do odgovora u nekom roku, PC nastavi da salje genericke poruke, kako bi pokrenuo proces 
+    sinhronizacije. Takodje, u svrhe provere da li je sve podeseno na najbolji nacin, vrsi se pracenje svih 
+    poruka koje se dobijaju i skladiste se na PC-u kako bi kasnije mogle da se provere, ukoliko dolazi do 
+    gresaka na mrezi. Kako se koristi PC, odnosno kompjuter opste namene, koji je preko jednog od interfejsa, 
+    povezan na internet, sam PC dobija tacno vreme preko NTP-a, nakon cega to vreme postaje najbolje za 
+    lokalnu oglednu mrezu. Ukoliko bi se koristio specijalizovani kompjuter, koji ima mogucnost da tacno 
+    vreme dobije preko GPS-a, i takodje specijalizovane mrezne kartice, koje podrzavaju PTP, mogla bi se 
+    dobiti mnogo veca tacnost, i time bi se povecala tacnost na slave uredjaju koji pokusava da se sinhronise.
+
+    Implementacija PTP deamon-a na PC-u je preuzeta i koriscena u skladu sa uslovima i preporukama Open 
+    Source zajednice, i sem konfiguracije nista nije promenjeno, kako bi se prilagodilo ovoj implementaciji.
+
+    Sa druge strane, implementacija na slave strani, u ovom slucaju na evaluacionoj ploci, je morala biti 
+    prilagodjena samom PTP protokolu, i morala je obezbediti mehanizme za korektno koriscenje PTP protokola.
+
+    Softverska implementacija je zamisljena tako da se moze obezbediti lako dodavanje novih funkcionalnosti, 
+    kao i promena vec postojecih funckionalnosti u vrlo kratkom vremenskom roku. S tim u vezi izabran je 
+    FreeRTOS kao operativni sistem koji ce biti osnova, i odabrana je Multi-Threaded arhitektura softvera 
+    koji implementira ovu funkcionalnost. Odabir ovog operativnog sistema i ove arhitekture je usko vezan sa 
+    svim sto je potrebno iskoristiti kako bi se obezbedila korektna implementacija ovog protokola. Kao i 
+    dostupnost baze znanja za ovaj operativni sistem, i njegova Open Source priroda. Takodje, za IP stack je 
+    izabran lwIP stack, koji je pogodan za implementacije na Embedded uredjajima, i takodje je Open Source i 
+    ima siroko dostupnu bazu znanja.
+
+    Implementacija ostavlja mogucnosti za dodavanje novih funkcionalnosti, i to kao dodvanje novih thread-ova 
+    unutar vec postojeceg sistema. Medjutim, prilikom dodavanja novih funkcionalnosti mora se voditi racuna o 
+    vec postojecim mehanizmima i kako nova funkcionalnost utice na njih. S tim u vezi, implementacija PTP 
+    mehanizma je jedna od niti unutar sistema, koja vodi racuna o tacnom vremenu sistema, i ima najveci 
+    prioritet. Kako sama sinhrnoizacija nije vremenski zahtevna, i ne javlja se tako cesto, blokirajucim 
+    prekidima same niti, postignuto je da ostale funckionalnosti unutar sistema, ukoliko ih bude, mogu 
+    nesmetano da se izvrsavaju, sve dok se ne javi potreba sistema za sinhrnoizacijom. 
+
+    Kao sto je vec navedeno u poglavlju Hardverske implementacije, procesor koji se koristi, ima harversku 
+    podrsku za PTP, i to u vidu TSU (Time stamping unit). Konfiguracijom modula GMAC unutar samog procesora 
+    moze se omoguciti da procesor prepozna pakete koji stizu preko interfejsa i odredjene podatke iz paketa 
+    preuzme i prosledi na dalje koriscenje. S tim u vezi, sam modul mora se konfigurisati tako da se dozvole 
+    hardverski prekidi prilikom prepoznavanja odredjenih paketa. Ova funkcionalnost se dozvoljava prilikom 
+    inicijalizacije same ploce. Takodje, TSU je potrebno konfigurisati tako da se obezbedi puna 
+    funkcionalnost samog modula. TSU kao modul unutar GMAC-a dobija klok (\#\# [lazarc] clock) kako bi se 
+    dobilo nezavisno vreme na ploci, i odnosu na ostatak sistema. Kao sto je navedeno u odeljku hardverske 
+    implementacije, TSU je implementiran kao 94-bitni brojac, koji ima rezoluciju od oko 15 femto sekundi. Na 
+    inicijalizaciji celog sistema TSU dobija odredjeni klok (\#\# [lazarc] clock), koji je u ovom slucaju 82 
+    MHz. TSU se ne startuje sve dok se u polju konfiguracije ne dodeli inkrement koji je razlicit od nule. 
+    Takodje, unutar konfiguracije TSU postoje polja za specificiranje inkrementa ispod nanosekunde, koje je 
+    potrebno setovati tako da se dobije sto pribliznija reprezentacija realnog vremena. 
+    
+    Kako je frekvencija kojom broji TSU 82MHz, izracunavanjem se dolazi do toga da je za jedan period kloka 
+    (\#\# [lazarc] clock) proslo 12.19512 ns. Pri cemu se cifre iza decimalne tacke se periodicno ponavljaju, 
+    i to ponavljanje je 19512. Nakon cega se odredjuje da inkrement nanosekunda unutar brojaca TSU iznosi 12, 
+    dok je inkrement vremena ispod nanosekunde celobrojni umnozak broja 1951, i u ovoj implementaciji je 9755,
+     odnosno 5 puta ostatka. Odabirom ove frekvencije za TSU, i dobijanjem ovih vremena, potrebno je izvrsiti
+     jos jednu modifikaciju TSU. TSU ima mogucnost i alternativnog inkrementa. Tj. zadavanjem vrednosti za 
+     alternativno inkrementiranje brojaca, TSU moze nakon odredjenog zadatog vremena, promeniti vrednosti 
+     kojima inkrementira brojac. U ovom slucaju, ispravljanje greske se vrsi na svakih 83 ciklusa unutar TSU, 
+     i u tom ciklusu se dodaje 16ns na vec postojecu vrednost unutar TSU brojaca. Ovim podesavanjima modula, 
+     dobija se sto vernija predstava realnog vremena. Tj. dobija se da ono sto dobijamo od oscilatora, 
+     odgovara stvarnim vrednostima vremena. Naravno, zbog vrednosti koje dolaze sa oscilatora i podesavanja 
+     PLL-ova unutar samog procesora, mora postojati odredjena greska, koja se moze tolerisati, i koja se moze 
+     smanjiti na odredjene nacine.
+
+    Konfiguracija GMAC modula podrazumeva i registrovanje prekida za Sync i Delay\_Req pakete koji stizu na 
+    interfejs, cime se dobijaju vremena koja su potrebna. Nakon ispravne konfiguracije, dobijaju se prekidi 
+    na koje stizu paketi, i iz kojih je moguce iscitati vremena. Na Sync i Delay\_Req pakete, i prekide koji 
+    javljaju, moguce je iscitati trenutnu vrednost vremena koje se nalazi u TSU, sto je bitno za proces 
+    sinhronizacije. U skladu sa arhitekturom softverske implementacije, vremena koja se dobijaju, se 
+    prosledjuju u red sa porukama, koji su potrebni za celokupnu sinhronizaciju.
+
+    \#\# [lazarc] prikaz razmene poruka 
+
+    Protokol tacnog vremena odredjuje i to da slave uredjaj mora prepoznati pakete koji stizu, sto se postize 
+    hardverskom podrskom za neke od paketa. Ali i odgovoriti na odredjene pakete. Ovo se postize 
+    implementiranjem masine stanja koja vodi racuna o trenutnom stanju uredjaja u smislu sinhronizacije. S 
+    tim u vezi, masina stanja ostaje u istom, pocetnom stanju, sve dok ne stigne prvi paket koji je bitan za 
+    proces sinhronizacije, Sync frame. Nakon cega se iz prekida dobija poruka sa trenutnom vrednosti vremena 
+    u TSU, i prelazi se u sledece stanje. Sledece stanje u masini stanja predstavlja stanje cekanja na 
+    sledeci paket, tj. Follow\_up frame. Unutar Follow\_up paketa se nalazi vreme kada je poslat Sync frame, 
+    i potrebno je raspakovati taj paket, i uzeti to vreme. To se obavlja unutar ovog stanja u masini stanja, 
+    nakon cega se prelazi u sledece stanje, i slanje uzetog vremena u red sa porukama. Sledece stanje 
+    Delay\_Req\_Send, implementira slanje Delay\_Req paketa sa slave uredjaja na master, u skladu sa 
+    specifikacijom protokola. Slanje Delay\_Req paketa, inicira prekid unutar GMAC, u kome se uzima tacno 
+    vreme kada je paket napustio uredjaj. To vreme se takodje salje u red sa porukama. Nakon cega se prelazi 
+    u sledece stanje, odnosno cekanje prijema Delay\_Resp paketa. Nakon sto Delay\_Resp paket pristigne, i 
+    raspakuje se na odgovarajuci nacin, dobija se cetvrto i poslednje vreme koje je potrebno za 
+    sinhronizaciju. I ono se salje u red sa porukama.
+
+    \#\# [lazarc] prikaz masine stanja 
+    
+    Nakon ovoga, sva vremena koja su potrebna za sinhronizaciju su tu, i moze se izvrsiti promena TSU, tako 
+    da racunanje vremena odgovara vremenu na master uredjaju. Racunanjem vrednosti kojim se treba promeniti 
+    TSU, koriste se vec ugradjeni makroi i mehanizmi kako bi se iskoristile funkcionalnosti koje nudi TSU. S 
+    tim u vezi modifikuje se trenutna vrednost koju broji TSU, i takodje se modifikuju vrednosti za delove 
+    vremena ispod nanosekunde.
+
+    Za ovakav nacin implementacije, potrebne je samo jedna nit, i to ona koja ce da vodi racuna o masini 
+    stanja. Unutar ove niti, odnosno masine stanja, implementirani su blokirajuci pozivi za dobijanje vremena 
+    iz reda sa porukama, cime se smanjuje vreme i resursi koje procesor trosi na opsluzivanje ove niti. 
+    Takodje, ovakav nacin implementacije dozvoljava implementaciju ostalih niti koje mogu izvrsavati ostale 
+    funkcionalnosti sistema, s obzirom da ova nit nije zahtevna i javlja se relativno retko potreba za 
+    sinhronizacijom, ~1s.
+
+    \subsection{Rezultati}
+
+    U ovom delu ce biti dati rezultati trenutnog izvrsavanja i sinhronizacije u oglednom sistemu.
+
+    \#\# [lazarc] dodati da je samo jedna nit za sync, i jedna dummy nit
+
+    U neopterecenoj mrezi, tj. u mrezi 1 na 1, PC i razvojna ploca, dobijaju se rezultati sinhrnoizacije od 
+    otprilike 0.06ms, sto je vise nego zadovoljavajuce za ovakav tip sinhronizacije. Takodje, postoji 
+    akumulacija greske koja je uzeta u obzir, i ona se ogleda u tome da u nekim trenucima, uredjaj koji se 
+    sinhronizuje izgubi sinhronizaciju, nakon cega se vraca u roku od jednog ciklusa sinhronizacije. Ova 
+    greska se pojavljuje usled prekoracenja (\#\# [lazarc] overflow ) dela brojaca za vremena ispod 
+    nanosekunde. 
+
+    \#\# [lazarc] ubaciti slike sa putty-a
+
+    \subsection{Predlozi za poboljsanja}
+
 	\newpage
 
 	\chapter{Zaključak}
 
 	\newpage
 
-	\chapter{CHECK}
+	\chapter{CHECK\_PTP}
     
 	\textbf{IZ PTP\_NEXT\_1.TXT}
 
@@ -878,79 +1015,79 @@
 	udaljenosti moraju raditi u vezi jedni sa drugima. U ovim scenirijima, lokalni sat, ili 
 	Master Sat, sinhronizuje sve uredjaje u istom sistemu sa tim satom. Zbog ove potrebe za 
 	sinhronizacijom, IEEE 1588 standard je objavljen kao standardni protokol 2002. godine.
-	(\#\#[lazarc] However, prevod \#\#) Iako su dva sata unutar uredjaja podeseni da rade na 
-	istoj frekvenciji, ne postoji garancija da ce ostati sinhronizovani. Upravo zbog ovoga 
-	proces sinhronizacije je neprekidan. Nekoliko faktora mogu uticati na to da dva identicna 
-	sata izgube sinhronizaciju. Razlozi mogu biti razliciti, kao na primer razlika u 
-	temperaturi, starosti uredjaja, kao i frekvenciji na kojoj uredjaji rade, koja moze 
+	(\#\#[lazarc] However, prevod \#\#) Iako su dva sata unutar uredjaja pode\v{s}eni da rade na 
+	istoj frekvenciji, ne postoji garancija da \'{c}e ostati sinhronizovani. Upravo zbog ovoga 
+	proces sinhronizacije je neprekidan. Nekoliko faktora mo\v{z}e uticati na to da dva identi\v{c}na 
+	sata izgube sinhronizaciju. Razlozi mogu biti razli\v{c}iti, kao na primer razlika u 
+	temperaturi, starosti uredjaja, kao i frekvenciji na kojoj uredjaji rade, koja mo\v{z}e 
 	uticati na kvalitet sinhronizacije. Upravo iz ovih razloga je i nastala potreba za 
 	sinhronizacijom uredjaja.
 	
 	SYNCHRONIZATION
-	IEEE 1588 obezbedjuje sinhronizaciju dva sata u istoj mrezi koja je otporna na greske. 
-	Takodje, koristi se veoma mali opseg frekvencija, procesna moc, ali i podesavanje samog 
+	IEEE 1588 obezbedjuje sinhronizaciju dva sata u istoj mre\v{z}i koja je otporna na gre\v{s}ke. 
+	Takodje, koristi se veoma mali opseg frekvencija, procesna mo\'{c}, ali i pode\v{s}avanje samog 
 	protokola. (\#\#[lazarc] There is very little bandwidth consumption, processing power, and 
-	setup.\#\#) IEEE 1588 standard postize sve ovo koristeci protokol preciznog vremena (\#\#
+	setup.\#\#) IEEE 1588 standard posti\v{z}e sve ovo koriste\'{c}i protokol preciznog vremena (\#\#
 	[lazarc] Precision time protocol.\#\#), ili PTP. Vremenski protokol koji se koristi 
-	sinhronizuje dva sata na mrezi podesavajuci satove ka "najkvalitetnijem" satu. IEEE 1588 
-	definise ospege vrednosti za standardan set karakteristika satova. Algoritam najboljeg 
-	sata, BMC algorithm, odlucuje koji sat na mrezi je "najkvalitetniji", odnosno koji sat na 
-	mrezi je najtacniji, i najbolji kako bi se ostali uredjaji sinhronizovali na njega. BMC 
-	algoritam onda sinhronizuje sve ostale satove (slave clocks) sa ovim satom na mrezi. 
-	Ukoliko se BMC (Best Master Clock) ukloni iz mreze, ili BMC algoritam odluci da taj sat 
-	nije vise najtacniji, algoritam redefinise novi "najkvalitetniji" sat, i prilagodi 
-	vremena ostalih satova u skladu sa tim. Nije potrebno da se administrator mreze ukljucuje 
-	u bilo kom trenutku kako bi se promenio najbolji sat u mrezi, zbog toga sto je ovaj 
-	algoritam otporan na greske.
+	sinhronizuje dva sata na mre\v{z}i pode\v{s}avaju\'{c}i satove ka "najkvalitetnijem" satu. IEEE 1588 
+	defini\v{s}e ospege vrednosti za standardan set karakteristika satova. Algoritam najboljeg 
+	sata, BMC algorithm, odlu\v{c}uje koji sat na mre\v{z}i je "najkvalitetniji", odnosno koji sat na 
+	mre\v{z}i je najta\v{c}niji, i najbolji kako bi se ostali uredjaji sinhronizovali na njega. BMC 
+	algoritam onda sinhronizuje sve ostale satove (slave clocks) sa ovim satom na mre\v{z}i. 
+	Ukoliko se BMC (Best Master Clock) ukloni iz mre\v{z}e, ili BMC algoritam odlu\v{c}i da taj sat 
+	nije vi\v{s}e najta\v{c}niji, algoritam redefini\v{s}e novi "najkvalitetniji" sat, i prilagodi 
+	vremena ostalih satova u skladu sa tim. Nije potrebno da se administrator mre\v{z}e uklju\v{c}uje 
+	u bilo kom trenutku kako bi se promenio najbolji sat u mre\v{z}i, zbog toga \v{s}to je ovaj 
+	algoritam otporan na gre\v{s}ke.
 	
 	U ovu svrhu koristi se Bidirekciona multikast komunikacija (\#\#[lazarc] Bidirectional 
 	Multicast Communication \#\#) od strane slave uredjaja kako bi se sinhronizovali na 
 	najbolji sat, IEEE 1588 grandmaster clock. "Sync", Sinhronizacioni paket sadrzi vremenski 
-	zig od najboljeg sata, koji predstavlja tacno vreme kada je paket poslat sa grandmaster 
-	clock-a. "Follow up", Prateci paket takodje moze biti poslat sa grandmaster sata, koji 
-	sadrzi vremenski zig "Sync" (sinhronizacionog) paketa. Ovakav princip razmene podataka 
-	omogucava tacan vremenski zig sinhronizacionog paketa koji je prosledjen sa grandmaster 
-	sata. Takodje, postoje slucajevi u kojima se ne otkriva tacno vreme slanja paketa, zbog 
-	odredjenih smetnji na mrezi. Ovo je omoguceno kroz Collision detection i Random Back-off 
-	mehanizama na Ethernet\/IP komunikaciji. Samo onda kad je paket kompletno poslat, nemoguce 
-	je promeniti sadrzaj paketa. 
+	\v{z}ig od najboljeg sata, koji predstavlja ta\v{c}no vreme kada je paket poslat sa grandmaster 
+	clock-a. "Follow up", Prate\'{c}i paket takodje mo\v{z}e biti poslat sa grandmaster sata, koji 
+	sadr\v{z}i vremenski \v{z}ig "Sync" (sinhronizacionog) paketa. Ovakav princip razmene podataka 
+	omogu\'{c}ava ta\v{c}an vremenski \v{z}ig sinhronizacionog paketa koji je prosledjen sa grandmaster 
+	sata. Takodje, postoje slu\v{c}ajevi u kojima se ne otkriva ta\v{c}no vreme slanja paketa, zbog 
+	odredjenih smetnji na mre\v{z}i. Ovo je omogu\'{c}eno kroz Collision detection i Random Back-off 
+	mehanizam u Ethernet\/IP komunikaciji. Samo onda kad je paket kompletno poslat, nemogu\'{c}e 
+	je promeniti sadr\v{z}aj paketa. 
 	
-	Grandmaster i Slave satovi na mrezi razmenjuju "Sync", Sihnronizacione pakete sa jedne na 
-	drugu strane, i postavljaju vremenske zigove pri prijemu paketa. Kombinijuci razliku u 
-	satova, kao i kasnjenje na mrezi, razlika izmedju slanja i prijema sinhronizacionih 
-	paketa moze biti izracunata. Koristeci razliku koja je izracunata u ovom slucaju, sat 
-	moze biti podesen sa novim vrednostima, i time se moze smanjiti razlika izmedju Master i 
-	Slave satova u ovoj mrezi. Razlika izmedju master i slave sinhrozniacionih paketa, i 
+	Grandmaster i Slave satovi na mre\v{z}i razmenjuju "Sync", Sihnronizacione pakete sa jedne na 
+	drugu strane, i postavljaju vremenske \v{z}igove pri prijemu paketa. Kombinijuci razliku u 
+	satovima, kao i ka\v{s}njenje na mre\v{z}i, razlika izmedju slanja i prijema sinhronizacionih 
+	paketa mo\v{z}e biti izra\v{c}unata. Koriste\'{c}i razliku koja je izra\v{c}unata u ovom slu\v{c}aju, sat 
+	mo\v{z}e biti pode\v{s}en sa novim vrednostima, i time se mo\v{z}e smanjiti razlika izmedju Master i 
+	Slave satova u ovoj mre\v{z}i. Razlika izmedju master i slave sinhrozniacionih paketa, i 
 	obrnuto, implicira da IEEE 1588 standard radi pod pretpostavkom da je propagacija paketa 
-	po mrezi simetricna. To je zbog prepostavke da slave uredjaj moze da odredi i podesi 
-	kasnjenje prilikom propagacije paketa po mrezi. Kako bi se kasnjenje na mrezi odredilo, 
-	slave kreira "delay request", zahtev za odredjivanjem kasnjenje, i postavlja vremenski 
-	zig prilikom slanja paketa. Master sat onda postavlja vremenski zig prilikom pristizanja 
-	tog zahteva, i vraca ga ka Slave uredjaju, i to u obliku "delay response" paketa, 
-	odgovora za kasnjenjem. Nakon toga, odredjuje se kasnjenje po linijama na mrezi, i 
-	izracunava se iz ovih paketa koji se razmenjuju.
+	po mre\v{z}i simetri\v{c}na. To je zbog prepostavke da slave uredjaj mo\v{z}e da odredi i podesi 
+	ka\v{s}njenje prilikom propagacije paketa po mre\v{z}i. Kako bi se ka\v{s}njenje na mre\v{z}i odredilo, 
+	slave kreira "delay request", zahtev za odredjivanjem ka\v{s}njenja, i postavlja vremenski 
+	\v{z}ig prilikom slanja paketa. Master sat onda postavlja vremenski \v{z}ig prilikom pristizanja 
+	tog zahteva, i vra\'{c}a ga ka Slave uredjaju, i to u obliku "delay response" paketa, 
+	odgovora za ka\v{s}njenjem. Nakon toga, odredjuje se ka\v{s}njenje po linijama na mre\v{z}i, i 
+	izra\v{c}unava se iz ovih paketa koji se razmenjuju.
 	
-	Slanje i primanje sinhronizacionih paketa dozvoljava da Slave uredjaji tacno izmere 
-	razliku izmedju lokalnog\/Slave sata, i Master sata. Standardne metode podesavanja sata na 
-	uredjajima nije opisano prema IEEE 1588 standardu; samo omogucava standardni protokol za 
-	razmenu poruka izmedju uredjaja. Poenta ovoga je da se uredjaji i satovi razlicitih 
-	proizvodjaca mogu sinhronizovati izmedju sebe.
+	Slanje i primanje sinhronizacionih paketa dozvoljava da Slave uredjaji ta\v{c}no izmere 
+	razliku izmedju lokalnog\/Slave sata, i Master sata. Standardne metode pode\v{s}avanja sata na 
+	uredjajima nije opisano prema IEEE 1588 standardu; samo omogu\'{c}ava standardni protokol za 
+	razmenu poruka izmedju uredjaja. Poenta ovoga je da se uredjaji i satovi razli\v{c}itih 
+	proizvodja\v{c}a mogu sinhronizovati izmedju sebe.
 	
 	QUALITY OF SYNCHRONIZATION
-	Postoje nekoliko faktora koji mogu uticati na egzaktnost sinhronizacije izmedju dva 
-	uredjaja unutar IEEE 1588 mreze. Promene frekvencije na uredjaju koji daje tacno vreme, 
-	koje se moze desiti izmedju dva sinhronizaciona paketa "Sync", mogu uzrokovati da se 
+	Postoji nekoliko faktora koji mogu uticati na egzaktnost sinhronizacije izmedju dva 
+	uredjaja unutar IEEE 1588 mre\v{z}e. Promene frekvencije na uredjaju koji daje ta\v{c}no vreme, 
+	koje se mo\v{z}e desiti izmedju dva sinhronizaciona paketa "Sync", mogu uzrokovati da se 
 	izgubi sinhronizacija sa ostalim uredjajima u istom sistemu. Kako bi se predupredila 
-	svaka mogucnost za gubljenje sinhronizacije, (\#\#[lazarc] High stability \#\#) mogu se 
-	koristiti uredjaji sa veoma velikom stabilnoscu, kao i da se skrati vreme izmedju razmene 
-	sinhronizacionih paketa. Kako bi se jos vise unapredila sinhronizacija, mogu se koristiti 
+	svaka mogu\'{c}nost za gubljenje sinhronizacije, (\#\#[lazarc] High stability \#\#) mogu se 
+	koristiti uredjaji sa veoma velikom stabilno\v{s}\'{c}u, kao i da se skrati vreme izmedju razmene 
+	sinhronizacionih paketa. Kako bi se jo\v{s} vi\v{s}e unapredila sinhronizacija, mogu se koristiti 
 	druge vrste oscilatora u uredjajima, narocito Temperature Controlled Crystal Oscillators 
-	(TXCOs) i Oven Controlled Crystal Oscillators (OCXOs). Rezulucija sata moze uticati na 
-	preciznost vremenskih zigova unutar sinhronizacionih paketa. Dziter (\#\#[lazarc] Jitter 
-	\#\#) iz susednih uredjaja u mrezi, kao sto su habovi i svicevi (\#\#[lazarc] hubs and 
+	(TXCOs) i Oven Controlled Crystal Oscillators (OCXOs). Rezulucija sata mo\v{z}e uticati na 
+	preciznost vremenskih \v{z}igova unutar sinhronizacionih paketa. D\v{z}iter (\#\#[lazarc] Jitter 
+	\#\#) iz susednih uredjaja u mre\v{z}i, kao sto su habovi i svi\v{c}evi (\#\#[lazarc] hubs and 
 	switches \#\#), takodje mogu uticati na preciznost sinhronizacije. Kvalitet IEEE 1588 
-	mreznog sistema i kako je podesen moze takodje uticati na kvalitet sinhronizacije. Kako bi 
-	se podesi sistem sa sto boljom sinhronizacijom, mora se napraviti kompromis izmedju 
+	mre\v{z}nog sistema i kako je pode\v{s}en mo\v{z}e takodje uticati na kvalitet sinhronizacije. Kako bi 
+	se podesi sistem sa \v{s}to boljom sinhronizacijom, mora se napraviti kompromis izmedju 
 	egzaktnosti sinhronizacije, cene, kao i razdaljine izmedju uredjaja u sistemu. Za sporije 
 	dogadjaje unutar sistema koji ne zavise od vremena, standardna NTP sinhronizacija preko 
 	interneta, koja daje sinhronizaciju na nivou milisekunde, zadovoljava sve potrebe. IEEE 
@@ -959,37 +1096,37 @@
 	
 	NETWORK HIERARCHIES
 	IEEE 1588 sporedni satovi (\#\#[lazarc] boundary clocks\#\#), koji se takodje i nazivaju 
-	transparentni svicevi (\#\#[lazarc] transparent switches \#\#), pruzaju efektivan nacin za 
-	smanjenje dzitera (\#\#[lazarc] jitter \#\#) unutar mreznog sistema baziranog na IEEE 1588 
-	standardu. Svic (\#\#[lazarc] switch \#\#), koji se koristi kao sporedni sat (\#\#[lazarc] 
-	boundary clock \#\#), pokrece PTP protokol i sinhronizuje se na master sat (\#\#[lazarc] 
+	transparentni svicevi (\#\#[lazarc] transparent switches \#\#), pru\v{z}aju efektivan na\v{c}in za 
+	smanjenje d\v{z}itera (\#\#[lazarc] jitter \#\#) unutar mre\v{z}nog sistema baziranog na IEEE 1588 
+	standardu. Svi\v{c} (\#\#[lazarc] switch \#\#), koji se koristi kao sporedni sat (\#\#[lazarc] 
+	boundary clock \#\#), pokre\'{c}e PTP protokol i sinhronizuje se na master sat (\#\#[lazarc] 
 	master clock \#\#). Sporedni sat (\#\#[lazarc] boundary clock \#\#), u navratima (\#\#
-	[lazarc] in turns \#\#) preuzima ulogu master sata za sve slejvove unutar iste mreze. 
-	Koristeci ovo podesavanje mreze, sva interna kasnjenja i dziter mogu biti kompenzovani i ne 
-	uticu na egzaktnost sinhronizacije.
+	[lazarc] in turns \#\#) preuzima ulogu master sata za sve slejvove unutar iste mre\v{z}e. 
+    Koriste\'{c}i ovo pode\v{s}avanje mre\v{z}e, sva interna ka\v{s}njenja i d\v{z}iter mogu biti 
+    kompenzovani i ne uti\v{c}u na egzaktnost sinhronizacije.
 	
 	Delay\_Resp, Delay\_Req, Follow\_up i Sync poruke se ne prenose kroz sporedne satove. 
-	Sporedni sat se ponasa kao obican sat u smislu sinhronizacije i koristi algoritam 
-	najboljeg sata unutar podmreze. Unutar podmreze koja se posmatra, ovaj uredjaj je slejv. 
-	Ovo ce uticati na to da se svi ostali uredjaji koji se povezuju na sporedni sat 
-	sinhronisu svoje vreme prema njemu. Hijerarhija Roditelj-Dete (\#\#[lazarc] Parent-Child 
+	Sporedni sat se ponasa kao obi\v{c}an sat u smislu sinhronizacije i koristi algoritam 
+	najboljeg sata unutar podmre\v{z}e. Unutar podmre\v{z}e koja se posmatra, ovaj uredjaj je slejv. 
+	Ovo \'{c}e uticati na to da se svi ostali uredjaji koji se povezuju na sporedni sat 
+	sinhroni\v{s}u svoje vreme prema njemu. Hijerarhija Roditelj-Dete (\#\#[lazarc] Parent-Child 
 	hierarchy \#\#) na master-slejv sate je odredjena prema sporednim satovima. (\#\#[lazarc] 
 	If cyclic path occur in the network hierarchy, the best master clock algorithm lowers the 
 	logical hierarchy to an acyclic graph.\#\#)	Naravno, postoji alternativa za sporedne sate, 
-	i to je koriscenje transparentnih sviceva (\#\#[lazarc] switches \#\#). Transparentni svic 
-	se ne ponasa kao PTP cvor unutar IEEE 1588 sistema. Umesto toga, transparetni svic podesava 
-	vremenski deo PTP paketa kako bi se kompenzovalo kasnjenje koje unosi svic. Transparetni 
-	svic nakon toga preracunava koliko je vremena sinhronizacioni 'Sync' paket proveo unutar 
-	svica, i modifikuje vremenski zig unutar sledeceg 'Follow\_up' paketa kako bi se 
-	nadoknadilo kasnjenje. PTP cvorovi mogu raditi kao da su deo veceg podsistema lokalne mreze
-	i to kao da su povezani habovima (\#\#[lazarc] Hubs \#\#) koristeci transparentne sviceve.
+	i to je kori\v{s}\'{c}enje transparentnih svi\v{c}eva (\#\#[lazarc] switches \#\#). Transparentni svi\v{c}
+	se ne pona\v{s}a kao PTP \v{c}vor unutar IEEE 1588 sistema. Umesto toga, transparetni svi\v{c} pode\v{s}ava 
+	vremenski deo PTP paketa kako bi se kompenzovalo ka\v{s}njenje koje unosi svi\v{c}. Transparetni 
+	svi\v{c} nakon toga prera\v{c}unava koliko je vremena sinhronizacioni 'Sync' paket proveo unutar 
+	svi\v{c}a, i modifikuje vremenski \v{z}ig unutar slede\'{c}eg 'Follow\_up' paketa kako bi se 
+	nadoknadilo ka\v{s}njenje. PTP \v{c}vorovi mogu raditi kao da su deo ve\'{c}eg podsistema lokalne mre\v{z}e
+	i to kao da su povezani habovima (\#\#[lazarc] Hubs \#\#) koriste\'{c}i transparentne svi\v{c}eve.
 	
 	USES FOR IEEE 1588
-	Precizna sinhronizacija se moze iskoristiti u sledecim aplikacijama:
+	Precizna sinhronizacija se mo\v{z}e iskoristiti u slede\'{c}im aplikacijama:
 	\begin{itemize}
 		\item Telekomunikacije
 		\item Energetska postrojenja
-		\item Industrijska automacija
+		\item Industrijska automatizacija
 		\item Testiranje i merenja
 		\item Robotska kontrola
 	\end{itemize}
@@ -997,97 +1134,97 @@
 	\textbf{IZ PTP\_NEXT\_2.TXT}
 
 	NETWORK TIMING TECHNOLOGY: NTP vs. PTP
-	Vremenska sinhrnozacija igra fundamentalnu ulogu u svakoj mrezi, ali je ipak najcesce 
-	dodata kao naknadna funkcionalnost. Ipak, moze znaciti razliku izmedju egzaktnog 
-	odredjivanja gresaka unutar sistema, u tacnim vremenskim trenucima, i nepostojanje ideje 
-	zasto se server ponasa onako kako nije predvidjeno. (\#\#[lazarc] Time synchronization 
+	Vremenska sinhrnozacija igra fundamentalnu ulogu u svakoj mre\v{z}i, ali je ipak naj\v{c}e\v{s}\'{c}e 
+	dodata kao naknadna funkcionalnost. Ipak, mo\v{z}e zna\v{c}iti razliku izmedju egzaktnog 
+	odredjivanja gre\v{s}aka unutar sistema, u ta\v{c}nim vremenskim trenucima, i nepostojanje ideje 
+	za\v{s}to se server pona\v{s}a onako kako nije predvidjeno. (\#\#[lazarc] Time synchronization 
 	serves a fundamental role in any network, but it's too often added as an afterthought. 
 	However, it can mean the difference between correctly troubleshooting a conflict in 
 	minutes and having no idea why the server is figuratively on fire. \#\#) Za finansijske i 
-	naucne institucije, vremenska sinhronizacija mora biti tacna na milijarditi, ili nekad na 
-	trilioniti deo sekunde, medjutim sve vise komercijalnih i industrijskih organizacija se 
-	sve vise zalazu za ideju da preciznost vremenske sinhronizacije bude u sub-milisecond 
-	opsegu.
-	Zasto nije dovoljno da samo sinhronizujemo svoje uredjaje preko javno dostupnog NTP 
-	protokola. Nazalost, kasnjenje postoji svugde, i prosto je nemoguce postici savrsenu 
+	nau\v{c}ne institucije, vremenska sinhronizacija mora biti ta\v{c}na na milijarditi, ili nekad na 
+	trilioniti deo sekunde, medjutim sve vi\v{s}e komercijalnih i industrijskih organizacija se 
+	sve vi\v{s}e zala\v{z}u za ideju da preciznost vremenske sinhronizacije bude u sub-milisecond 
+	opsegu.	Za\v{s}to nije dovoljno da samo sinhronizujemo svoje uredjaje preko javno dostupnog NTP 
+	protokola. Na\v{z}alost, ka\v{s}njenje postoji svugde, i prosto je nemogu\'{c}e posti\'{c}i savr\v{s}enu 
 	sinhrnoizaciju. Brzina svetlosti je brza, u vakumu, foton moze napraviti krug oko zemlje 
-	vise od 7 puta u sekundi, iako putuje aproksimativno 31\% sporije kroz obicnu opticku 
-	mrezu, lako se moze preneti jedan bit informacije preko pola sveta za manje od desetine 
-	sekunde.
-	Ali, svi znamo da idealan svet ne postoji. Dodati sviceve (\#\#[lazarc] switches \#\#), 
-	rutere, i ostalu mreznu infrastrukturu, i ta desetina sekunde se uveca nekoliko puta. Bez 
-	specijalizovane opreme, nasa mreza lako moze dodati kasnjenje cak i vece od sekunde.
-	Jos veca briga je sinhronizacija razlicitih uredjaja unutar iste mreze. Scenario u kom 
-	finansijska institucija koja ima tacno 100 deonica kompanije X na berzi. U nekom trenutku 
-	se pojavi informacija koja se tice kompanije X, i finansijska institucija odluci da proda 
-	tih 100 akcija ne samo jednom investitoru, vec nekoliko njih u razmaku od sekunde. Ali 
-	posto su serveri ove institucije nesihronizovani jedan na drugi, ne postoji uopste ideja 
+	vi\v{s}e od 7 puta u sekundi, iako putuje aproksimativno 31\% sporije kroz obi\v{c}nu opti\v{c}ku 
+	mre\v{z}u, lako se mo\v{z}e preneti jedan bit informacije preko pola sveta za manje od desetine 
+	sekunde. Ali, svi znamo da idealan svet ne postoji. Dodati svi\v{c}eve (\#\#[lazarc] switches \#\#), 
+	rutere, i ostalu mre\v{z}nu infrastrukturu, i ta desetina sekunde se uve\'{c}a nekoliko puta. Bez 
+    specijalizovane opreme, na\v{s}a mre\v{z}a lako mo\v{z}e dodati ka\v{s}njenje \v{c}ak i ve\'{c}e od 
+    sekunde. Jo\v{s} ve\'{c}a briga je sinhronizacija razli\v{c}itih uredjaja unutar iste mre\v{z}e. Scenario 
+    u kom finansijska institucija koja ima ta\v{c}no 100 deonica kompanije X na berzi. U nekom trenutku 
+	se pojavi informacija koja se ti\v{c}e kompanije X, i finansijska institucija odlu\v{c}i da proda 
+	tih 100 akcija ne samo jednom investitoru, ve\'{c} nekoliko njih u razmaku od sekunde. Ali 
+	po\v{s}to su serveri ove institucije nesihronizovani jedan na drugi, ne postoji uop\v{s}te ideja 
 	kako odrediti koja je ponuda stigla prva. U ovom realnom scenariju sinhronizacija 
-	uredjaja unutar mreze je od vitalnog znacaja.
+	uredjaja unutar mre\v{z}e je od vitalnog zna\v{c}aja.
 
 	NETWORK TIME PROTOCOL
-	NTP, ili Network Time Protocol, je siroko prihvacen kao sredstvo za cuvanje vremena na 
-	mrezi, i trenutno je u upotrebi cetvrta verzija samog protokola. Hijerarhijski sistem ima 
-	razlicite slojeve koji se nazivaju STRATA (\#\#[lazarc] strata eng. \#\#). Statum 0 
-	uredjaji su u samom vrhu i ukljucuju atomske satove, kao one koji se nalaze u GNSS 
+	NTP, ili Network Time Protocol, je \v{s}iroko prihva\'{c}en kao sredstvo za \v{c}uvanje vremena na 
+	mre\v{z}i, i trenutno je u upotrebi \v{c}etvrta verzija samog protokola. Hijerarhijski sistem ima 
+	razli\v{c}ite slojeve koji se nazivaju STRATA (\#\#[lazarc] strata eng. \#\#). Statum 0 
+	uredjaji su u samom vrhu i uklju\v{c}uju atomske satove, kao one koji se nalaze u GNSS 
 	satelitima.	Stratum 1, ili primarni vremenski server, svaki od njih ima jedan na jedan 
-	direktnu konekciju sa Stratum 1 satom, i postizu sinhronizaciju red mikrosekunde sa Stratum 
-	0 satovima, i povezuju se na ostale Stratum 1 severe za brzu proveru satova i cuvanje 
-	podataka. Stratum 2 serveri se mogu povezivati na vise primarnih vremenskih servera kako 
-	bi se postigla veci level sinhronizacije i poboljsala preciznost, i tako dalje. NTP 
-	podrzava maksimum od 15 strata uredjaja, ali svaki strata uredjaj unosi malu gresku u 
+	direktnu konekciju sa Stratum 1 satom, i posti\v{z}u sinhronizaciju red mikrosekunde sa Stratum 
+	0 satovima, i povezuju se na ostale Stratum 1 severe za brzu proveru satova i \v{c}uvanje 
+	podataka. Stratum 2 serveri se mogu povezivati na vi\v{s}e primarnih vremenskih servera kako 
+	bi se postigao ve\'{c}i level sinhronizacije i pobolj\v{s}ala preciznost, i tako dalje. NTP 
+	podr\v{z}ava maksimum od 15 strata uredjaja, ali svaki strata uredjaj unosi malu gre\v{s}ku u 
 	sinhronizaciji sa Stratum 0 uredjajima.
 
-	64-bitni vremenski zig je trenutno implementiran kako bi se podelio u dva 32-bitna dela. 
+	64-bitni vremenski \v{z}ig je trenutno implementiran kako bi se podelio u dva 32-bitna dela. 
 	\begin{itemize}
-		\item Prva polovina broji broj sekundi do nesto preko 136 godina.
+		\item Prva polovina broji broj sekundi do ne\v{s}to preko 136 godina.
 		\item Druga polovina predstavlja deo sekunde do razmere pikosekunde
 	\end{itemize}
 
-	Predlozena je promena na 128-o bitne vremenske zigove u NTPv4 protokolu, i trebalo bi da 
-	poveca vremensku razmeru na nesto manje od 600 milijardi godina, pri cemu bi vremenska 
+	Predlo\v{z}ena je promena na 128-o bitne vremenske \v{z}igove u NTPv4 protokolu, i trebalo bi da 
+	pove\'{c}a vremensku razmeru na ne\v{s}to manje od 600 milijardi godina, pri \v{c}emu bi vremenska 
 	rezolucija bila manja od femtosekunde.
 
 	PRECISION TIME PROTOCOL
-	PTP, ili Precision time protokol, je jos jedan standard za sinhronizaciju vremena preko 
-	mreze, ali umesto sinhronizacije reda velicine milisekunde, PTP mreze mogu da postignu 
-	sinhronizaciju reda velicine nanosekunde, ili cak pikosekunde. Za vecinu komercijalnih i 
-	industrijskih aplikacija, NTP je vise nego precizan, ali ukoliko je potrebna tacnija 
-	sinhronizacija i tacnije obelezavanje vremena, potrebno je migrirati sistem na PTP.
+	PTP, ili Precision time protokol, je jo\v{s} jedan standard za sinhronizaciju vremena preko 
+	mre\v{z}e, ali umesto sinhronizacije reda veli\v{c}ine milisekunde, PTP mre\v{z}e mogu da postignu 
+	sinhronizaciju reda veli\v{c}ine nanosekunde, ili \v{c}ak pikosekunde. Za ve\'{c}inu komercijalnih i 
+	industrijskih aplikacija, NTP je vi\v{s}e nego precizan, ali ukoliko je potrebna ta\v{c}nija 
+	sinhronizacija i ta\v{c}nije obele\v{z}avanje vremena, potrebno je migrirati sistem na PTP.
 
-	Zbog cega je PTP toliko tacan? Koristi obelezavanje paketa hardverskim vremenskim 
-	zigovima, umesto softverskih, i kao svaki fini naucni instrument, PTP oprema je 
-	specijalizovana za samo jednu specijalizovanu svrhu: ocuvanje sinhronizacije izmedju 
-	uredjaja. Samo iz ovih razloga, PTP mreze imaju mnogo tacniju vremensku rezoluciju, i ne 
-	kao NTP uredjaji, PTP uredjaji ce ustvari ukljuciti vreme koje svaka od sinhronizacionih 
-	poruka provede u svakom od uredjaja, sto ukljucuje i kasnjenje u uredjaju.
+	Zbog \v{c}ega je PTP toliko ta\v{c}an? Koristi obele\v{z}avanje paketa hardverskim vremenskim 
+	\v{z}igovima, umesto softverskih, i kao svaki fini nau\v{c}ni instrument, PTP oprema je 
+	specijalizovana za samo jednu specijalizovanu svrhu: o\v{c}uvanje sinhronizacije izmedju 
+	uredjaja. Samo iz ovih razloga, PTP mre\v{z}e imaju mnogo ta\v{c}niju vremensku rezoluciju, i ne 
+	kao NTP uredjaji, PTP uredjaji ce ustvari uklju\v{c}iti vreme koje svaka od sinhronizacionih 
+	poruka provede u svakom od uredjaja, \v{s}to uklju\v{c}uje i ka\v{s}njenje u uredjaju.
 
-	Svaka od PTP razmena ukljucuje seriju od 4 poruke koje se razmenjuju izmedju master-a i 
+	Svaka od PTP razmena uklju\v{c}uje seriju od 4 poruke koje se razmenjuju izmedju master-a i 
 	slave-a:
 	\begin{itemize}
 		\item Inicijalna sinhronizaciona poruka od mastera ka slejvu {Sync message}
 		\item Poruka koja prati sinhronizacionu poruku od mastera ka slejvu {Follow\_up message}
-		\item Poruka sa zahtevom za odredjivanje kasnjenja od slejva ka masteru {Delay\_Req 
+		\item Poruka sa zahtevom za odredjivanje ka\v{s}njenja od slejva ka masteru {Delay\_Req 
 		message}
-		\item Finalni odgovor sa kasnjenjem od mastera ka slejvu {Delay\_Resp message}
-	\end{itemize}
-	Ova razmena pruza cetiri razlicita vremena:
+		\item Finalni odgovor sa ka\v{s}njenjem od mastera ka slejvu {Delay\_Resp message}
+    \end{itemize}
+    
+	Ova razmena pru\v{z}a \v{c}etiri razli\v{c}ita vremena:
 	\begin{itemize}
 		\item T1 -> vreme kad master posalje inicijalnu sinhronizacionu poruku
 		\item T2 -> vreme kad slejv dobije inicijalnu sinhronizacionu poruku
-		\item T3 -> vreme kad slejv posalje poruku sa zahtevom za kasnjenjem
-		\item T4 -> vreme kad master dobije zahtev za kasnjenjem
-	\end{itemize}
-	Master salje sva 4 vremenska ziga ka slejvu tokom faze odgovora na zahtev za kasnjenjem, 
-	i slejv moze sa tim vremenima da izracuna kasnjenje po mrezi izmedju mastera i slejva u 
-	oba smera. Imajuci specijalizovani hardver koji moze da uhvati vremena lokalnog sata, 
-	slejv uredjaji mogu izbeci dodatno kasnjenje koje je uslovljeno lokalnim operativnim 
+		\item T3 -> vreme kad slejv posalje poruku sa zahtevom za ka\v{s}njenjem
+		\item T4 -> vreme kad master dobije zahtev za ka\v{s}njenjem
+    \end{itemize}
+    
+	Master \v{s}alje sva 4 vremenska \v{z}iga ka slejvu tokom faze odgovora na zahtev za ka\v{s}njenjem, 
+	i slejv mo\v{z}e sa tim vremenima da izra\v{c}una ka\v{s}njenje po mre\v{z}i izmedju mastera i slejva u 
+	oba smera. Imaju\'{c}i specijalizovani hardver koji mo\v{z}e da uhvati vremena lokalnog sata, 
+	slejv uredjaji mogu izbe\'{c}i dodatno ka\v{s}njenje koje je uslovljeno lokalnim operativnim 
 	sistemom.
 
-	NTP mreze imaju dodatno kasnjenje i manju preciznost jednostavno zbog toga sto su 
-	softverski bazirane, i svi zahtevi za vremenima moraju da cekaju na lokalni operativni 
-	sistem. Za vecinu kompanija, NTP pruza dovoljno tacnu rezoluciju vrmena kako bi se resili 
-	svi konflikti u dogledno vrmene, dok neke organizacije zahtevaju dosta veci nivo 
+	NTP mre\v{z}e imaju dodatno ka\v{s}njenje i manju preciznost jednostavno zbog toga \v{s}to su 
+	softverski bazirane, i svi zahtevi za vremenima moraju da \v{c}ekaju na lokalni operativni 
+	sistem. Za ve\'{c}inu kompanija, NTP pru\v{z}a dovoljno ta\v{c}nu rezoluciju vrmena kako bi se re\v{s}ili 
+	svi konflikti u dogledno vrmene, dok neke organizacije zahtevaju dosta ve\'{c}i nivo 
 	sinhronizacije.
 
 	WHY BOTHER WITH A TIME SERVER AT ALL?
