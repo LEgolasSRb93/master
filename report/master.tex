@@ -108,67 +108,67 @@
 
 	\subsection{Sloj 2: Sloj veze (Data Link Layer)}
 
-	Sloj veze podataka obezbedjuje prenos podataka izmedju dva cvora u komunikaciji - vezu 
-	izmedju dva direktno povezana uredjaja na mrezi. Ovaj sloj otkriva i eventualno ispravlja 
-	greske koje se mogu javiti u fizickom sloju. On definise protokol za uspostavljanje i 
-	prekid veze izmedju dva fizicki povezana uredjaja. Takodje, definise protokol za kontrolu 
+	Sloj veze podataka obezbedjuje prenos podataka izmedju dva \v{c}vora u komunikaciji - vezu 
+	izmedju dva direktno povezana uredjaja na mre\v{z}i. Ovaj sloj otkriva i eventualno ispravlja 
+	gre\v{s}ke koje se mogu javiti u fizi\v{c}kom sloju. On defini\v{s}e protokol za uspostavljanje i 
+	prekid veze izmedju dva fizi\v{c}ki povezana uredjaja. Takodje, defini\v{s}e protokol za kontrolu 
 	protoka izmedju njih.
 
 	IEEE 802 standard deli sloj veze na dva podsloja:
 	\begin{itemize}
 		\item \textbf{Kontrola pristupa medijumu (MAC - Medium access control):}
 		\#\# [lazarc] [prevod]
-		odgovorna je za kontrolu nacina na koji uredjaji na mrezi dobijaju pristup medijumu i
+		odgovorna je za kontrolu na\v{c}ina na koji uredjaji na mre\v{z}i dobijaju pristup medijumu i
 		dozvolu za prenos podataka.
 		\item \textbf{Kontrola logicke veze (LLC - Logical link control):}
 		\#\# [lazarc] [prevod]
-		odgovorna je za identifikaciju i enkapsulaciju slojeva mreznog protokola, i kontrolu
-		gresaka i sinhronizaciju paketa koji se salju.
+		odgovorna je za identifikaciju i enkapsulaciju slojeva mre\v{z}nog protokola, i kontrolu
+		gre\v{s}aka i sinhronizaciju paketa koji se \v{s}alju.
 	\end{itemize}
 
-	MAC i LLC slojevi IEEE 802 mreznog standarda kao sto su 802.3 Ethernet, ili 802.11 Wi-Fi su
+	MAC i LLC slojevi IEEE 802 mre\v{z}nog standarda kao \v{s}to su 802.3 Ethernet, ili 802.11 Wi-Fi su
 	slojevi veze (data link layer).
 
-	Point-to-Point Protocol (PPP) - je protokol sloja veze koji radi na nekoliko razlicitih
-	fizickih slojeva, kao sto su sinhrone ili asinhrone serijske linije.
+	Point-to-Point Protocol (PPP) - je protokol sloja veze koji radi na nekoliko razli\v{c}itih
+	fizi\v{c}kih slojeva, kao \v{s}to su sinhrone ili asinhrone serijske linije.
 
-	\subsection{Sloj 3: Mrezni sloj (Network Layer)}
+	\subsection{Sloj 3: Mre\v{z}ni sloj (Network Layer)}
 
-	Mrezni sloj obezbedjuje funkcionalno i proceduralno sredstvo prenosa sekvenci podataka
-	promenljive duzine, koji se nazivaju jos i paketi, od jednog cvora do drugog, poveznih u
-	"razlicite mreze". \#\# [lazarc] [prevod] \#\# Mreza je medijum na koji moze biti povezano 
-	vise cvorova, u kom svaki cvor ima adresu i koji dozvoljava cvorovima povezanim sa njim da 
-	prenose poruke ka ostalim cvorovima, i to samo dajuci sadrzaj poruke i adresu cvora na 
-	koji poruka treba da bude dostavljena, omogucavajuci mrezi da nadje nacin da isporuci 
-	poruku odredisnom cvoru, eventualno ga usmeravajuci kroz sredisnje cvorove (uredjaje koji 
-	su izmedju dva uredjaja koji pokusavaju da komuniciraju). Ako je poruka prevelika da bi se 
-	prenela sa jednog uredjaja na drugi samo koriscenjem sloja veze (Data Link Layer), mreza 
-	moze preneti podatke tako sto ce ih podeliti u nekoliko delova na jednom uredjaju, poslati 
-	delove nezavisno, i onda spojiti delove na drugom uredjaju. Pri cemu moze, iako nije uvek 
-	potrebno, prijaviti greske u isporuci.
+	Mre\v{z}ni sloj obezbedjuje funkcionalno i proceduralno sredstvo prenosa sekvenci podataka
+	promenljive du\v{z}ine, koji se nazivaju jo\v{s} i paketi, od jednog \v{c}vora do drugog, poveznih u
+    "razli\v{c}ite mre\v{z}e". \#\# [lazarc] [prevod] \#\# Mre\v{z}a je medijum na koji mo\v{z}e biti 
+    povezano vi\v{s}e \v{c}vorova, u kom svaki \v{c}vor ima adresu i koji dozvoljava \v{c}vorovima povezanim 
+    sa njim da prenose poruke ka ostalim \v{c}vorovima, i to samo daju\'{c}i sadr\v{z}aj poruke i adresu 
+    \v{c}vora na koji poruka treba da bude dostavljena, omogucavaju\'{c}i mre\v{z}i da nadje na\v{c}in da 
+    isporu\v{c}i poruku odredi\v{s}nom \v{c}voru, eventualno ga usmeravaju\'{c}i kroz sredi\v{s}nje 
+    \v{c}vorove (uredjaje koji su izmedju dva uredjaja koji poku\v{s}avaju da komuniciraju). Ako je poruka 
+    prevelika da bi se prenela sa jednog uredjaja na drugi samo kori\v{s}\'{c}enjem sloja veze (Data Link 
+    Layer), mre\v{z}a mo\v{z}e preneti podatke tako \v{s}to \'{c}e ih podeliti u nekoliko delova na jednom 
+    uredjaju, poslati delove nezavisno, i onda spojiti delove na drugom uredjaju. Pri \v{c}emu mo\v{z}e, iako 
+    nije uvek potrebno, prijaviti gre\v{s}ke u isporuci.
 
-	Isporuka poruka na mreznom sloju nije garantovano pouzdana. Mrezni sloj moze pruziti 
+	Isporuka poruka na mre\v{z}nom sloju nije garantovano pouzdana. Mre\v{z}ni sloj mo\v{z}e pru\v{z}iti 
 	pouzdanu isporuku poruka, ali nije obavezno da to mora biti ispunjeno.
 
 	Neki broj protokola koji upravljaju slojevima, imaju funkciju koja je definisana u aneksu
-	upravljanja, ISO 7498/4, i pripadaju mreznom sloju. Oni ukljucuju protokole rutiranja,
-	upravljanja grupomsa vise uredjaja, informacije o mreznom sloju, o greskama, kao i 
-	dodeljivanje adresa mreznog sloja medju uredjajima. Ustvari, to je funkcija podataka koji 
-	se prenose uz pomoc protokola, sto ih cini da pripadaju mreznom sloju, a ne protokolu. 
+	upravljanja, ISO 7498/4, i pripadaju mre\v{z}nom sloju. Oni uklju\v{c}uju protokole rutiranja,
+	upravljanja grupom sa vi\v{s}e uredjaja, informacije o mre\v{z}nom sloju, o gre\v{s}kama, kao i 
+	dodeljivanje adresa mre\v{z}nog sloja medju uredjajima. Ustvari, to je funkcija podataka koji 
+	se prenose uz pomo\'{c} protokola, \v{s}to ih \v{c}ini da pripadaju mre\v{z}nom sloju, a ne protokolu. 
 	\#\# [lazarc] poslednja	recenica [prevod] \#\#
 
 	\subsection{Sloj 4: Transportni sloj (Transport Layer)}
 
 	Transportni sloj obezbedjuje funkcionalno i proceduralno sredstvo prenosa sekvenci podataka
-	promenljive duzine od predajnog do prijemnog uredjaja, uz odrzavanje kvaliteta.
+	promenljive du\v{z}ine od predajnog do prijemnog uredjaja, uz odr\v{z}avanje kvaliteta.
 
-	Transportni sloj kontrolise pouzdanost date konekcije kroz kontrolu protoka,
-	segmentaciju/desegmentaciju i kontrolu gresaka. Neki protokli su orjentisani na stanje 
-	mreze, a neki na konekciju u mrezi. \#\# [lazarc] [prevod] \#\# Ovo znaci da Transportni 
-	sloj moze da prati segmente i ponovo preneti one koji nisu isporuceni prijemnom uredjaju. 
-	Transportni sloj takodje omogucava i potvrdu uspesnog prenosa podataka i salje naredne 
-	podatke ako nije doslo do greske prilikom prenosa. Transportni sloj formira i segmente 
-	koji su primljeni iz visih slojeva, npr Aplikativnog sloja (Application Layer). 
+	Transportni sloj kontroli\v{s}e pouzdanost date konekcije kroz kontrolu protoka,
+	segmentaciju\/desegmentaciju i kontrolu gre\v{s}aka. Neki protokli su orjentisani na stanje 
+	mre\v{z}e, a neki na konekciju u mre\v{z}i. \#\# [lazarc] [prevod] \#\# Ovo zna\v{c}i da Transportni 
+	sloj mo\v{z}e da prati segmente i ponovo prenese one koji nisu isporu\v{c}eni prijemnom uredjaju. 
+	Transportni sloj takodje omogu\'{c}ava i potvrdu uspe\v{s}nog prenosa podataka i \v{s}alje naredne 
+	podatke ako nije do\v{s}lo do gre\v{s}ke prilikom prenosa. Transportni sloj formira i segmente 
+	koji su primljeni iz vi\v{s}ih slojeva, npr. Aplikativnog sloja (Application Layer). 
 	Segmentacija je proces podele dugih poruka u krace poruke kako bi se lakse prenele preko 
 	nizih slojeva u modelu.
 
