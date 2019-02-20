@@ -169,139 +169,140 @@
 	Transportni sloj takodje omogu\'{c}ava i potvrdu uspe\v{s}nog prenosa podataka i \v{s}alje naredne 
 	podatke ako nije do\v{s}lo do gre\v{s}ke prilikom prenosa. Transportni sloj formira i segmente 
 	koji su primljeni iz vi\v{s}ih slojeva, npr. Aplikativnog sloja (Application Layer). 
-	Segmentacija je proces podele dugih poruka u krace poruke kako bi se lakse prenele preko 
-	nizih slojeva u modelu.
+	Segmentacija je proces podele dugih poruka u kra\'{c}e poruke kako bi se lak\v{s}e prenele preko 
+	ni\v{z}ih slojeva u modelu.
 
-	OSI model definise pet klasa transportnih protokola za povezivnje od klase 0 (koja je 
+	OSI model defini\v{s}e pet klasa transportnih protokola za povezivnje od klase 0 (koja je 
 	takodje poznata i kao TP0 i ima najslabije karakteristike) do klase 4 (TP4, koja je 
-	dizajnirana za manje pouzdane mreze, slicne Internetu). Klasa 0 (TP0) nema mogucnost 
-	oporavka od greske i bila je dizajnirana za koriscenje na mreznim slojevima koji pruzaju 
-	konekciju bez gresaka. Klasa 4 (TP4) je najbliza TCP, iako TCP sadrzi neke funkcije koje 
-	se u OSI modelu dodeljuju visim slojevima. Takodje, sve klase u OSI modelu omogucavaju 
-	brzu upotrebu podataka i ocuvanje granica podataka \#\# [lazarc] [prevod] \#\#. Detalje 
-	karakteristika svih klasa prikazane su u sledecoj tabeli:
+	dizajnirana za manje pouzdane mre\v{z}e, slic\v{c}e Internetu). Klasa 0 (TP0) nema mogu\'{c}nost 
+	oporavka od gre\v{s}ke i bila je dizajnirana za kori\v{s}\'{c}enje na mre\v{z}nim slojevima koji pru\v{z}aju 
+	konekciju bez gre\v{s}aka. Klasa 4 (TP4) je najbli\v{z}a TCP, iako TCP sadr\v{z}i neke funkcije koje 
+	se u OSI modelu dodeljuju vi\v{s}im slojevima. Takodje, sve klase u OSI modelu omogu\'{c}avaju 
+	brzu upotrebu podataka i o\v{c}uvanje granica podataka \#\# [lazarc] [prevod] \#\#. Detalje 
+	karakteristika svih klasa prikazane su u slede\'{c}oj tabeli:
 
 	\#\# [lazarc] tabela sa interneta
 	\#\# [lazarc] prebaci tabelu na srpski
 
 	\subsection{Sloj 5: Sloj sesije (Session Layer)}
 
-	Sloj sesije kontrolise dijaloge (veze) izmedju uredjaja. Uspostavlja, upravlja i uklanja 
+	Sloj sesije kontroli\v{s}e dijaloge (veze) izmedju uredjaja. Uspostavlja, upravlja i uklanja 
 	veze izmedju lokalnih i udaljenih aplikacija. Obezbedjuje funkcije Full-Duplex, 
 	Half-Duples ili	Simplex i uspostavlja procedure Checkpoint-a, prekida ili ponovnog 
-	pokretanja procedura. OSi model je ucinio ovaj sloj odgovornim za dobro zavrsavanje sesija,
-	sto je osobina TCP (Transmission Control Protocol), i takodje proveru sesija i oporavak, 
-	sto se obicno ne koristi u Internet Protocol Suite. Sloj sesije se obicno eksplicitno 
-	primenjuje u sredinama aplikacija koje koriste proceduralne pozive na udaljenim uredjajima.
+	pokretanja procedura. OSi model je u\v{c}inio ovaj sloj odgovornim za dobro zavr\v{s}avanje sesija,
+	\v{s}to je osobina TCP (Transmission Control Protocol), i takodje proveru sesija i oporavak, 
+	\v{s}to se obi\v{c}no ne koristi u Internet Protocol Suite. Sloj sesije se obi\v{c}no eksplicitno 
+	primenjuje u aplikacijama koje koriste proceduralne pozive na udaljenim uredjajima.
 
 	\subsection{Sloj 6: Sloj prezentacije (Presentation Layer)}
 
 	Sloj prezentacije uspostavlja kontekst izmedju dva entiteta aplikativnog sloja, u kom 
-	entiteti aplikativnog sloja mogu koristiti razlicitu sintaksu i semantiku ukoliko sloj 
-	prezentacije pruza mapiranje izmeju njih. Ukoliko je dostupno mapiranje, jedinice 
-	protokola su enkapsulirane u jednice sesije i prosledjene na nize slojeve.
+	entiteti aplikativnog sloja mogu koristiti razli\v{c}itu sintaksu i semantiku ukoliko sloj 
+	prezentacije pru\v{z}a mapiranje izmedju njih. Ukoliko je dostupno mapiranje, jedinice 
+	protokola su enkapsulirane u jednice sesije i prosledjene na ni\v{z}e slojeve.
 
-	Ovaj sloj obezbedjuje nezavisnost od predstavljanja podataka u razlicitim aplikacijama i
-	mreznim formatima. Sloj prezentacije pretvara podatke u oblik koji prihvata zadata 
-	aplikacija.	Ovaj sloj formatira podatke koji se salju preko mreze. Ponekad se naziva i 
-	sintaksni sloj.	Takodje, moze ukljucivati i funkcije kompresije.
+	Ovaj sloj obezbedjuje nezavisnost od predstavljanja podataka u razli\v{c}itim aplikacijama i
+	mre\v{z}nim formatima. Sloj prezentacije pretvara podatke u oblik koji prihvata zadata 
+	aplikacija.	Ovaj sloj formatira podatke koji se \v{s}alju preko mre\v{z}e. Ponekad se naziva i 
+	sintaksni sloj.	Takodje, mo\v{z}e uklju\v{c}ivati i funkcije kompresije.
 
 	\subsection{Sloj 7: Aplikativni sloj (Application Layer)}
 
-	Aplikativni sloj je OSI sloj najblizi krajnjem korisniku, sto znaci da i OSI aplikativni 
+	Aplikativni sloj je OSI sloj najbli\v{z}i krajnjem korisniku, \v{s}to zna\v{c}i da i OSI aplikativni 
 	sloj i korisnik interaguju direktno sa aplikacijom. Ovaj sloj komunicira sa softverskom 
-	aplikacijom	koja sadrzi komponentu za komunikaciju. Takve aplikacije ne spadaju u okvir 
-	OSI modela.	Funkcije u aplikativnom sloju obicno ukljucuju identifikovanje partnera u 
+	aplikacijom	koja sadr\v{z}i komponentu za komunikaciju. Takve aplikacije ne spadaju u okvir 
+	OSI modela.	Funkcije u aplikativnom sloju obi\v{c}no uklju\v{c}uju identifikovanje partnera u 
 	komunikaciji, odredjivanje dostupnosti resursa i sinhronizaciju komunikacije. Prilikom 
 	identifikacije uredjaja za komunikaciju, aplikativni sloj se razlikuje od samih 
-	aplikacija. Na primer, internet aplikacija (web strana) moze imati dva entiteta - dve 
+	aplikacija. Na primer, internet aplikacija (web strana) mo\v{z}e imati dva entiteta - dve 
 	aplikacije: jedna koja koristi HTTP za komunikaciju sa korisnicima, i drugu za udaljenu 
-	bazu podataka koja cuva podatke. Ni jedan od ovih protokola nemaju nista sa podacima koji 
-	se cuvaju, to se nalazi samo u aplikaciji. Aplikacijski sloj nema nacina za odredjivanje 
-	resursa u mrezi.
+	bazu podataka koja \v{c}uva podatke. Ni jedan od ovih protokola nemaju ni\v{s}ta sa podacima koji 
+	se \v{c}uvaju, to se nalazi samo u aplikaciji. Aplikacijski sloj nema na\v{c}ina za odredjivanje 
+	resursa u mre\v{z}i.
 
 	\section{Internet protocol suite}
 	
 	Internet protocol suite (TCP/IP) je konceptualni model i set komunikacionih protokola koji se 
-	koriste za Internet i slicne kompjuterske mreze. Opste je poznat kao TCP/IP zbog toga sto 
+	koriste za Internet i sli\v{c}ne kompjuterske mre\v{z}e. Op\v{s}te je poznat kao TCP/IP zbog toga \v{s}to 
 	su osnovni protokoli u ovom modelu TCP (Transmission Control Protocol) i IP (Internet 
-	Protocol). Ponekad se naziva i DoD (Department of Defense) model zbog toga sto je 
+	Protocol). Ponekad se naziva i DoD (Department of Defense) model zbog toga \v{s}to je 
 	razvijanje ovog modela potpomoglo Ministarstvo odbrane SAD-a kroz DARPA.
 
-	Internet protokol suite (\#\# [lazarc] [prevod]\#\#) omogucava razmenu podataka izmedju dva
-	uredjaja na mrezi, i to specificirajuci kako ce se podaci deliti u pakete, adresirati,
-	prenositi, rutirati, i primati. Ove funkcionalnosti su organizovane u cetirir apstraktna 
+	Internet protokol suite (\#\# [lazarc] [prevod]\#\#) omogu\'{c}ava razmenu podataka izmedju dva
+	uredjaja na mre\v{z}i, i to specificiraju\'{c}i kako \'{c}e se podaci deliti u pakete, adresirati,
+	prenositi, rutirati, i primati. Ove funkcionalnosti su organizovane u \v{c}etiri apstraktna 
 	sloja, koja klasifikuju sve protokole s obzirom na to u kom delu povezivanja se nalaze 
-	(\#\#[lazarc] [prevod] scope of networking involved \#\#). Od najnizeg do najviseg, 
-	slojevi se dele na Link	Layer (Sloj povezivanja), koji sadrzi komunikacione metode za 
-	podatke koji ostaju unutar jednog segmenta mreze; Internet Layer (Sloj interneta), koji 
-	omogucava povezivanje izmedju nezavisnih mreza; Transport Layer (Sloj prenosa), koji 
-	omogucava komunikacione servise za aplikacije na uredjajima u mrezi; i Application Layer 
-	(Sloj aplikacije), koji omogucava servise korisnicima i	sistemskim aplikacijama.
+	(\#\#[lazarc] [prevod] scope of networking involved \#\#). Od najni\v{z}eg do najvi\v{s}eg, 
+	slojevi se dele na Link	Layer (Sloj povezivanja), koji sadr\v{z}i komunikacione metode za 
+	podatke koji ostaju unutar jednog segmenta mre\v{z}e; Internet Layer (Sloj interneta), koji 
+	omogu\'{c}ava povezivanje izmedju nezavisnih mre\v{z}a; Transport Layer (Sloj prenosa), koji 
+	omogu\'{c}ava komunikacione servise za aplikacije na uredjajima u mre\v{z}i; i Application Layer 
+	(Sloj aplikacije), koji omogu\'{c}ava servise korisnicima i	sistemskim aplikacijama.
 
-	Tehnicki sandardi koji specificiraju Internet protocol suite (\#\#[lazarc] [prevod]\#\#) i 
-	mnogi od protokola koji cine IPS odrzava Internet Engineering Task Force (IETF). IPS je 
-	model koji prethodi OSI modelu, koji je dosta detaljniji i opisuje vise u mreznom sistemu.
+	Tehni\v{c}ki sandardi koji specificiraju Internet protocol suite (\#\#[lazarc] [prevod]\#\#) i 
+	mnogi od protokola koji \v{c}ine IPS odr\v{z}ava Internet Engineering Task Force (IETF). IPS je 
+	model koji prethodi OSI modelu, koji je dosta detaljniji i opisuje vi\v{s}e u mre\v{z}nom sistemu.
 
-	Key architectural principles:
+	\subsection{Glavni principi arhitekture modela}
+
 	Princip od kraja do kraja je evoluirao tokom vremena. Njegov prvobitni izraz je stavio 
-	odrzavanje stanja i sveobuhvatne inteligencije na ivice, i pretpostavio da internet koji je 
-	povezivao krajeve nije zadrzao nikakvo stanje i koncentrisao se na brzinu i jednostavnost. 
-	Potrebe za zastitnim zidovima (\#\#[lazarc] firewalls \#\#), prevodiocima mreznih adresa, 
-	kesiranju veb sadrzaja i slicno, su izazvale promene u ovom principu.
+	odr\v{z}avanje stanja i sveobuhvatne inteligencije na ivice, i pretpostavio da internet koji je 
+	povezivao krajeve nije zadr\v{z}ao nikakvo stanje i koncentrisao se na brzinu i jednostavnost. 
+	Potrebe za za\v{s}titnim zidovima (\#\#[lazarc] firewalls \#\#), prevodiocima mre\v{z}nih adresa, 
+	ke\v{s}iranju sadr\v{z}aja sa interneta i sli\v{c}no, su izazvale promene u ovom principu.
 
-	Princip robusnosti kaze: "Uopsteno, implementacija mora biti konzervativna u ponasanju 
-	prilikom slanja i liberalna u svom ponasanju prilikom prijema. Sto znaci, da mora biti 
+	Princip robusnosti ka\v{z}e: "Uop\v{s}teno, implementacija mora biti konzervativna u pona\v{s}anju 
+	prilikom slanja i liberalna u svom pona\v{s}anju prilikom prijema. \v{S}to zna\v{c}i, da mora biti 
 	oprezna pri slanju dobro formiranih paketa (\#\#[lazarc] datagrams \#\#), ali mora 
-	prihvatiti bilo koji paket koji moze protumaciti. (na primer, ne primecivati tehnicke greske 
-	gde nije poznato sta ih uzrokuje.)". "Drugi deo principa je gotovo jednako vazan: softver na 
-	drugim uredjajima moze sadrzati razlike koji cine nerazumnim da se iskoriste legalne, ali 
+	prihvatiti bilo koji paket koji mo\v{z}e protuma\v{c}iti. (na primer, ne prime\'{c}ivati tehni\v{c}ke gre\v{s}ke 
+	gde nije poznato sta ih uzrokuje.)". "Drugi deo principa je gotovo jednako va\v{z}an: softver na 
+	drugim uredjajima mo\v{z}e sadr\v{z}ati razlike koji \v{c}ine nerazumnim da se iskoriste legalne, ali 
 	nejasne karakteristike protokola".
 
 	Enkapsulacija se koristi za obezbedjivanje apstrakcije protokola i usluga. Enkapsulacija je 
-	obicno uskladjena sa podelom unutar protokola na slojeve funkcionalnosti. Uopsteno, 
-	aplikacija (najvisi nivo modela) koristi skup protokola za slanje svojih podataka kroz 
+	obi\v{c}no uskladjena sa podelom unutar protokola na slojeve funkcionalnosti. Uop\v{s}teno, 
+	aplikacija (najvi\v{s}i nivo modela) koristi skup protokola za slanje svojih podataka kroz 
 	slojeve. Podaci se dalje enkapsuliraju na svakom sloju.
 
-	Rani dokumenti o ovom protokolu, govore o cetvoroslojevnom protokolu. Sto je u upotrebi i 
-	danas. I oni su unutar protokola korisceni u istom redosledu u kom ce i ovde biti navedeni.
+	Rani dokumenti o ovom protokolu, govore o \v{c}etvoroslojevnom protokolu. \v{S}to je u upotrebi i 
+	danas. I oni su unutar protokola kori\v{s}\'{c}eni u istom redosledu u kom \'{c}e i ovde biti navedeni.
 
 	\begin{itemize}
-		\item Aplikativni sloj (Application layer)
-		Aplikativni sloj je opseg unutar kog aplikacije kreiraju korisnicke podatke i prenose 
+		\item Aplikativni sloj (Application layer):
+		Aplikativni sloj je opseg unutar kog aplikacije kreiraju korisni\v{c}ke podatke i prenose 
 		ove podatke drugim aplikacijama na istom ili drugom uredjaju (hostu). Aplikacije ili 
-		procesi, koriste usluge koje pruzaju donji slojevi, posebno transportni sloj koji 
+		procesi, koriste usluge koje pru\v{z}aju donji slojevi, posebno transportni sloj koji 
 		obezbedjuje pouzdane ili nepouzdane veze ka drugim procesima. Komunikacione partnere 
-		karakterise arhitektura aplikacije, kao sto su model klijent-server i umrezavanje 
-		ravnopravnih korisnika. Ovo je sloj u kome su svi protokoli viseg nivoa, kao sto su SMTP,
-		 FTP, SSH, HTTP, i td. Procesi se adresiraju preko portova koji u sustini predstavljaju 
+		karakteri\v{s}e arhitektura aplikacije, kao \v{s}to su model klijent-server i umre\v{z}avanje 
+		ravnopravnih korisnika. Ovo je sloj u kome su svi protokoli vi\v{s}eg nivoa, kao \v{s}to su SMTP,
+		 FTP, SSH, HTTP, i td. Procesi se adresiraju preko portova koji u su\v{s}tini predstavljaju 
 		 usluge.
-		\item Transportni sloj (Transport layer)
-		Transportni sloj obavlja komunikacije izmedju domacina, ili domacina na istim ili 
-		razlicitim uredjajima (hostovima) i na lokalnoj mrezi ili udaljenim mrezama razdvojenim 
+		\item Transportni sloj (Transport layer): 
+		Transportni sloj obavlja komunikacije izmedju doma\'{c}ina, ili doma\'{c}ina na istim ili 
+		razli\v{c}itim uredjajima (hostovima) i na lokalnoj mre\v{z}i ili udaljenim mre\v{z}ama razdvojenim 
 		od rutera. Ovaj sloj obezbedjuje kanal za komunikacione potrebe aplikacija. UDP je 
-		osnovni protokol transportnog sloja koji pruza nepouzdanu uslugu sa paketima. Protokol 
-		za kontrolu prenosa (TCP) omogucava kontrolu protoka, uspostavljanje veze i pouzdan 
+		osnovni protokol transportnog sloja koji pru\v{z}a nepouzdanu uslugu sa paketima. Protokol 
+		za kontrolu prenosa (TCP) omogu\'{c}ava kontrolu protoka, uspostavljanje veze i pouzdan 
 		prenos podataka.
-		\item Internet sloj (Internet layer)
-		Internet sloj razmenjuje pakete preko mreze. Ovaj sloj obezbedjuje uniforman mrezni 
-		interfejs koji skriva stvarnu topologiju (raspored) osnovnih mreznih veza. Zbog toga se 
-		naziva i slojem koji uspostavlja rad na mrezi. Zaista, ovaj sloj definise i uspostavlja 
-		internet. Ovaj sloj definise strukture adresiranja i usmeravanja koje se koriste za 
+		\item Internet sloj (Internet layer): 
+		Internet sloj razmenjuje pakete preko mre\v{z}e. Ovaj sloj obezbedjuje uniforman mre\v{z}ni 
+		interfejs koji skriva stvarnu topologiju (raspored) osnovnih mre\v{z}nih veza. Zbog toga se 
+		naziva i slojem koji uspostavlja rad na mre\v{z}i. Zaista, ovaj sloj defini\v{s}e i uspostavlja 
+		internet. Ovaj sloj defini\v{s}e strukture adresiranja i usmeravanja koje se koriste za 
 		pakete TCP/IP protokola. Primarni protokol u ovom opsegu je Internet protokol, koji 
-		definise IP adrese. Njegova sledeca funkcija u usmeravanju je da prenosi pakete pakete 
-		na sledeci IP ruter koji ima vezu sa mrezom blize kranjem odredistu podataka.	
-		\item Sloj veze (Link layer)
-		Sloj veze definise metode umrezavanja u okviru lokalne mrezne veze na kojoj uredjaji 
-		(hostovi) komuniciraju bez rutera u medjukomunikaciji. Ovaj sloj ukljucuje protokole 
-		koji se koriste za opisivanje topologije lokalne mreze i potrebnih interfejsa da bi se 
-		zavrsio prenos paketa sa Internet sloja na ostale uredjaje.
+		definise IP adrese. Njegova slede\'{c}a funkcija u usmeravanju je da prenosi pakete 
+		na slede\'{c}i IP ruter koji ima vezu sa mre\v{z}om bli\v{z}e kranjem odredi\v{s}tu podataka.	
+		\item Sloj veze (Link layer): 
+		Sloj veze defini\v{s}e metode umre\v{z}avanja u okviru lokalne mre\v{z}ne veze na kojoj uredjaji 
+		(hostovi) komuniciraju bez rutera u medjukomunikaciji. Ovaj sloj uklju\v{c}uje protokole 
+		koji se koriste za opisivanje topologije lokalne mre\v{z}e i potrebnih interfejsa da bi se 
+		zavr\v{s}io prenos paketa sa Internet sloja na ostale uredjaje.
 	\end{itemize}
 
-	Slojevi protokola blizu vrha su logicno blizi korisnickoj aplikaciji, dok su oni blize dnu 
-	logicki blizi fizickom prenosu podataka. Pregled slojeva u smislu pruzanja i koriscenja 
-	usluge je metoda aplikacije koja izoluje gornje slojeve protokola od detalja kao sto je 
-	prenos bitova, detekcije loseg prenosa, na primer, dok su nizi slojevi izolovani od detalja 
+	Slojevi protokola blizu vrha su logi\v{c}no bli\v{z}i korisnickoj aplikaciji, dok su oni bli\v{z}e dnu 
+	logi\v{c}ki bli\v{z}i fizi\v{c}kom prenosu podataka. Pregled slojeva u smislu pru\v{z}anja i kori\v{s}\'{c}enja 
+	usluge je metoda aplikacije koja izoluje gornje slojeve protokola od detalja kao \v{s}to je 
+	prenos bitova, detekcije lo\v{s}eg prenosa, na primer, dok su ni\v{z}i slojevi izolovani od detalja 
 	aplikacije i principa rada aplikacije.
 
 	\section{Precission Time Protocol}
