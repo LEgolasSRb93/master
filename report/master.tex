@@ -598,14 +598,14 @@
         \end{itemize}
 
         Svojstva sata se daju u IEEE 1588-2002 standardu porukama za sinhronizaciju (Sync messages) i u
-        IEEE 1588-2008 standardu u porukama za ogla\v{s}avanje (Announce messages). Trenutni Master clock (\#\#
-	[lazarc] [prevod]\#\#) prenosi sve informacije u rednovnim intervalima. Sat koji sebe
-	smatra boljim od trenutnog Master sata prenosi\'{c}e ove informacije kako bi se pozvali svi
-	uredjaji za pormenu	Master sata. Kada trenutni Master prepozna bolji sat, tada Master sat
+        IEEE 1588-2008 standardu u porukama za ogla\v{s}avanje (Announce messages). Trenutni Master clock
+	prenosi sve informacije u rednovnim intervalima. Sat koji sebe smatra boljim od trenutnog Master
+        sata prenosi\'{c}e ove informacije kako bi se pozvali svi uredjaji za
+        pormenu Master sata. Kada trenutni Master prepozna bolji sat, tada Master sat
 	zaustavlja emitovanje poruka za sinhronizaciju (Sync Messages), ili poruke ogra\v{s}avanja
 	(Announce messages), u zavisnosti od verzije protokola, i bolji sat preuzima ulogu Master
 	sata. BMC algoritam uzima u obzir samo osobine koje su ve\'{c} poznate, i koje su deklarisali
-	sami satovi, i ne uzima u obzir	kvalitet veze na mre\v{z}i.
+	sami satovi, i ne uzima u obzir kvalitet veze na mre\v{z}i.
 
 	\subsection{Sinhronizacija}
 
@@ -643,8 +643,8 @@
 	vreme prenosa poruka kroz medijum za povezivanje. Vreme progresije poruke kroz medijum za
 	povezivanje	se radi merenjem vremena koje je potrebno da poruka ode od svakog uredjaja do
 	njihovog Mastera u domenu, i da se vrati nazad. Ovu razmenu iniciraju Slave uredjaji i pri
-    tome mere vreme	progresije poruke $d$. Razmena poruka po\v{c}inje tako \v{s}to Slave uredjaj
-    \v{s}alje Delay\_Req poruku u vremenskom trenutku $T_2$ ka svom Master uredjaju. Master uredjaj
+        tome mere vreme progresije poruke $d$. Razmena poruka po\v{c}inje tako \v{s}to Slave uredjaj
+        \v{s}alje Delay\_Req poruku u vremenskom trenutku $T_2$ ka svom Master uredjaju. Master uredjaj
 	primi ovu poruku, i kao	odgovor po\v{s}alje ta\v{c}nu vremensku oznaku kada je primio Delay\_Req
 	poruku. Poruka odgovora	Delay\_Resp sadrzi ta\v{c}no vreme $T_2'$ u kome je primljena poruka
 	Delay\_Req.
@@ -653,7 +653,7 @@
 	$T_1'$,	$T_2$ i $T_2'$.
 
 	Ukoliko je $d$ vreme koje je potrebno Sync poruci da prodje kroz medijum za povezivanje, a
-    $\tilde{o}$	konstantna razlika satova izmedju Master i Slave uredjaja, onda je:
+        $\tilde{o}$ konstantna razlika satova izmedju Master i Slave uredjaja, onda je:
 
 	\begin{equation}
 		T_1' - T_1 = \tilde{o} + d
@@ -982,160 +982,231 @@
         za povezivanje preko Ethernet-a, \v{c}ime je omogu\'{c}eno prepoznavanje PTP poruka koje dolaze
 	na interfejs.
 
-	\section{Time stamping unit - TSU}
-	IEEE-1588 je standard za preciznu sinhronizaciju vremena u lokalnim mre\v{z}ama. Radi se o
-	razmeni	preciznog vremena izmedju dva uredjaja u lokalnoj mre\v{z}i. PTP poruke se mogu
-	prenositi preko	IEEE802.3/Ethernet, IPv4 ili IPv6 protokola kako je to ve\'{c} opisano u
-	odeljcima pre. Periferija unutar razvojnog okru\v{z}enja GMAC ozna\v{c}ava ta\v{c}ku
-	vremenske oznake poruke (na po\v{c}etku slanja i na kraju slanja) poruke. IEEE 802.1AS je
-	podskup IEEE 1588 standarda. Jedina razlika je u adresi koja slu\v{z}i za slanje PTP poruka
-	svim uredjajima u lokalnoj mrezi (Multicast). GMAC periferija je dizajnirana tako da
-	prepoznaje poruke koje su klju\v{c}ne za PTP protokol. Kao \v{s}to je ve\'{c} navedeno,
-	sinhronizacija izmedju dva uredjaja se izvodi u dva stadijuma, odredjivanje razlike	(offset)
-	izmedju dva sata (na strani Master i Slave uredjaja), nakon \v{c}ega se \v{s}alje ta\v{c}no
-	ka\v{s}njenje na linijama za prenos podataka, \v{c}ime se ta\v{c}no sinhronizuju dva sata.
-	Hardverski moduli koji poma\v{z}u u ovoj razmeni poruka odredjuju ta\v{c}no vreme kada je
-	poruka stigla, i kada je poruka poslata. \v{S}to je klju\v{c}no za odredjivanje vremena
-	kojim se izra\v{c}unavaju razlika i ka\v{s}njenje. Pojava ovih poruka uzrokuje
-	prijavljivanje hardverskih prekida, tako da je mogu\'{c}e operisati sa vremenima koja se
-	dobijaju tako da se dobija fina sinhronizacija vremena dva uredjaja. Podr\v{s}ka ovom
-	protokolu u hardveru se ogleda u postojanju TSU(Timestamping unit) periferije
-	koja se sastoji od tajmera i registara u koje se sme\v{s}taju tacna vremena u trenucima kada
-	stignu ili odu poruke koje su klju\v{c}ne za dobijanje ta\v{c}nog vremena. Prekid se
-	prijavljuje kada se ovi	registri osve\v{z}e vremenom slanja ili primanja poruke bitne za PTP
-	protokol. Tajmer je implemntiran kao 94-bitni broja\v{c}, u kome vi\v{s}ih 48 bita broje
-	sekunde, narednih 30 bita nanosekunde, i preostalih 16 bita broje vreme ispod nanosekunda.
-	Ni\v{z}ih 46 bita se prevrte (roll-over) kad se izbroji ta\v{c}no jedna sekunda. Takodje,
-	prijavljuje se hardverski prekid nakon sto se izbroji jedna sekunda. Vrednosti tajmera, kao
-	i parametri za njegovo (\#\#[lazarc] CHECK! \#\#) koji je glavni takt unutar procesora, i njime
-	se takodje moze manipulisati. Promene pode\v{s}avanja tajmera unutar TSU su od velike
-	va\v{z}nosti za ta\v{c}nu sinhronizuju dva uredjaja. Ova periferija najvi\v{s}e uti\v{c}e na
-	ta\v{c}no vreme koje je potrebno sinhronizovati, i takodje daje informacije o ta\v{c}nom
-	vremenu na uredjaju koji se koristi. Vi\v{s}e detalja o samoj implemntaciji i
-	kori\v{s}\'{c}enju ove periferije bi\'{c}e dato u delu softverske implementacije.
+	\section{Timestamping unit - TSU}
+        Timestamping unit (TSU), je periferija unutar procesora koja pru\v{z}a
+        podr\v{s}ku prilikom vremenskog ozna\v{c}avanja paketa koji
+        u\v{c}estvuju u razmeni poruka u PTP protokolu. TSU se sastoji od
+        tajmera, koji je implementiran kao broja\v{c}, i registara u koji se
+        sme\v{s}taju vremena u kojima PTP paketi prelaze granicu vremenskog
+        ozna\v{c}avanja. Hardverski prekid se registruje prilikom
+        osve\v{z}avanja registara, pri \v{c}emu se osve\v{z}avanje registara
+        dogadja svaki put kada ta\v{c}no specificirani paketi predju preko
+        interfejsa.
+
+        Tajmer unutar periferije je implementiran kao 94 bitni broja\v{c}, kod
+        koga je najvi\v{s}ih bita predstavlja broj sekundi, slede\'{c}ih 30
+        bita predstavlja broj nanosekundi i najni\v{z}ih 16 bita predstavlja
+        vreme nivoa ispod nanosekunde. Donjih 46 bita se prebroje nakon \v{s}to
+        je izbrojena jedna sekunda, i takodje prijavljuje se prekid kada se
+        izbroji jedna sekunda. Vrednost tajmera je mogu\'{c}e pro\v{c}itati,
+        kao i modifikovati preko APB interfejsa. Frekvencija tajmera se dobija
+        od MCK procesora. U ovom slu\v{c}aju MCK je 82MHz.
+
+        Veli\v{c}ina inkrementa tajmera je podesiva i mo\v{z}e se kontrolisati
+        preko registra GMAC\_TI, gde je donjih 8 bita vrednost za koju \'{c}e
+        se uve\'{c}ati vrednost tajmera u nanosekundama, i dodatnih 16 bita
+        unutar registra GMAC\_TISUBN, unutar koga se specificira vrednost
+        inkrementa na nivou vremena ispod nanosekunde. Ukoliko je ostatak
+        registra GMAC\_TI nula, na svaku uzlaznu ivicu kloka koji dolazi na
+        periferiju, vrednost \'{c}e se uve\'{c}avati za vrednost donjih 8 bita
+        GMAC\_TI registra, plus vrednost GMAC\_TISUBN registra. Registar
+        GMAC\_TISUBN dozvoljava rezoluciju od otprilike 15 femtosekundi.
+
+        Takodje, registar GMAC\_TI ima mogu\'{c}nost pode\v{s}avanja
+        alternativnog broja nanosekundi, i to na bitima od 15 do 8, i na bitima
+        od 23 do 16 broj ciklusa nakon koga \'{c}e se iskoristiti vrednost
+        alternativnog broja nanosekundi prilikom uve\'{c}anja vrednosti
+        broja\v{c}a. Ovaj deo periferije je u velikoj meri zna\v{c}ajan za
+        pode\v{s}avanje ta\v{c}nog vremena, i to u slu\v{c}ajevima kada se
+        koriste drugi oscilatori za pogon procesora, koji daju druga\v{c}ije
+        vrednosti frekvencije kojom se uve\'{c}ava vrednost broja\v{c}a.
+
+        Ova periferija najvi\v{s}e uti\v{c}e na ta\v{c}no vreme koje je potrebno
+        sinhronizovati, i takodje daje informacije o ta\v{c}nom vremenu na uredjaju
+        koji se koristi. Vi\v{s}e detalja o samoj implemntaciji i kori\v{s}\'{c}enju
+        ove periferije bi\'{c}e dato u delu softverske implementacije.
 
 	\newpage
 
 	\chapter{Softverska implementacija}
 
-        U ovom delu \'{c}e biti opisana softverska implementacija projekta, sa datim rezultatima na kraju
-        odeljka. Rezultati se odnose na razliku u satovima dva uredjaja u sistemu koji je napravljen kako bi se
-        prikazala funkcionalnost protkola, i izvr\v{s}ila sinhronizacija dva uredjaja unutar oglednog sistema.
+        U ovom delu \'{c}e biti opisana softverska implementacija projekta, sa
+        datim rezultatima na kraju odeljka. Rezultati se odnose na razliku u
+        satovima dva uredjaja u sistemu koji je napravljen kako bi se prikazala
+        funkcionalnost protkola, i izvr\v{s}ila sinhronizacija dva uredjaja
+        unutar oglednog sistema.
 
         \#\# Prikaz sistema, nparaviti sliku gde se vide Linux PC i ploca
 
-        Ogledni sistem za implementaciju protokola preciznog vremena se sastoji od PC-a, na kome se nalazi Ubuntu
-        16.04 LTS operativni sistem, i razvojne plo\v{c}e SAMA5D27-SOM1-EK1. Povezivanje izmedju razvojne
-        plo\v{c}e i PC-a je ostvareno preko standardnog UTP kabla (UTP - Unshielded-Twisted-Pair). Na PC-u se
-        pokre\'{c}e Open source implementacija PTPd, odnosno deamon-a koji obavlja funkciju PTP protokola na
-        standardnim operativnim sistemima. U ovom slu\v{c}aju je izabran PTPd kao najjednostavnija i
-        najdostupnija verzija ovakvog programa koja se pravljena za operativne sisteme bazirane na Linux-u.
+        Ogledni sistem za implementaciju protokola preciznog vremena se sastoji
+        od PC-a, na kome se nalazi Ubuntu 16.04 LTS operativni sistem, i
+        razvojne plo\v{c}e SAMA5D27-SOM1-EK1. Povezivanje izmedju razvojne
+        plo\v{c}e i PC-a je ostvareno preko standardnog UTP kabla (UTP -
+        Unshielded-Twisted-Pair). Na PC-u se pokre\'{c}e Open source
+        implementacija PTPd, odnosno deamon-a koji obavlja funkciju PTP
+        protokola na standardnim operativnim sistemima. U ovom slu\v{c}aju je
+        izabran PTPd kao najjednostavnija i najdostupnija verzija ovakvog
+        programa koja se pravljena za operativne sisteme bazirane na Linux-u.
 
-        Kako je u nekim trenucima potrebno da vise uredjaja na mrezi dobija informacije potrebne za
-        sinhronizaciju, sam PTP deamon je konfigurisan da radi u Master only modu, i takodje u Multicast modu.
-        Sto znaci da je Linux PC u ovoj konfiguraciji oglednog sistema uvek Master i da svi uredjaji moraju da se
-        sinhronisu na njegovo tacno vreme. Takodje, kako je PC jedini uredjaj na mrezi koji daje takve
-        informacije, postavljen je u Mulitcast mod, tako da svi uredjaji dobijaju informacije, dok samo neki koji
-        mogu da prepoznaju odredjene poruke, mogu da odgovore i sinhronisu se u potpunosti. S tim u vezi, dodata
-        su jos neka podesavanja samog deamon-a, cime je odredjen period za odgovor sa slave strane, odnosno da
-        ukoliko ne dodje do odgovora u nekom roku, PC nastavi da salje genericke poruke, kako bi pokrenuo proces
-        sinhronizacije. Takodje, u svrhe provere da li je sve podeseno na najbolji nacin, vrsi se pracenje svih
-        poruka koje se dobijaju i skladiste se na PC-u kako bi kasnije mogle da se provere, ukoliko dolazi do
-        gresaka na mrezi. Kako se koristi PC, odnosno kompjuter opste namene, koji je preko jednog od interfejsa,
-        povezan na internet, sam PC dobija tacno vreme preko NTP-a, nakon cega to vreme postaje najbolje za
-        lokalnu oglednu mrezu. Ukoliko bi se koristio specijalizovani kompjuter, koji ima mogucnost da tacno
-        vreme dobije preko GPS-a, i takodje specijalizovane mrezne kartice, koje podrzavaju PTP, mogla bi se
-        dobiti mnogo veca tacnost, i time bi se povecala tacnost na slave uredjaju koji pokusava da se sinhronise.
+        Kako je u nekim trenucima potrebno da vi\v{s}e uredjaja na mre\v{z}i
+        dobija informacije potrebne za sinhronizaciju, sam PTP deamon je
+        konfigurisan da radi u Master only modu, i takodje u Multicast modu.
+        \v{S}to zna\v{c}i da je Linux PC u ovoj konfiguraciji oglednog sistema
+        uvek Master i da svi uredjaji moraju da se sinhroni\v{s}u na njegovo
+        ta\v{c}no vreme. Takodje, kako je PC jedini uredjaj na mre\v{z}i koji
+        daje takve informacije, postavljen je u Mulitcast mod, tako da svi
+        uredjaji dobijaju informacije, dok samo neki koji mogu da prepoznaju
+        odredjene poruke, mogu da odgovore i sinhroni\v{s}u se u potpunosti. S
+        tim u vezi, dodata su jos neka pode\v{s}avanja samog deamon-a, \v{c}ime
+        je odredjen period za odgovor sa slave strane, odnosno da ukoliko ne
+        dodje do odgovora u nekom roku, PC nastavi da \v{s}alje generi\v{c}ke
+        poruke, kako bi pokrenuo proces sinhronizacije. Takodje, u svrhe
+        provere da li je sve pode\v{s}eno na najbolji na\v{c}in, vr\v{s}i se
+        pra\'{c}enje svih poruka koje se dobijaju i skladi\v{s}te na PC-u kako
+        bi kasnije mogle da se provere, ukoliko dolazi do gre\v{s}aka na
+        mre\v{z}i. Kako se koristi PC, odnosno kompjuter op\v{s}te namene, koji
+        je preko jednog od interfejsa, povezan na internet, sam PC dobija
+        ta\v{c}no vreme preko NTP-a, nakon \v{c}ega to vreme postaje najbolje
+        za lokalnu oglednu mre\v{z}u. Ukoliko bi se koristio specijalizovani
+        kompjuter, koji ima mogu\'{c}nost da ta\v{c}no vreme dobije preko
+        GPS-a, i takodje specijalizovane mre\v{z}ne kartice, koje
+        podr\v{z}avaju PTP, mogla bi se dobiti mnogo ve\'{c}a ta\v{c}nost, i
+        time bi se pove\'{c}ala ta\v{c}nost na slave uredjaju koji poku\v{s}ava
+        da se sinhroni\v{s}e. Implementacija PTP deamon-a na PC-u je preuzeta i
+        kori\v{s}\'{c}ena u skladu sa uslovima i preporukama Open Source
+        zajednice, i sem konfiguracije ni\v{s}ta nije promenjeno, kako bi se
+        prilagodilo ovoj implementaciji.
 
-        Implementacija PTP deamon-a na PC-u je preuzeta i koriscena u skladu sa uslovima i preporukama Open
-        Source zajednice, i sem konfiguracije nista nije promenjeno, kako bi se prilagodilo ovoj implementaciji.
+        Sa druge strane, implementacija na slave strani, u ovom slu\v{c}aju na
+        evaluacionoj plo\v{c}i, je morala biti prilagodjena samom PTP
+        protokolu, i morala je obezbediti mehanizme za korektno kori\v{s}\'{c}enje
+        PTP protokola.
 
-        Sa druge strane, implementacija na slave strani, u ovom slucaju na evaluacionoj ploci, je morala biti
-        prilagodjena samom PTP protokolu, i morala je obezbediti mehanizme za korektno koriscenje PTP protokola.
+        Softverska implementacija je zami\v{s}ljena tako da se mo\v{z}e
+        obezbediti lako dodavanje novih funkcionalnosti, kao i promena ve\'{c}
+        postoje\'{c}ih funckionalnosti u vrlo kratkom vremenskom roku. S tim u
+        vezi izabran je FreeRTOS kao operativni sistem koji ce biti osnova, i
+        odabrana je Multi-Threaded arhitektura softvera koji implementira ovu
+        funkcionalnost. Odabir ovog operativnog sistema i ove arhitekture je
+        usko vezan sa svim \v{s}to je potrebno iskoristiti kako bi se
+        obezbedila korektna implementacija ovog protokola. Kao i dostupnost
+        baze znanja za ovaj operativni sistem, i njegova Open Source priroda.
+        Takodje, za IP stack je izabran lwIP stack, koji je pogodan za
+        implementacije na Embedded uredjajima, i takodje je Open Source i ima
+        \v{s}iroko dostupnu bazu znanja.
 
-        Softverska implementacija je zamisljena tako da se moze obezbediti lako dodavanje novih funkcionalnosti,
-        kao i promena vec postojecih funckionalnosti u vrlo kratkom vremenskom roku. S tim u vezi izabran je
-        FreeRTOS kao operativni sistem koji ce biti osnova, i odabrana je Multi-Threaded arhitektura softvera
-        koji implementira ovu funkcionalnost. Odabir ovog operativnog sistema i ove arhitekture je usko vezan sa
-        svim sto je potrebno iskoristiti kako bi se obezbedila korektna implementacija ovog protokola. Kao i
-        dostupnost baze znanja za ovaj operativni sistem, i njegova Open Source priroda. Takodje, za IP stack je
-        izabran lwIP stack, koji je pogodan za implementacije na Embedded uredjajima, i takodje je Open Source i
-        ima siroko dostupnu bazu znanja.
+        Implementacija ostavlja mogu\'{c}nosti za dodavanje novih
+        funkcionalnosti, i to kao dodavanje novih thread-ova
+        unutar ve\'{c} postoje\'{c}eg sistema. Medjutim, prilikom dodavanja
+        novih funkcionalnosti mora se voditi ra\v{c}una o
+        ve\'{c} postoje\'{c}im mehanizmima i kako nova funkcionalnost uti\v{c}e
+        na njih. S tim u vezi, implementacija PTP mehanizma je jedna od niti
+        unutar sistema, koja vodi ra\v{c}una o ta\v{c}nom vremenu sistema, i
+        ima najve\'{c}i prioritet. Kako sama sinhrnoizacija nije vremenski
+        zahtevna, i ne javlja se tako \v{c}esto, blokiraju\'{c}im prekidima
+        same niti, postignuto je da ostale funckionalnosti unutar sistema,
+        ukoliko ih bude, mogu nesmetano da se izvr\v{s}avaju, sve dok se ne
+        javi potreba sistema za sinhrnoizacijom.
 
-        Implementacija ostavlja mogucnosti za dodavanje novih funkcionalnosti, i to kao dodvanje novih thread-ova
-        unutar vec postojeceg sistema. Medjutim, prilikom dodavanja novih funkcionalnosti mora se voditi racuna o
-        vec postojecim mehanizmima i kako nova funkcionalnost utice na njih. S tim u vezi, implementacija PTP
-        mehanizma je jedna od niti unutar sistema, koja vodi racuna o tacnom vremenu sistema, i ima najveci
-        prioritet. Kako sama sinhrnoizacija nije vremenski zahtevna, i ne javlja se tako cesto, blokirajucim
-        prekidima same niti, postignuto je da ostale funckionalnosti unutar sistema, ukoliko ih bude, mogu
-        nesmetano da se izvrsavaju, sve dok se ne javi potreba sistema za sinhrnoizacijom.
+        Kao \v{s}to je ve\'{c} navedeno u poglavlju Hardverske implementacije,
+        procesor koji se koristi, ima harversku podr\v{s}ku za PTP, i to u vidu
+        TSU (Time stamping unit). Konfiguracijom modula GMAC unutar samog
+        procesora mo\v{z}e se omogu\'{c}iti da procesor prepozna pakete koji
+        sti\v{z}u preko interfejsa i odredjene podatke iz paketa preuzme i
+        prosledi na dalje kori\v{s}\'{c}enje. S tim u vezi, sam modul mora se
+        konfigurisati tako da se dozvole hardverski prekidi prilikom
+        prepoznavanja odredjenih paketa. Ova funkcionalnost se dozvoljava
+        prilikom inicijalizacije same plo\v{c}e. Takodje, TSU je potrebno
+        konfigurisati tako da se obezbedi puna funkcionalnost samog modula. TSU
+        kao modul unutar GMAC-a dobija klok (\#\# [lazarc] clock) kako bi se
+        dobilo nezavisno vreme na ploci, i odnosu na ostatak sistema. Kao
+        \v{s}to je navedeno u odeljku hardverske implementacije, TSU je
+        implementiran kao 94-bitni broja\v{c}, koji ima rezoluciju od oko 15
+        femtosekundi. Na inicijalizaciji celog sistema TSU dobija odredjeni
+        klok (\#\# [lazarc] clock), koji je u ovom slu\v{c}aju 82 MHz. TSU se
+        ne startuje sve dok se u polju konfiguracije ne dodeli inkrement koji
+        je razli\v{c}it od nule. Takodje, unutar konfiguracije TSU postoje
+        polja za specificiranje inkrementa ispod nanosekunde, koje je potrebno
+        setovati tako da se dobije \v{s}to pribli\v{z}nija reprezentacija
+        realnog vremena.
 
-        Kao sto je vec navedeno u poglavlju Hardverske implementacije, procesor koji se koristi, ima harversku
-        podrsku za PTP, i to u vidu TSU (Time stamping unit). Konfiguracijom modula GMAC unutar samog procesora
-        moze se omoguciti da procesor prepozna pakete koji stizu preko interfejsa i odredjene podatke iz paketa
-        preuzme i prosledi na dalje koriscenje. S tim u vezi, sam modul mora se konfigurisati tako da se dozvole
-        hardverski prekidi prilikom prepoznavanja odredjenih paketa. Ova funkcionalnost se dozvoljava prilikom
-        inicijalizacije same ploce. Takodje, TSU je potrebno konfigurisati tako da se obezbedi puna
-        funkcionalnost samog modula. TSU kao modul unutar GMAC-a dobija klok (\#\# [lazarc] clock) kako bi se
-        dobilo nezavisno vreme na ploci, i odnosu na ostatak sistema. Kao sto je navedeno u odeljku hardverske
-        implementacije, TSU je implementiran kao 94-bitni brojac, koji ima rezoluciju od oko 15 femto sekundi. Na
-        inicijalizaciji celog sistema TSU dobija odredjeni klok (\#\# [lazarc] clock), koji je u ovom slucaju 82
-        MHz. TSU se ne startuje sve dok se u polju konfiguracije ne dodeli inkrement koji je razlicit od nule.
-        Takodje, unutar konfiguracije TSU postoje polja za specificiranje inkrementa ispod nanosekunde, koje je
-        potrebno setovati tako da se dobije sto pribliznija reprezentacija realnog vremena.
-
-        Kako je frekvencija kojom broji TSU 82MHz, izracunavanjem se dolazi do toga da je za jedan period kloka
-        (\#\# [lazarc] clock) proslo 12.19512 ns. Pri cemu se cifre iza decimalne tacke se periodicno ponavljaju,
-        i to ponavljanje je 19512. Nakon cega se odredjuje da inkrement nanosekunda unutar brojaca TSU iznosi 12,
-        dok je inkrement vremena ispod nanosekunde celobrojni umnozak broja 1951, i u ovoj implementaciji je 9755,
-        odnosno 5 puta ostatka. Odabirom ove frekvencije za TSU, i dobijanjem ovih vremena, potrebno je izvrsiti
-        jos jednu modifikaciju TSU\@. TSU ima mogucnost i alternativnog inkrementa. Tj\@. zadavanjem vrednosti za
-        alternativno inkrementiranje brojaca, TSU moze nakon odredjenog zadatog vremena, promeniti vrednosti
-        kojima inkrementira brojac. U ovom slucaju, ispravljanje greske se vrsi na svakih 83 ciklusa unutar TSU,
-        i u tom ciklusu se dodaje 16ns na vec postojecu vrednost unutar TSU brojaca. Ovim podesavanjima modula,
-        dobija se sto vernija predstava realnog vremena. Tj\@. dobija se da ono sto dobijamo od oscilatora,
-        odgovara stvarnim vrednostima vremena. Naravno, zbog vrednosti koje dolaze sa oscilatora i podesavanja
-        PLL-ova unutar samog procesora, mora postojati odredjena greska, koja se moze tolerisati, i koja se moze
-        smanjiti na odredjene nacine.
-
-        Konfiguracija GMAC modula podrazumeva i registrovanje prekida za Sync i Delay\_Req pakete koji stizu na
-        interfejs, cime se dobijaju vremena koja su potrebna. Nakon ispravne konfiguracije, dobijaju se prekidi
-        na koje stizu paketi, i iz kojih je moguce iscitati vremena. Na Sync i Delay\_Req pakete, i prekide koji
-        javljaju, moguce je iscitati trenutnu vrednost vremena koje se nalazi u TSU, sto je bitno za proces
-        sinhronizacije. U skladu sa arhitekturom softverske implementacije, vremena koja se dobijaju, se
-        prosledjuju u red sa porukama, koji su potrebni za celokupnu sinhronizaciju.
+        Kako je frekvencija kojom broji TSU 82MHz, izra\v{c}unavanjem se dolazi
+        do toga da je za jedan period kloka (\#\# [lazarc] clock) pro\v{s}lo
+        12.19512 ns. Pri \v{c}emu se cifre iza decimalne ta\v{c}ke
+        periodi\v{c}no ponavljaju, i to ponavljanje je 19512. Nakon \v{c}ega se
+        odredjuje da inkrement nanosekunda unutar broja\v{c}a TSU iznosi 12,
+        dok je inkrement vremena ispod nanosekunde celobrojni umno\v{z}ak broja
+        1951, i u ovoj implementaciji je 9755, odnosno 5 puta ostatka. Odabirom
+        ove frekvencije za TSU, i dobijanjem ovih vremena, potrebno je
+        izvr\v{s}iti jos jednu modifikaciju TSU\@. TSU ima mogu\'{c}nost i
+        alternativnog inkrementa. Tj\@. zadavanjem vrednosti za alternativno
+        inkrementiranje broja\v{c}a, TSU mo\v{z}e nakon odredjenog zadatog
+        vremena, promeniti vrednosti kojima inkrementira broja\v{c}. U ovom
+        slu\v{c}aju, ispravljanje gre\v{s}ke se vr\v{s}i na svakih 83 ciklusa
+        unutar TSU, i u tom ciklusu se dodaje 16ns na ve\'{c} postoje\'{c}u
+        vrednost unutar TSU broja\v{c}a. Ovim pode\v{s}avanjima modula, dobija
+        se \v{s}to vernija predstava realnog vremena. Tj\@. dobija se da ono
+        \v{s}to dobijamo od oscilatora, odgovara stvarnim vrednostima vremena.
+        Naravno, zbog vrednosti koje dolaze sa oscilatora i pode\v{s}avanja
+        PLL-ova unutar samog procesora, mora postojati odredjena gre\v{s}ka,
+        koja se mo\v{z}e tolerisati, i koja se mo\v{z}e smanjiti na odredjene
+        na\v{c}ine. Konfiguracija GMAC modula podrazumeva i registrovanje
+        prekida za Sync i Delay\_Req pakete koji sti\v{z}u na interfejs,
+        \v{c}ime se dobijaju vremena koja su potrebna. Nakon ispravne
+        konfiguracije, dobijaju se prekidi na koje sti\v{z}u paketi, i iz kojih
+        je mogu\'{c}e i\v{s}\v{c}itati vremena. Na Sync i Delay\_Req pakete, i
+        prekide koji javljaju, mogu\'{c}e je i\v{s}\v{c}itati trenutnu vrednost
+        vremena koje se nalazi u TSU, \v{s}to je bitno za proces
+        sinhronizacije. U skladu sa arhitekturom softverske implementacije,
+        vremena koja se dobijaju, se prosledjuju u red sa porukama, koji su
+        potrebni za celokupnu sinhronizaciju.
 
         \#\# [lazarc] prikaz razmene poruka
 
-        Protokol tacnog vremena odredjuje i to da slave uredjaj mora prepoznati pakete koji stizu, sto se postize
-        hardverskom podrskom za neke od paketa. Ali i odgovoriti na odredjene pakete. Ovo se postize
-        implementiranjem masine stanja koja vodi racuna o trenutnom stanju uredjaja u smislu sinhronizacije. S
-        tim u vezi, masina stanja ostaje u istom, pocetnom stanju, sve dok ne stigne prvi paket koji je bitan za
-        proces sinhronizacije, Sync frame. Nakon cega se iz prekida dobija poruka sa trenutnom vrednosti vremena
-        u TSU, i prelazi se u sledece stanje. Sledece stanje u masini stanja predstavlja stanje cekanja na
-        sledeci paket, tj. Follow\_up frame. Unutar Follow\_up paketa se nalazi vreme kada je poslat Sync frame,
-        i potrebno je raspakovati taj paket, i uzeti to vreme. To se obavlja unutar ovog stanja u masini stanja,
-        nakon cega se prelazi u sledece stanje, i slanje uzetog vremena u red sa porukama. Sledece stanje
-        Delay\_Req\_Send, implementira slanje Delay\_Req paketa sa slave uredjaja na master, u skladu sa
-        specifikacijom protokola. Slanje Delay\_Req paketa, inicira prekid unutar GMAC, u kome se uzima tacno
-        vreme kada je paket napustio uredjaj. To vreme se takodje salje u red sa porukama. Nakon cega se prelazi
-        u sledece stanje, odnosno cekanje prijema Delay\_Resp paketa. Nakon sto Delay\_Resp paket pristigne, i
-        raspakuje se na odgovarajuci nacin, dobija se cetvrto i poslednje vreme koje je potrebno za
-        sinhronizaciju. I ono se salje u red sa porukama.
+        Protokol ta\v{c}nog vremena odredjuje i to da slave uredjaj mora
+        prepoznati pakete koji sti\v{z}u, \v{s}to se posti\v{z}e
+        hardverskom podr\v{s}kom za neke od paketa. Ali i odgovoriti na
+        odredjene pakete. Ovo se posti\v{z}e implementiranjem ma\v{s}ine stanja
+        koja vodi ra\v{c}una o trenutnom stanju uredjaja u smislu
+        sinhronizacije. S tim u vezi, ma\v{s}ina stanja ostaje u istom,
+        po\v{c}etnom stanju, sve dok ne stigne prvi paket koji je bitan za
+        proces sinhronizacije, Sync frame. Nakon \v{c}ega se iz prekida dobija
+        poruka sa trenutnom vrednosti vremena u TSU, i prelazi se u slede\'{c}e
+        stanje. Slede\'{c}e stanje u ma\v{s}ini stanja predstavlja stanje
+        \v{c}ekanja na slede\'{c}i paket, tj. Follow\_up frame. Unutar
+        Follow\_up paketa se nalazi vreme kada je poslat Sync frame, i potrebno
+        je raspakovati taj paket, i uzeti to vreme. To se obavlja unutar ovog
+        stanja u ma\v{s}ini stanja, nakon \v{c}ega se prelazi u slede\'{c}e
+        stanje, i slanje uzetog vremena u red sa porukama. Slede\'{c}e stanje
+        Delay\_Req\_Send, implementira slanje Delay\_Req paketa sa slave
+        uredjaja na master, u skladu sa specifikacijom protokola. Slanje
+        Delay\_Req paketa, inicira prekid unutar GMAC, u kome se uzima ta\v{c}no
+        vreme kada je paket napustio uredjaj. To vreme se takodje \v{s}alje u
+        red sa porukama. Nakon \v{c}ega se prelazi u slede\'{c}e stanje,
+        odnosno \v{c}ekanje prijema Delay\_Resp paketa. Nakon \v{s}to
+        Delay\_Resp paket pristigne, i raspakuje se na odgovaraju\'{c}i
+        na\v{c}in, dobija se \v{c}etvrto i poslednje vreme koje je potrebno za
+        sinhronizaciju. I ono se \v{s}alje u red sa porukama.
 
         \#\# [lazarc] prikaz masine stanja
 
-        Nakon ovoga, sva vremena koja su potrebna za sinhronizaciju su tu, i moze se izvrsiti promena TSU, tako
-        da racunanje vremena odgovara vremenu na master uredjaju. Racunanjem vrednosti kojim se treba promeniti
-        TSU, koriste se vec ugradjeni makroi i mehanizmi kako bi se iskoristile funkcionalnosti koje nudi TSU\@. S
-        tim u vezi modifikuje se trenutna vrednost koju broji TSU, i takodje se modifikuju vrednosti za delove
-        vremena ispod nanosekunde.
+        Nakon ovoga, sva vremena koja su potrebna za sinhronizaciju su tu, i
+        mo\v{z}e se izvr\v{s}iti promena TSU, tako da ra\v{c}unanje vremena
+        odgovara vremenu na master uredjaju. Ra\v{c}unanjem vrednosti kojim se
+        treba promeniti TSU, koriste se ve\v{c} ugradjeni makroi i mehanizmi
+        kako bi se iskoristile funkcionalnosti koje nudi TSU\@. S tim u vezi
+        modifikuje se trenutna vrednost koju broji TSU, i takodje se modifikuju
+        vrednosti za delove vremena ispod nanosekunde.
 
-        Za ovakav nacin implementacije, potrebne je samo jedna nit, i to ona koja ce da vodi racuna o masini
-        stanja. Unutar ove niti, odnosno masine stanja, implementirani su blokirajuci pozivi za dobijanje vremena
-        iz reda sa porukama, cime se smanjuje vreme i resursi koje procesor trosi na opsluzivanje ove niti.
-        Takodje, ovakav nacin implementacije dozvoljava implementaciju ostalih niti koje mogu izvrsavati ostale
-        funkcionalnosti sistema, s obzirom da ova nit nije zahtevna i javlja se relativno retko potreba za
+        Za ovakav na\v{c}in implementacije, potrebne je samo jedna nit, i to
+        ona koja \'{c}e da vodi ra\v{c}una o ma\v{s}ini stanja. Unutar ove
+        niti, odnosno ma\v{s}ine stanja, implementirani su blokiraju\'{c}i
+        pozivi za dobijanje vremena iz reda sa porukama, \v{c}ime se smanjuje
+        vreme i resursi koje procesor tro\v{s}i na opslu\v{z}ivanje ove niti.
+        Takodje, ovakav na\v{c}in implementacije dozvoljava implementaciju
+        ostalih niti koje mogu izvr\v{s}avati ostale funkcionalnosti sistema, s
+        obzirom da ova nit nije zahtevna i javlja se relativno retko potreba za
+
         sinhronizacijom, \~1s.
 
         \subsection{Rezultati}
