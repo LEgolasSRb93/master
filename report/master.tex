@@ -503,7 +503,12 @@
         mre\v{z}u sa njim. Ukoliko se u nekom delu mre\v{z}e nalazi Boundary clock on prosledjuje
         ta\v{c}no vreme ka ostalim uredjajima koji su direktno na njega povezani.
 
-	\# mora slika ovde kako izgleda arhitekura tacno
+        \begin{figure}[htb]
+                \centering
+                \includegraphics[scale=.3]{../pic/arch_ptp_system.png}
+                \caption{Prikaz arhitekture jednog sistema koji podrzava PTP}
+                \label{fig:arch_ptp_system}
+        \end{figure}
 
 	Simplifikovano, PTP sistem se sastoji od Ordinary clocks \#Obicnog uredjaja\# poveznih na
 	jednostavnu mre\v{z}u, i bez Boundary clocks \#Sporednih uredjaja\#. Grandmaster se bira, i svi
@@ -517,10 +522,10 @@
 	dostave podataka preko mre\v{z}e.
 
 	PTP tipi\v{c}no koristi EPOCH vreme, standardno vreme za UNIX sisteme (1 Januar 1970 kao
-        po\v{c}etak	ra\v{c}unanja vremena). Dok je UNIX vreme bazirano na Univerzalnom vremenu UTC,
+        po\v{c}etak ra\v{c}unanja vremena). Dok je UNIX vreme bazirano na Univerzalnom vremenu UTC,
         i mora da postoji sekunda preskoka (\#Ovo dodati, mozda u uvod\#), PTP je baziran na
 	Medjunarodnom Atomskom Vremenu (TAI - International Atomic Time). PTP Grandmaster daje
-	trenutnu razliku izmedju UTC i TAI,	kako bi UTC vreme moglo da se izra\v{c}una od primljenog
+	trenutnu razliku izmedju UTC i TAI, kako bi UTC vreme moglo da se izra\v{c}una od primljenog
 	PTP vremena.
 
 	\# mora slika da se vidi razlika izmedju UTC i PTP, TAI
@@ -626,7 +631,12 @@
 	sekundu. Dok je IEEE 1588-2008 protokolom dozvoljeno i do 10 objava vremena u jednoj
 	sekundi.
 
-	\#\# [lazarc] [slika] sync
+        \begin{figure}[htb]
+                \centering
+                \includegraphics[scale=.3]{../pic/ieee_1588_sync_sequence.png}
+                \caption{Prikaz sinhronizacione sekvence PTP protokola}
+                \label{fig:ieee_1588_sync_sequence}
+        \end{figure}
 
         Svaka objava vremena kre\'{c}e u vremenskom trenutku $T_1$, i to Sync porukom koju \v{s}alje
         Master uredjaj svim uredjajima u domenu. Uredjaj koji prima ovu poruku pamti vreme $T_1'$ u
