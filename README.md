@@ -37,7 +37,7 @@ Potrebno opisati:
     - Rezultati -> ubaciti slike sa Putty-a, dodati sta predstavljaju
     - Predlozi za poboljsanja -> ubaciti deo za IEEE1588 poruke, i sta bi jos
       moglo da se uradi
-    - predlog: 
+    - predlog:
         > pisati o promeni standarda, koriscenju novog nacina slanja, sa data link layer-a
         > pisati o koriscenju drugog steka
         > testiranju na razlicitim operativnim sistemima
@@ -66,5 +66,6 @@ Potrebno opisati:
 - https://savannah.nongnu.org/projects/lwip/
 - http://ww1.microchip.com/downloads/en/DeviceDoc/SAMA5D27-SOM1-Kit1-User-Guide-DS50002667B.PDF
 - https://www.rtaautomation.com/technologies/ieee-1588/
+- https://1.ieee802.org/tsn/802-1as-rev/
 
 Bookmark folder **Master** also!

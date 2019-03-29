@@ -50,7 +50,7 @@
 	mre\v{z}u, lako se mo\v{z}e preneti jedan bit informacije preko pola sveta za manje od desetine
 	sekunde. Ali, svi znamo da idealan svet ne postoji. Dodati svi\v{c}eve (switches),
 	rutere, i ostalu mre\v{z}nu infrastrukturu, i ta desetina sekunde se uve\'{c}a nekoliko puta. Bez
-        specijalizovane opreme, na\v{s}a mre\v{z}a lako mo\v{z}e dodati ka\v{s}njenje \v{c}ak i ve\'{c}e od
+    specijalizovane opreme, na\v{s}a mre\v{z}a lako mo\v{z}e dodati ka\v{s}njenje \v{c}ak i ve\'{c}e od
 	sekunde. Jo\v{s} ve\'{c}a briga je sinhronizacija razli\v{c}itih uredjaja unutar iste mre\v{z}e.
 
 	Sinhronizacija postaje neophodna kada su uredjaji koji rade zajedno na odredjenoj
@@ -1221,24 +1221,54 @@
 
         \subsection{Rezultati}
 
-		U ovom delu \'{c}e biti dati rezultati trenutnog izvr\v{s}avanja i sinhronizacije 
+		U ovom delu \'{c}e biti dati rezultati trenutnog izvr\v{s}avanja i sinhronizacije
 		u oglednom sistemu.
 
         \#\# [lazarc] dodati da je samo jedna nit za sync, i jedna dummy nit
 
-		U neoptere\'{c}enoj mre\v{z}i, tj\@. u mre\v{z}i 1 na 1, PC i razvojna plo\v{c}a, 
-		dobijaju se rezultati sinhrnoizacije od otprilike 0.06ms, \v{s}to je vi\v{s}e nego 
-		zadovoljavaju\'{c}e za ovakav tip sinhronizacije. Takodje, postoji akumulacija gre\v{s}ke 
+		U neoptere\'{c}enoj mre\v{z}i, tj\@. u mre\v{z}i 1 na 1, PC i razvojna plo\v{c}a,
+		dobijaju se rezultati sinhrnoizacije od otprilike 0.06ms, \v{s}to je vi\v{s}e nego
+		zadovoljavaju\'{c}e za ovakav tip sinhronizacije. Takodje, postoji akumulacija gre\v{s}ke
 		koja je uzeta u obzir, i ona se ogleda u tome da u nekim trenucima, uredjaj koji se
-		sinhronizuje izgubi sinhronizaciju, nakon \v{c}ega se vraca u roku od jednog ciklusa 
-		sinhronizacije. Ova gre\v{s}ka se pojavljuje usled prekora\v{c}enja (\#\# [lazarc] overflow ) 
+		sinhronizuje izgubi sinhronizaciju, nakon \v{c}ega se vraca u roku od jednog ciklusa
+		sinhronizacije. Ova gre\v{s}ka se pojavljuje usled prekora\v{c}enja (\#\# [lazarc] overflow )
 		dela broja\v{c}a za vremena ispod nanosekunde.
 
         \#\# [lazarc] ubaciti slike sa putty-a
 
 		\subsection{Predlozi za pobolj\v{s}anja}
-		
 
+        Unutar ovog dela bi\'{c}e dati predlozi za pobolj\v{s}anja vec
+        postoje\'{c}eg mehanizma, a i predlozi za pobolj\v{s}anja algoritma
+        koji je implementiran.
+
+        Naime, kako je u ovoj implementaciji kori\v{s}\'{c}ena verzija 1
+        originalnog IEEE 1588 standarda, na lwIP steku, mogu\'{c}e je
+        pru\v{z}iti podr\v{s}ku za verziju 2 standarda. \v{C}ime bi se
+        pobolj\v{s}ala sinhronizacija i pru\v{z}ila podr\v{s}ka za
+        razli\v{c}ite softverske i hardverske implementacije ostatka sistema,
+        odnosno integracije razvojne plo\v{c}e u druge sisteme koji ne
+        podr\v{z}avaju ovu verziju standarda. Takodje, na ovaj na\v{c}in bi se
+        pru\v{z}ila podr\v{s}ka za ostali hardver koji podr\v{z}ava standard,
+        \v{c}ime bi se pove\'{c}ala i ta\v{c}nost sinhronizacije.
+
+        Takodje, kao jo\v{s} jedan predlog za pobolj\v{s}anje mo\v{z}e se
+        navesti i kori\v{s}\'{c}enje druga\v{c}ije softverske implementacije
+        standarda na PC-u, ili kori\v{s}\'{c}enje drugog operativnog sistema na
+        samoj razvojnoj plo\v{c}i. Pri \v{c}emu je mogu\'{c}e vr\v{s}iti
+        uporednu analizu koliko zaista sam operativni sistem uti\v{c}e na
+        sinhronizaciju i propagaciju paketa kroz stek i operativni sistem.
+
+        I kao poslednji predlog za pobolj\v{s}anje, mogu\'{c}e je
+        implementirati IEEE 802.1 AS koji specificira kori\v{s}\'{c}enje IEEE
+        1588 standarda, ali bez kori\v{s}\'{c}enja specijalizovanog IP steka.
+        Implementacijom ovog standarda, prepoznavanje i formiranje paketa se
+        spu\v{s}ta u OSI modelu na Data Link sloj, \v{c}ime se smanjuje ukida
+        propagacija kroz stek, i time pove\'{c}ava ta\v{c}nost sinhronizacije.
+        Medjutim, u ovoj implementaciji standarda, vrlo je bitno da postoji
+        podr\v{s}ka unutar drajvera same periferije, i to mo\v{z}e dosta
+        uticati od softverskog paketa, kao i operativnog sistema koji se
+        koristi.
 
 	\newpage
 
