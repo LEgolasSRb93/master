@@ -53,22 +53,22 @@
 	ipak naj\v{c}e\v{s}\'{c}e dodata kao naknadna funkcionalnost. Ipak,
 	mo\v{z}e zna\v{c}iti razliku izmedju egzaktnog odredjivanja gre\v{s}aka
 	unutar sistema, u ta\v{c}nim vremenskim trenucima, i nepostojanje ideje
-	za\v{s}to se server pona\v{s}a onako kako nije predvidjeno. Za finansijske 
-	i nau\v{c}ne institucije, vremenska sinhronizacija mora biti ta\v{c}na na 
-	milijarditi, ili nekad na trilioniti deo sekunde, medjutim sve vi\v{s}e 
-	komercijalnih i industrijskih organizacija se sve vi\v{s}e zala\v{z}u za 
-	ideju da preciznost vremenske sinhronizacije bude u sub-milisecond opsegu. 
-	Za\v{s}to nije dovoljno da se uredjaji sinhronizuju preko javno dostupnog 
-	NTP protokola. Na\v{z}alost, ka\v{s}njenje postoji svugde, i prosto je 
-	nemogu\'{c}e posti\'{c}i savr\v{s}enu sinhrnoizaciju. Brzina svetlosti je 
-	brza, u vakumu, foton mo\v{z}e napraviti krug oko Zemlje vi\v{s}e od 7 puta 
-	u sekundi, iako putuje aproksimativno 31\% sporije kroz obi\v{c}nu 
-	opti\v{c}ku mre\v{z}u, lako se mo\v{z}e preneti jedan bit informacije preko 
-	pola sveta za manje od desetine sekunde. Ali, svi znamo da idealan svet ne 
-	postoji. Dodati svi\v{c}eve (eng\. switches), rutere (eng\. routers), i 
-	ostalu mre\v{z}nu infrastrukturu, i ta desetina sekunde se uve\'{c}a 
-	nekoliko puta. Bez specijalizovane opreme, na\v{s}a mre\v{z}a lako mo\v{z}e 
-	dodati ka\v{s}njenje \v{c}ak i ve\'{c}e od sekunde. Jo\v{s} ve\'{c}a briga 
+	za\v{s}to se server pona\v{s}a onako kako nije predvidjeno. Za finansijske
+	i nau\v{c}ne institucije, vremenska sinhronizacija mora biti ta\v{c}na na
+	milijarditi, ili nekad na trilioniti deo sekunde, medjutim sve vi\v{s}e
+	komercijalnih i industrijskih organizacija se sve vi\v{s}e zala\v{z}u za
+	ideju da preciznost vremenske sinhronizacije bude u sub-milisecond opsegu.
+	Za\v{s}to nije dovoljno da se uredjaji sinhronizuju preko javno dostupnog
+	NTP protokola. Na\v{z}alost, ka\v{s}njenje postoji svugde, i prosto je
+	nemogu\'{c}e posti\'{c}i savr\v{s}enu sinhrnoizaciju. Brzina svetlosti je
+	brza, u vakumu, foton mo\v{z}e napraviti krug oko Zemlje vi\v{s}e od 7 puta
+	u sekundi, iako putuje aproksimativno 31\% sporije kroz obi\v{c}nu
+	opti\v{c}ku mre\v{z}u, lako se mo\v{z}e preneti jedan bit informacije preko
+	pola sveta za manje od desetine sekunde. Ali, svi znamo da idealan svet ne
+	postoji. Dodati svi\v{c}eve (eng\. switches), rutere (eng\. routers), i
+	ostalu mre\v{z}nu infrastrukturu, i ta desetina sekunde se uve\'{c}a
+	nekoliko puta. Bez specijalizovane opreme, na\v{s}a mre\v{z}a lako mo\v{z}e
+	dodati ka\v{s}njenje \v{c}ak i ve\'{c}e od sekunde. Jo\v{s} ve\'{c}a briga
 	je sinhronizacija razli\v{c}itih uredjaja unutar iste mre\v{z}e.
 
 	Sinhronizacija postaje neophodna kada su uredjaji koji rade zajedno na
@@ -85,27 +85,27 @@
 	sinhronizacije. Upravo iz ovih razloga je i	nastala potreba za
 	sinhronizacijom uredjaja.
 
-	S tim u vezi, u ovom radu \'{c}e biti predstavljen primer implementacije 
-	vremenske sinhronizacije izmedju dva uredjaja, kao ogled primene Precision 
-	Time Protocol-a, i prikazivanje njegovih mogu\'{c}nosti. Sve \v{s}to \'{c}e 
-	prikazano u ovom radu je napravljeno na osnovu \textit{open source} 
-	softverskim modulima, i sve \v{s}to je iskor\v{s}\'{c}eno mo\v{z}e biti 
+	S tim u vezi, u ovom radu \'{c}e biti predstavljen primer implementacije
+	vremenske sinhronizacije izmedju dva uredjaja, kao ogled primene Precision
+	Time Protocol-a, i prikazivanje njegovih mogu\'{c}nosti. Sve \v{s}to \'{c}e
+	prikazano u ovom radu je napravljeno na osnovu \textit{open source}
+	softverskim modulima, i sve \v{s}to je iskor\v{s}\'{c}eno mo\v{z}e biti
 	nadogradjeno i iskori\v{s}\'{c}eno u nekim drugim sistemima.
 
-	Implementirani sistem je vrlo jednostavan, sastoji se od jednog kompjutera 
-	op\v{s}te namene, PC-a, i razvojne plo\v{c}e kompanije Atmel, bazirane na 
-	Arm A5 mikrokontroleru. Sam sistem je zami\v{s}ljen tako da bude modularan, 
-	i da na osnovu neke naknadne potrebe, moze biti nadogradjen, ili 
+	Implementirani sistem je vrlo jednostavan, sastoji se od jednog kompjutera
+	op\v{s}te namene, PC-a, i razvojne plo\v{c}e kompanije Atmel, bazirane na
+	Arm A5 mikrokontroleru. Sam sistem je zami\v{s}ljen tako da bude modularan,
+	i da na osnovu neke naknadne potrebe, moze biti nadogradjen, ili
 	iskori\v{s}\'{c}en u neke druge svrhe.
 
-	U prvom poglavlju \'{c}e biti prikazan pregled OSI modela komunikacije, 
-	TCP/IP modela, i prikaz samog PTP protokola, koji potpuno opisan i 
-	obja\v{s}njen. U drugom poglavlju bi\'{c}e prikazan oprativni sistem koji 
-	je kori\v{s}\'{c}en, kao i stek (eng\. stack) za komunikaciju koji je 
-	iskori\v{s}\'{c}en za implementaciju. U tre\'{c}em poglavlju je data 
-	hardverska implementacija sa opisom razvojne plo\v{c}e koja je izabrana i 
-	razloga zbog kojih je izabrana ova plo\v{c}a. U \v{c}etvrtom poglavlju je 
-	dat opis softverske implementacije, kao i rezultati same implementacije. I 
+	U prvom poglavlju \'{c}e biti prikazan pregled OSI modela komunikacije,
+	TCP/IP modela, i prikaz samog PTP protokola, koji potpuno opisan i
+	obja\v{s}njen. U drugom poglavlju bi\'{c}e prikazan oprativni sistem koji
+	je kori\v{s}\'{c}en, kao i stek (eng\. stack) za komunikaciju koji je
+	iskori\v{s}\'{c}en za implementaciju. U tre\'{c}em poglavlju je data
+	hardverska implementacija sa opisom razvojne plo\v{c}e koja je izabrana i
+	razloga zbog kojih je izabrana ova plo\v{c}a. U \v{c}etvrtom poglavlju je
+	dat opis softverske implementacije, kao i rezultati same implementacije. I
 	predlozi za pobolj\v{s}anja same implementacije.
 
 	\newpage
@@ -450,122 +450,34 @@
 
 	\section{Precission Time Protocol}
 
-	\section{Network Time Protocol}
-
-	NTP, ili Network Time Protocol, je \v{s}iroko prihva\'{c}en kao sredstvo za
-	\v{c}uvanje vremena na mre\v{z}i, i trenutno je u upotrebi \v{c}etvrta
-	verzija samog protokola. Hijerarhijski sistem ima razli\v{c}ite slojeve
-	koji se nazivaju STRATA (eng\. strata). Statum 0 uredjaji su u samom vrhu i
-	uklju\v{c}uju atomske satove, kao one koji se nalaze u GNSS	satelitima.
-	Stratum 1, ili primarni vremenski server, svaki od njih ima jedan na jedan
-	direktnu konekciju sa Stratum 1 satom, i posti\v{z}u sinhronizaciju red
-	mikrosekunde sa Stratum	0 satovima, i povezuju se na ostale Stratum 1
-	severe za brzu proveru satova i \v{c}uvanje	podataka. Stratum 2 serveri se
-	mogu povezivati na vi\v{s}e primarnih vremenskih servera kako bi se
-	postigao ve\'{c}i level sinhronizacije i pobolj\v{s}ala preciznost, i tako
-	dalje. NTP podr\v{z}ava maksimum od 15 strata uredjaja, ali svaki strata
-	uredjaj unosi malu gre\v{s}ku u	sinhronizaciji sa Stratum 0 uredjajima.
-
-	64-bitni vremenski \v{z}ig je trenutno implementiran kako bi se podelio u
-	dva 32-bitna dela.
-	\begin{itemize}
-		\item Prva polovina broji broj sekundi do ne\v{s}to preko 136 godina.
-		\item Druga polovina predstavlja deo sekunde do razmere pikosekunde
-	\end{itemize}
-
-	Predlo\v{z}ena je promena na 128-o bitne vremenske \v{z}igove u NTPv4
-	protokolu, i trebalo bi da pove\'{c}a vremensku razmeru na ne\v{s}to manje
-	od 600 milijardi godina, pri \v{c}emu bi vremenska rezolucija bila manja od
-	femtosekunde.
-
 	\section{Precision time protokol}
 
-	\#\# [lazarc] take a look
+    Protokol preciznog vremena (Precision Time Protocol (PTP)) je protokol
+	kori\v{s}\'{c}en za sinhronizaciju satova preko kompjuterske mre\v{z}e. U
+	lokalnoj kompjuterskoj mre\v{z}i (local area connection), posti\v{z}e se
+	preciznost sata i u rangu ispod mikrosekunde, \v{s}to ga \v{c}ini pogodnim
+	za merenja i kontrolne sisteme.
 
-	PTP, ili Precision time protokol, je jo\v{s} jedan standard za
-	sinhronizaciju vremena preko mre\v{z}e, ali umesto sinhronizacije reda
-	veli\v{c}ine milisekunde, PTP mre\v{z}e mogu da postignu sinhronizaciju
-	reda veli\v{c}ine nanosekunde, ili \v{c}ak pikosekunde. Za ve\'{c}inu
-	komercijalnih i	industrijskih aplikacija, NTP je vi\v{s}e nego precizan,
-	ali ukoliko je potrebna ta\v{c}nija	sinhronizacija i ta\v{c}nije
-	obele\v{z}avanje vremena, potrebno je migrirati sistem na PTP.
+	PTP je originalno definisan u IEEE 1588-2002 standardu, i zvani\v{c}no
+	nazvan ``Standard for a Precision Clock Synchronization Protocol for
+	Networked Measurement and Control Systems'' i objavljen 2002 godine. U 2008
+	godini, IEEE 1588-2002 je objavljen kao preradjen standard, poznat i kao
+	PTP Version 2, sa pobolj\v{s}anom ta\v{c}no\v{s}\'{c}u, precizno\v{s}\'{c}u
+	i robusno\v{s}\'{c}u, medjutim nije kompatibilan sa prethodnom verzijom
+	koja je objavljena 2002 godine.
 
-	Zbog \v{c}ega je PTP toliko ta\v{c}an? Koristi obele\v{z}avanje paketa
-	hardverskim vremenskim \v{z}igovima, umesto softverskih, i kao svaki fini
-	nau\v{c}ni instrument, PTP oprema je specijalizovana za samo jednu
-	specijalizovanu svrhu: o\v{c}uvanje sinhronizacije izmedju uredjaja. Samo
-	iz ovih razloga, PTP mre\v{z}e imaju mnogo ta\v{c}niju vremensku rezoluciju
-	i ne kao NTP uredjaji, PTP uredjaji ce ustvari uklju\v{c}iti vreme koje
-	svaka od sinhronizacionih poruka provede u svakom od uredjaja, \v{s}to
-	uklju\v{c}uje i ka\v{s}njenje u uredjaju.
-
-	Svaka od PTP razmena uklju\v{c}uje seriju od 4 poruke koje se razmenjuju
-	izmedju master-a i slave-a:
-	\begin{itemize}
-		\item Inicijalna sinhronizaciona poruka od mastera ka slejvu {Sync
-		message}
-		\item Poruka koja prati sinhronizacionu poruku od mastera ka slejvu
-		{Follow\_up message}
-		\item Poruka sa zahtevom za odredjivanje ka\v{s}njenja od slejva ka
-		masteru {Delay\_Req	message}
-		\item Finalni odgovor sa ka\v{s}njenjem od mastera ka slejvu
-		{Delay\_Resp message}
-	\end{itemize}
-
-	Ova razmena pru\v{z}a \v{c}etiri razli\v{c}ita vremena:
-	\begin{itemize}
-		\item T1 -> vreme kad master posalje inicijalnu sinhronizacionu poruku
-		\item T2 -> vreme kad slejv dobije inicijalnu sinhronizacionu poruku
-		\item T3 -> vreme kad slejv posalje poruku sa zahtevom za ka\v{s}njenjem
-		\item T4 -> vreme kad master dobije zahtev za ka\v{s}njenjem
-	\end{itemize}
-
-	Master \v{s}alje sva 4 vremenska \v{z}iga ka slejvu tokom faze odgovora na
-	zahtev za ka\v{s}njenjem, i slejv mo\v{z}e sa tim vremenima da izra\v{c}una
-	ka\v{s}njenje po mre\v{z}i izmedju mastera i slejva u oba smera.
-	Imaju\'{c}i specijalizovani hardver koji mo\v{z}e da uhvati vremena
-	lokalnog sata, slejv uredjaji mogu izbe\'{c}i dodatno ka\v{s}njenje koje je
-	uslovljeno lokalnim operativnim	sistemom.
-
-	NTP mre\v{z}e imaju dodatno ka\v{s}njenje i manju preciznost jednostavno
-	zbog toga \v{s}to su softverski bazirane, i svi zahtevi za vremenima moraju
-	da \v{c}ekaju na lokalni operativni	sistem. Za ve\'{c}inu kompanija, NTP
-	pru\v{z}a dovoljno ta\v{c}nu rezoluciju vrmena kako bi se re\v{s}ili
-	svi konflikti u dogledno vrmene, dok neke organizacije zahtevaju dosta
-	ve\'{c}i nivo sinhronizacije.
-
-	IEEE 1588 obezbedjuje sinhronizaciju dva sata u istoj mre\v{z}i koja je
-	otporna na gre\v{s}ke. Takodje, koristi se veoma mali opseg frekvencija,
-	procesna mo\'{c}, ali i pode\v{s}avanje samog protokola. IEEE 1588 standard
-	posti\v{z}e sve ovo koriste\'{c}i protokol preciznog vremena (Precision
-	Time Protocol), ili PTP\@. Vremenski protokol koji se koristi sinhronizuje
-	dva sata na	mre\v{z}i pode\v{s}avaju\'{c}i satove ka ``najkvalitetnijem''
-	satu. IEEE 1588	defini\v{s}e ospege vrednosti za standardan set
-	karakteristika satova. Algoritam najboljeg sata, BMC algorithm,
-	odlu\v{c}uje koji sat na mre\v{z}i je ``najkvalitetniji'', odnosno koji sat
-	na mre\v{z}i je najta\v{c}niji, i najbolji kako bi se ostali uredjaji
-	sinhronizovali na njega. BMC algoritam onda sinhronizuje sve ostale satove
-	(slave clocks) sa ovim satom na mre\v{z}i.	Ukoliko se BMC (Best Master
-	Clock) ukloni iz mre\v{z}e, ili BMC algoritam odlu\v{c}i da taj sat
-	nije vi\v{s}e najta\v{c}niji, algoritam redefini\v{s}e novi
-	``najkvalitetniji'' sat, i prilagodi vremena ostalih satova u skladu sa
-	tim. Nije potrebno da se administrator mre\v{z}e uklju\v{c}uje u bilo kom
-	trenutku kako bi se promenio najbolji sat u mre\v{z}i, zbog toga \v{s}to je
-	ovaj algoritam otporan na gre\v{s}ke.
-
-	U ovu svrhu koristi se Bidirekciona multikast komunikacija (Bidirectional
-	Multicast Communication) od strane slave uredjaja kako bi se sinhronizovali
-	na najbolji sat, IEEE 1588 grandmaster clock. ``Sync'', Sinhronizacioni
-	paket sadr\v{z}i vremenski \v{z}ig najboljeg sata, koji predstavlja
-	ta\v{c}no vreme kada je paket poslat sa grandmaster clock-a. ``Follow up'',
-	Prate\'{c}i paket takodje mo\v{z}e biti poslat sa grandmaster sata, koji
-	sadr\v{z}i vremenski \v{z}ig ``Sync'' (sinhronizacionog) paketa. Ovakav
-	princip razmene podataka omogu\'{c}ava ta\v{c}an vremenski \v{z}ig
-	sinhronizacionog paketa koji je prosledjen sa grandmaster sata. Takodje,
-	postoje	slu\v{c}ajevi u kojima se ne otkriva ta\v{c}no vreme slanja paketa,
-	zbog odredjenih smetnji na mre\v{z}i. Ovo je omogu\'{c}eno kroz Collision
-	detection i Random Back-off	mehanizam u Ethernet/IP komunikaciji. Samo onda
-	kad je paket kompletno poslat, nemogu\'{c}e	je promeniti sadr\v{z}aj paketa.
+	``IEEE 1588 je dizajniran da popuni prazninu koja nije dobro obradjena ni
+	jednim od dva dominantna protokola, NTP i GPS\@. IEEE 1588 je dizajniran za
+	lokalne sisteme u kojima je	potrebna preciznost izvan one koja je dostupna
+	NTP protokolom. Takodje je dizajniran za aplikacije koje se ne mogu nositi
+	sa cenom GPS prijemnika na svakom uredjaju, ili sa onima u kojima nije
+	mogu\'{c}e dobijanje GPS signala.'' (``IEEE 1588 is designed to fill a niche
+	not well served by either of the two dominant protocols, NTP and GPS\@.
+	IEEE 1588 is designed for local systems requiring accuracies beyond those
+	attainable using NTP\@. It is also designed for applications that cannot
+	bear the cost of a GPS receiver at each node, or for which GPS signals are
+	inaccessible.'' - Eidson, John C. (April 2006). Measurement, Control and
+	Communication Using IEEE 1588. Springer. ISBN 1-84628-250-0.
 
 	Postoji nekoliko faktora koji mogu uticati na egzaktnost sinhronizacije
 	izmedju dva	uredjaja unutar IEEE 1588 mre\v{z}e. Promene frekvencije na
@@ -600,34 +512,35 @@
 		\item Robotska kontrola
 	\end{itemize}
 
-	Protokol preciznog vremena (Precision Time Protocol (PTP)) je protokol
-	kori\v{s}\'{c}en za sinhronizaciju satova preko kompjuterske mre\v{z}e. U
-	lokalnoj kompjuterskoj mre\v{z}i (local area connection), posti\v{z}e se
-	preciznost sata i u rangu ispod mikrosekunde, \v{s}to ga \v{c}ini pogodnim
-	za merenja i kontrolne sisteme.
+	\subsection{Network Time Protocol}
 
-	PTP je originalno definisan u IEEE 1588-2002 standardu, i zvani\v{c}no
-	nazvan ``Standard for a Precision Clock Synchronization Protocol for
-	Networked Measurement and Control Systems'' i objavljen 2002 godine. U 2008
-	godini, IEEE 1588-2002 je objavljen kao preradjen standard, poznat i kao
-	PTP Version 2, sa pobolj\v{s}anom ta\v{c}no\v{s}\'{c}u, precizno\v{s}\'{c}u
-	i robusno\v{s}\'{c}u, medjutim nije kompatibilan sa prethodnom verzijom
-	koja je objavljena 2002 godine.
+	NTP, ili Network Time Protocol, je \v{s}iroko prihva\'{c}en kao sredstvo za
+	\v{c}uvanje vremena na mre\v{z}i, i trenutno je u upotrebi \v{c}etvrta
+	verzija samog protokola. Hijerarhijski sistem ima razli\v{c}ite slojeve
+	koji se nazivaju STRATA (eng\. strata). Statum 0 uredjaji su u samom vrhu i
+	uklju\v{c}uju atomske satove, kao one koji se nalaze u GNSS	satelitima.
+	Stratum 1, ili primarni vremenski server, svaki od njih ima jedan na jedan
+	direktnu konekciju sa Stratum 1 satom, i posti\v{z}u sinhronizaciju red
+	mikrosekunde sa Stratum	0 satovima, i povezuju se na ostale Stratum 1
+	severe za brzu proveru satova i \v{c}uvanje	podataka. Stratum 2 serveri se
+	mogu povezivati na vi\v{s}e primarnih vremenskih servera kako bi se
+	postigao ve\'{c}i level sinhronizacije i pobolj\v{s}ala preciznost, i tako
+	dalje. NTP podr\v{z}ava maksimum od 15 strata uredjaja, ali svaki strata
+	uredjaj unosi malu gre\v{s}ku u	sinhronizaciji sa Stratum 0 uredjajima.
 
-	``IEEE 1588 je dizajniran da popuni prazninu koja nije dobro obradjena ni
-	jednim od dva dominantna protokola, NTP i GPS\@. IEEE 1588 je dizajniran za
-	lokalne sisteme u kojima je	potrebna preciznost izvan one koja je dostupna
-	NTP protokolom. Takodje je dizajniran za aplikacije koje se ne mogu nositi
-	sa cenom GPS prijemnika na svakom uredjaju, ili sa onima u kojima nije
-	mogu\'{c}e dobijanje GPS signala.'' (``IEEE 1588 is designed to fill a niche
-	not well served by either of the two dominant protocols, NTP and GPS\@.
-	IEEE 1588 is designed for local systems requiring accuracies beyond those
-	attainable using NTP\@. It is also designed for applications that cannot
-	bear the cost of a GPS receiver at each node, or for which GPS signals are
-	inaccessible.'' - Eidson, John C. (April 2006). Measurement, Control and
-	Communication Using IEEE 1588. Springer. ISBN 1-84628-250-0.
+	64-bitni vremenski \v{z}ig je trenutno implementiran kako bi se podelio u
+	dva 32-bitna dela.
+	\begin{itemize}
+		\item Prva polovina broji broj sekundi do ne\v{s}to preko 136 godina.
+		\item Druga polovina predstavlja deo sekunde do razmere pikosekunde
+	\end{itemize}
 
-	\subsection{Arhitektura}
+	Predlo\v{z}ena je promena na 128-o bitne vremenske \v{z}igove u NTPv4
+	protokolu, i trebalo bi da pove\'{c}a vremensku razmeru na ne\v{s}to manje
+	od 600 milijardi godina, pri \v{c}emu bi vremenska rezolucija bila manja od
+	femtosekunde.
+
+    \subsection{Arhitektura}
 
 	IEEE 1588 standard opisuje hijerarhijsku master-slave arhitekturu za
 	distribuciju vremena. Pod ovom arhitekturom podrazumeva se distribucija
@@ -674,8 +587,6 @@
 	Vremenu (TAI - International Atomic Time). PTP Grandmaster daje	trenutnu
 	razliku izmedju UTC i TAI, kako bi UTC vreme moglo da se izra\v{c}una od
 	primljenog PTP vremena.
-
-	\# mora slika da se vidi razlika izmedju UTC i PTP, TAI
 
 	\subsection{Detalji protokola}
 
@@ -1382,8 +1293,6 @@
     se prosledjuju u red sa porukama, koji su potrebni za celokupnu
     sinhronizaciju.
 
-	\#\# [lazarc] prikaz razmene poruka
-
 	Protokol ta\v{c}nog vremena odredjuje i to da slave uredjaj mora prepoznati
 	pakete koji sti\v{z}u, \v{s}to se posti\v{z}e hardverskom podr\v{s}kom za
 	neke od paketa. Ali i odgovoriti na odredjene pakete. Ovo se posti\v{z}e
@@ -1429,7 +1338,8 @@
 	koje procesor tro\v{s}i na opslu\v{z}ivanje ove niti. Takodje, ovakav
 	na\v{c}in implementacije dozvoljava implementaciju ostalih niti koje mogu
 	izvr\v{s}avati ostale funkcionalnosti sistema, s obzirom da ova nit nije
-	zahtevna i javlja se relativno retko potreba za sinhronizacijom, \~ 1s.
+	zahtevna i javlja se relativno retko potreba za sinhronizacijom,
+    \textasciitilde 1s.
 
 	\section{Rezultati}
 
@@ -1445,7 +1355,27 @@
 	sinhronizacije. Ova gre\v{s}ka se pojavljuje usled prekora\v{c}enja
 	(eng\. overflow) dela broja\v{c}a za vremena ispod nanosekunde.
 
-	\#\# [lazarc] ubaciti slike sa putty-a
+	\begin{figure}[htb]
+			\centering
+			\includegraphics[scale=1.0]{../pic/ptpd_startup.png}
+            \caption{Prikaz pokretanja alata PTPd, i postavljanje PC-a za
+            master u oglednom sistemu}
+			\label{fig:ptpd_startup}
+	\end{figure}
+
+    \begin{figure}[htb]
+			\centering
+			\includegraphics[scale=1.5]{../pic/ptp_time_1.png}
+            \caption{Po\v{c}etak sinhronizacije}
+			\label{fig:ptp_time_1}
+	\end{figure}
+
+    \begin{figure}[htb]
+			\centering
+			\includegraphics[scale=1.5]{../pic/ptp_time_2.png}
+            \caption{Sinhronizacija nakon nekog vremena}
+			\label{fig:ptp_time_2}
+	\end{figure}
 
 	Na slikama je dat ispis sa konzole razvojne plo\v{c}e. I predstavlja
 	razliku izmedju sata na razvojnoj plo\v{c}i, i sata na PC-u. Iz
@@ -1490,50 +1420,50 @@
 
 	\chapter{Zaključak}
 
-	Cilj ovog rada je prikaz kompletnog postupka implementacije vremenske 
-	sinhronizacije u Namenskim ra\v{c}unarskim sistemima, koja je sve vi\v{s}e 
-	i vi\v{s}e prisutna i zahtevana. Zamisao je da predlo\v{z}ena 
-	implementacija bude modularna, i lako iskori\v{s}\'{c}ena bez ikakvih 
+	Cilj ovog rada je prikaz kompletnog postupka implementacije vremenske
+	sinhronizacije u Namenskim ra\v{c}unarskim sistemima, koja je sve vi\v{s}e
+	i vi\v{s}e prisutna i zahtevana. Zamisao je da predlo\v{z}ena
+	implementacija bude modularna, i lako iskori\v{s}\'{c}ena bez ikakvih
 	promena.
 
-	Pre svega, dat je uvod u sam model komunikacije, i prikaz samog protokola 
-	koji je implementiran. Utvrdjeno je da sam Precision Time Protocol veoma 
-	mo\'{c}an, i trenutno zbog sve prisutnije potrebe za automatizacijom, sve 
-	vi\v{s}e u upotrebi. Ono \v{s}to je vrlo zna\v{c}ajno je da je protokol u 
-	upotrebi trenutno, i da se i dalje razvija, \v{s}to je vrlo bitno. Takodje, 
-	implementacija samog porotokola dosta zavisi od hardvera, ali i softvera 
-	koji se koristi, \v{s}to dosta uti\v{c}e na sam sistem u kom je potrebno 
+	Pre svega, dat je uvod u sam model komunikacije, i prikaz samog protokola
+	koji je implementiran. Utvrdjeno je da sam Precision Time Protocol veoma
+	mo\'{c}an, i trenutno zbog sve prisutnije potrebe za automatizacijom, sve
+	vi\v{s}e u upotrebi. Ono \v{s}to je vrlo zna\v{c}ajno je da je protokol u
+	upotrebi trenutno, i da se i dalje razvija, \v{s}to je vrlo bitno. Takodje,
+	implementacija samog porotokola dosta zavisi od hardvera, ali i softvera
+	koji se koristi, \v{s}to dosta uti\v{c}e na sam sistem u kom je potrebno
 	ostvariti sinhrnoizaciju. S tim u vezi potrebno je dobro poznavati protokol,
-	 ali i sam sistem u kom je potrebno sve implementirati, tako da se protokol 
+	 ali i sam sistem u kom je potrebno sve implementirati, tako da se protokol
 	iskoristi na najbolji na\v{c}in.
 
-	Kori\v{s}\'{c}enje FreeRTOS operativnog sistema je omogu\'{c}ilo da se 
-	poka\v{z}e kako se jedna ovakva funcionalnost mo\v{z}e biti implementirana 
-	i na dosta jednostavnijim sistemima, koji imaju dosta svojih prednosti, 
-	naro\v{c}ito u vremenski kriti\v{c}nim aplikacijama, kao \v{s}to je u ovom 
-	slu\v{c}aju. Takodje, sam FreeRTOS ima dosta mogu\'{c}nosti koje u ovoj 
-	implementaciji nisu iskori\v{s}\'{c}ene. Naravno, u skladu sa 
-	implementacijom dat je pregled samog operativnog sistema, koji naravno 
-	mo\v{z}e biti dosta detaljniji, kao i opis lwIP-a. Medjutim, ovde je dat 
-	samo osnovni pregled, koji predstavlja samo uvid u mogu\'{c}nosti koje 
+	Kori\v{s}\'{c}enje FreeRTOS operativnog sistema je omogu\'{c}ilo da se
+	poka\v{z}e kako se jedna ovakva funcionalnost mo\v{z}e biti implementirana
+	i na dosta jednostavnijim sistemima, koji imaju dosta svojih prednosti,
+	naro\v{c}ito u vremenski kriti\v{c}nim aplikacijama, kao \v{s}to je u ovom
+	slu\v{c}aju. Takodje, sam FreeRTOS ima dosta mogu\'{c}nosti koje u ovoj
+	implementaciji nisu iskori\v{s}\'{c}ene. Naravno, u skladu sa
+	implementacijom dat je pregled samog operativnog sistema, koji naravno
+	mo\v{z}e biti dosta detaljniji, kao i opis lwIP-a. Medjutim, ovde je dat
+	samo osnovni pregled, koji predstavlja samo uvid u mogu\'{c}nosti koje
 	poseduju i lwIP i FreeRTOS.
 
-	Sama razvojna plo\v{c}a je izabrana zbog mikrokontrolera koji se nalazi na 
-	njoj, i zbog hardverske podr\v{s}ke koju ima izabrani mikrokontroler. Kao i 
-	\v{s}iroko dostupne baze znanja, vezane za sam mikrokontroler, kao i 
-	softverske podr\v{s}ke koju pru\v{z}a sama kompanija Atmel, kao i 
+	Sama razvojna plo\v{c}a je izabrana zbog mikrokontrolera koji se nalazi na
+	njoj, i zbog hardverske podr\v{s}ke koju ima izabrani mikrokontroler. Kao i
+	\v{s}iroko dostupne baze znanja, vezane za sam mikrokontroler, kao i
+	softverske podr\v{s}ke koju pru\v{z}a sama kompanija Atmel, kao i
 	\textit{open source} zajednica, koja podr\v{z}ava ovaj hardver.
 
-	Ovaj rad se mo\v{z}e posmatrati kao primer inicijalne vremenske 
-	sinhronizacije u jednom Namenskom ra\v{c}unarskom sistemu. Kao i jedan deo 
-	ve\'{c}eg sistema, koji je spreman za kori\v{s}\'{c}enje u ve\'{c} 
+	Ovaj rad se mo\v{z}e posmatrati kao primer inicijalne vremenske
+	sinhronizacije u jednom Namenskom ra\v{c}unarskom sistemu. Kao i jedan deo
+	ve\'{c}eg sistema, koji je spreman za kori\v{s}\'{c}enje u ve\'{c}
 	postoje\'{c}im sistemima kojima nedostaje vremenska sinhronizacija. Takodje,
-	 ovaj rad predstavlja kombinaciju modularnog projektovanja jednog namenskog 
-	sistema u koji je mogu\'{c}e dodavanje novih funkcionalnosti, i to na vrlo 
-	lak na\v{c}in. Sama priroda implementacije koja se bazira na 
-	\textit{open source} projektima, omogu\'{c}ava da kori\v{s}\'{c}enje 
-	ve\'{c} postoje\'{c}e implementacije, kao i pro\v{s}irivanje i unapredjenje 
-	mo\v{z}e biti lako i brzo uradjeno, kao i da nema potrebe za odredjenim 
-	komercijalnim softverskim modulima ili komercijalnim alatima. 
+	 ovaj rad predstavlja kombinaciju modularnog projektovanja jednog namenskog
+	sistema u koji je mogu\'{c}e dodavanje novih funkcionalnosti, i to na vrlo
+	lak na\v{c}in. Sama priroda implementacije koja se bazira na
+	\textit{open source} projektima, omogu\'{c}ava da kori\v{s}\'{c}enje
+	ve\'{c} postoje\'{c}e implementacije, kao i pro\v{s}irivanje i unapredjenje
+	mo\v{z}e biti lako i brzo uradjeno, kao i da nema potrebe za odredjenim
+	komercijalnim softverskim modulima ili komercijalnim alatima.
 
 \end{document}
