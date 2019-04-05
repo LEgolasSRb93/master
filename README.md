@@ -7,8 +7,8 @@ Uvod ili Synopsis za master rad. Nesto smisleno moze ovde da ide.
 
 Potrebno opisati:
 
-* Apstrakt [left]
-* Uvod [left]
+* Apstrakt [done]
+* Uvod [done]
     - Zasto je bitno da se to radi? [done, some parts, recheck]
     - Kako se radi? [done, recheck]
     - Sta se postize ovim nacinom rada? [done, reheck]
@@ -21,7 +21,7 @@ Potrebno opisati:
         - Opsti opis [done]
         - Opis poruka [done]
         - Opis sinhronizacije [done]
-        - Slike [left]
+        - Slike [done]
     - Opis OSI modela [done]
     - Opis TCP/IP modela [done]
 * Opis operativnog sistema
@@ -36,21 +36,8 @@ Potrebno opisati:
     - Nacin na koji je odradjeno sve [done]
     - Rezultati -> ubaciti slike sa Putty-a, dodati sta predstavljaju
     - Predlozi za poboljsanja -> ubaciti deo za IEEE1588 poruke, i sta bi jos
-      moglo da se uradi
-    - predlog:
-        > pisati o promeni standarda, koriscenju novog nacina slanja, sa data link layer-a
-        > pisati o koriscenju drugog steka
-        > testiranju na razlicitim operativnim sistemima
-        > testiranju sa pravom opremmom za ovaj standard
-        > sta bi se dobilo time?
-* Zakljucak [left]
-    - dodati
-    - predlog:
-        > Upisati da je ovo samo uvod u celu temu, i da je potrebno se detaljnije pozabaviti ovim
-        > takodje, znacajno je da se kaze koliko je ustvari ova tema znacajna
-        > sta moze da se uradi kao dodatak, i sta bi bilo dobro da se uradi u sledecoj iteraciji
-* Slike [left]
-    - pregledati slike, ubaciti gde treba
+* Zakljucak [done]
+* Slike [done]
     - neke mozda prebaciti na srpski - pitati Saranovca
 
 

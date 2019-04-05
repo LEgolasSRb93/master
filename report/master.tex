@@ -219,20 +219,19 @@
 	Mre\v{z}ni sloj obezbedjuje funkcionalno i proceduralno sredstvo prenosa
 	sekvenci podataka promenljive du\v{z}ine, koji se nazivaju jo\v{s} i paketi,
 	od jednog \v{c}vora do drugog, poveznih u ``razli\v{c}ite mre\v{z}e''.
-	\#\# [lazarc] [prevod] \#\# Mre\v{z}a je medijum na koji mo\v{z}e biti
-	povezano vi\v{s}e \v{c}vorova, u kom svaki \v{c}vor ima adresu i koji
-	dozvoljava \v{c}vorovima povezanim sa njim da prenose poruke ka ostalim
-	\v{c}vorovima, i to samo daju\'{c}i sadr\v{z}aj poruke i adresu \v{c}vora
-	na koji poruka treba da bude dostavljena, omogucavaju\'{c}i mre\v{z}i da
-	nadje na\v{c}in da isporu\v{c}i poruku odredi\v{s}nom \v{c}voru, eventualno
-	ga usmeravaju\'{c}i kroz sredi\v{s}nje \v{c}vorove (uredjaje koji su
-	izmedju dva uredjaja koji poku\v{s}avaju da komuniciraju). Ako je poruka
-	prevelika da bi se prenela sa jednog uredjaja na drugi samo
-	kori\v{s}\'{c}enjem sloja veze (Data Link Layer), mre\v{z}a mo\v{z}e
-	preneti podatke tako \v{s}to \'{c}e ih podeliti u nekoliko delova na jednom
-	uredjaju, poslati delove nezavisno, i onda spojiti delove na drugom
-	uredjaju. Pri \v{c}emu mo\v{z}e, iako nije uvek potrebno, prijaviti
-	gre\v{s}ke u isporuci.
+	Mre\v{z}a je medijum na koji mo\v{z}e biti povezano vi\v{s}e \v{c}vorova, u
+    kom svaki \v{c}vor ima adresu i koji dozvoljava \v{c}vorovima povezanim sa
+    njim da prenose poruke ka ostalim \v{c}vorovima, i to samo daju\'{c}i
+    sadr\v{z}aj poruke i adresu \v{c}vora na koji poruka treba da bude
+    dostavljena, omogucavaju\'{c}i mre\v{z}i da nadje na\v{c}in da isporu\v{c}i
+    poruku odredi\v{s}nom \v{c}voru, eventualno ga usmeravaju\'{c}i kroz
+    sredi\v{s}nje \v{c}vorove (uredjaje koji su izmedju dva uredjaja koji
+    poku\v{s}avaju da komuniciraju). Ako je poruka prevelika da bi se prenela sa
+    jednog uredjaja na drugi samo kori\v{s}\'{c}enjem sloja veze (Data Link
+    Layer), mre\v{z}a mo\v{z}e preneti podatke tako \v{s}to \'{c}e ih podeliti
+    u nekoliko delova na jednom uredjaju, poslati delove nezavisno, i onda
+    spojiti delove na drugom uredjaju. Pri \v{c}emu mo\v{z}e, iako nije uvek
+    potrebno, prijaviti gre\v{s}ke u isporuci.
 
 	Isporuka poruka na mre\v{z}nom sloju nije garantovano pouzdana. Mre\v{z}ni
 	sloj mo\v{z}e pru\v{z}iti pouzdanu isporuku poruka, ali nije obavezno da to
@@ -245,7 +244,6 @@
 	dodeljivanje adresa mre\v{z}nog sloja medju uredjajima. Ustvari, to je
 	funkcija podataka koji se prenose uz pomo\'{c} protokola, \v{s}to ih
 	\v{c}ini da pripadaju mre\v{z}nom sloju, a ne protokolu.
-	\#\# [lazarc] poslednja	recenica [prevod] \#\#
 
 	\subsection{Sloj 4: Transportni sloj (Transport Layer)}
 
@@ -256,14 +254,14 @@
 	Transportni sloj kontroli\v{s}e pouzdanost date konekcije kroz kontrolu
 	protoka, segmentaciju/desegmentaciju i kontrolu gre\v{s}aka. Neki protokli
 	su orjentisani na stanje mre\v{z}e, a neki na konekciju u mre\v{z}i.
-	\#\# [lazarc] [prevod] \#\# Ovo zna\v{c}i da Transportni sloj mo\v{z}e da
-	prati segmente i ponovo prenese one koji nisu isporu\v{c}eni prijemnom
-	uredjaju. Transportni sloj takodje omogu\'{c}ava i potvrdu uspe\v{s}nog
-	prenosa podataka i \v{s}alje naredne podatke ako nije do\v{s}lo do
-	gre\v{s}ke prilikom prenosa. Transportni sloj formira i segmente koji su
-	primljeni iz vi\v{s}ih slojeva, npr. Aplikativnog sloja (Application Layer).
-	Segmentacija je proces podele dugih poruka u kra\'{c}e poruke kako bi se
-	lak\v{s}e prenele preko	ni\v{z}ih slojeva u modelu.
+	Ovo zna\v{c}i da Transportni sloj mo\v{z}e da prati segmente i ponovo
+    prenese one koji nisu isporu\v{c}eni prijemnom uredjaju. Transportni sloj
+    takodje omogu\'{c}ava i potvrdu uspe\v{s}nog prenosa podataka i \v{s}alje
+    naredne podatke ako nije do\v{s}lo do gre\v{s}ke prilikom prenosa.
+    Transportni sloj formira i segmente koji su primljeni iz vi\v{s}ih slojeva,
+    npr. Aplikativnog sloja (Application Layer). Segmentacija je proces podele
+    dugih poruka u kra\'{c}e poruke kako bi se lak\v{s}e prenele preko ni\v{z}ih
+    slojeva u modelu.
 
 	OSI model defini\v{s}e pet klasa transportnih protokola za povezivnje od
 	klase 0 (koja je takodje poznata i kao TP0 i ima najslabije karakteristike)
@@ -273,9 +271,8 @@
 	slojevima koji pru\v{z}aju konekciju bez gre\v{s}aka. Klasa 4 (TP4) je
 	najbli\v{z}a TCP, iako TCP sadr\v{z}i neke funkcije koje se u OSI modelu
 	dodeljuju vi\v{s}im slojevima. Takodje, sve klase u OSI modelu
-	omogu\'{c}avaju	brzu upotrebu podataka i o\v{c}uvanje granica podataka
-	\#\# [lazarc] [prevod] \#\#. Detalje karakteristika svih klasa prikazane su
-	u slede\'{c}oj tabeli:
+	omogu\'{c}avaju	brzu upotrebu podataka i o\v{c}uvanje granica podataka.
+    Detalje karakteristika svih klasa prikazane su u slede\'{c}oj tabeli:
 
 	\begin{figure}[htb]
 			\centering
@@ -336,25 +333,23 @@
 	Ponekad se naziva i DoD (Department of Defense) model zbog toga \v{s}to je
 	razvijanje ovog modela potpomoglo Ministarstvo odbrane SAD-a kroz DARPA.
 
-	Internet protokol suite (\#\# [lazarc] [prevod]\#\#) omogu\'{c}ava razmenu
-	podataka izmedju dva uredjaja na mre\v{z}i, i to specificiraju\'{c}i kako
-	\'{c}e se podaci deliti u pakete, adresirati, prenositi, rutirati, i
-	primati. Ove funkcionalnosti su organizovane u \v{c}etiri apstraktna sloja,
-	koja klasifikuju sve protokole s obzirom na to u kom delu povezivanja se
-	nalaze (\#\#[lazarc] [prevod] scope of networking involved \#\#). Od
-	najni\v{z}eg do najvi\v{s}eg, slojevi se dele na Link Layer (Sloj
-	povezivanja), koji sadr\v{z}i komunikacione metode za podatke koji ostaju
-	unutar jednog segmenta mre\v{z}e; Internet Layer (Sloj interneta), koji
-	omogu\'{c}ava povezivanje izmedju nezavisnih mre\v{z}a; Transport Layer
-	(Sloj prenosa), koji omogu\'{c}ava komunikacione servise za aplikacije na
-	uredjajima u mre\v{z}i; i Application Layer	(Sloj aplikacije), koji
-	omogu\'{c}ava servise korisnicima i	sistemskim aplikacijama.
+	Internet protokol suite omogu\'{c}ava razmenu podataka izmedju dva uredjaja
+    na mre\v{z}i, i to specificiraju\'{c}i kako \'{c}e se podaci deliti u
+    pakete, adresirati, prenositi, rutirati, i primati. Ove funkcionalnosti su
+    organizovane u \v{c}etiri apstraktna sloja, koja klasifikuju sve protokole
+    s obzirom na to u kom delu povezivanja se nalaze. Od najni\v{z}eg do
+    najvi\v{s}eg, slojevi se dele na Link Layer (Sloj povezivanja), koji
+    sadr\v{z}i komunikacione metode za podatke koji ostaju unutar jednog
+    segmenta mre\v{z}e; Internet Layer (Sloj interneta), koji omogu\'{c}ava
+    povezivanje izmedju nezavisnih mre\v{z}a; Transport Layer (Sloj prenosa),
+    koji omogu\'{c}ava komunikacione servise za aplikacije na uredjajima u
+    mre\v{z}i; i Application Layer (Sloj aplikacije), koji omogu\'{c}ava
+    servise korisnicima i sistemskim aplikacijama.
 
-	Tehni\v{c}ki sandardi koji specificiraju Internet protocol suite
-	(\#\#[lazarc] [prevod]\#\#) i mnogi od protokola koji \v{c}ine IPS
-	odr\v{z}ava Internet Engineering Task Force (IETF). IPS je model koji
-	prethodi OSI modelu, koji je dosta detaljniji i opisuje vi\v{s}e u
-	mre\v{z}nom sistemu.
+	Tehni\v{c}ki sandardi koji specificiraju Internet protocol suite i mnogi od
+    protokola koji \v{c}ine IPS odr\v{z}ava Internet Engineering Task Force
+    (IETF). IPS je model koji prethodi OSI modelu, koji je dosta detaljniji i
+    opisuje vi\v{s}e u mre\v{z}nom sistemu.
 
 	\begin{figure}[htb]
 			\centering
@@ -376,12 +371,12 @@
 	Princip robusnosti ka\v{z}e: "Uop\v{s}teno, implementacija mora biti
 	konzervativna u pona\v{s}anju prilikom slanja i liberalna u svom
 	pona\v{s}anju prilikom prijema. \v{S}to zna\v{c}i, da mora biti
-	oprezna pri slanju dobro formiranih paketa (\#\#[lazarc] datagrams \#\#),
-	ali mora prihvatiti bilo koji paket koji mo\v{z}e protuma\v{c}iti. (na
-	primer, ne prime\'{c}ivati tehni\v{c}ke gre\v{s}ke gde nije poznato \v{s}ta
-	ih uzrokuje.)". "Drugi deo principa je gotovo jednako va\v{z}an: softver na
-	drugim uredjajima mo\v{z}e sadr\v{z}ati razlike koji \v{c}ine nerazumnim da
-	se iskoriste legalne, ali nejasne karakteristike protokola".
+	oprezna pri slanju dobro formiranih paketa, ali mora prihvatiti bilo koji
+    paket koji mo\v{z}e protuma\v{c}iti. (na primer, ne prime\'{c}ivati
+    tehni\v{c}ke gre\v{s}ke gde nije poznato \v{s}ta ih uzrokuje.)". "Drugi deo
+    principa je gotovo jednako va\v{z}an: softver na drugim uredjajima mo\v{z}e
+    sadr\v{z}ati razlike koji \v{c}ine nerazumnim da se iskoriste legalne, ali
+    nejasne karakteristike protokola".
 
 	Enkapsulacija se koristi za obezbedjivanje apstrakcije protokola i usluga.
 	Enkapsulacija je obi\v{c}no uskladjena sa podelom unutar protokola na
@@ -546,14 +541,13 @@
 	distribuciju vremena. Pod ovom arhitekturom podrazumeva se distribucija
 	vremena u sistemu koji se sastoji od jednog ili vi\v{s}e komunikacionih
 	medijuma (segmenata koji su povezani na mre\v{z}u), i jednog ili vi\v{s}e
-	izvora ta\v{c}nog vremena. \#Obi\v{c}ni uredjaj\# Izvor ``obi\v{c}nog''
-	vremena (``ordinary clock'') je uredjaj sa jednim pristupom mre\v{z}i i ima
-	jednu od dve uloge, ili je izvor (master) ta\v{c}nog vremena, ili \v{c}eka
-	na ta\v{c}no vreme (slave) u komunikaciji na mre\v{z}i. \#Sporedni
-	uredjaj\# Grani\v{c}ni sat (Boundary clock) ima vi\v{s}e pristupa, na
-	razli\v{c}ite mre\v{z}e, i mo\v{z}e precizno sinhronizovati jedan segment
-	mre\v{z}e na drugi. Master sinhronizacije se bira za svaki segment
-	mre\v{z}e u sistemu. \#Glavni uredjaj\# Referentno vreme koje se uzima za
+	izvora ta\v{c}nog vremena. Izvor ``obi\v{c}nog'' vremena (``ordinary
+    clock'') je uredjaj sa jednim pristupom mre\v{z}i i ima jednu od dve uloge,
+    ili je izvor (master) ta\v{c}nog vremena, ili \v{c}eka na ta\v{c}no vreme
+    (slave) u komunikaciji na mre\v{z}i. Grani\v{c}ni sat (Boundary clock) ima
+    vi\v{s}e pristupa, na razli\v{c}ite mre\v{z}e, i mo\v{z}e precizno
+    sinhronizovati jedan segment mre\v{z}e na drugi. Master sinhronizacije se
+    bira za svaki segment mre\v{z}e u sistemu. Referentno vreme koje se uzima za
 	izvor sinhronizacionog sata se zove Grandmaster clock. Grandmaster
 	dostavlja sinhronizacione informacije do svih uredjaja koji su povezani na
 	istu mre\v{z}u sa njim. Ukoliko se u nekom delu mre\v{z}e nalazi Boundary
@@ -567,13 +561,12 @@
 			\label{fig:arch_ptp_system}
 	\end{figure}
 
-	Simplifikovano, PTP sistem se sastoji od Ordinary clocks \#Obicnog
-	uredjaja\# poveznih na jednostavnu mre\v{z}u, i bez Boundary clocks
-	\#Sporednih uredjaja\#. Grandmaster se bira, i svi ostali uredjaji se
-	direktno sinhroni\v{s}u na njega.
+    Simplifikovano, PTP sistem se sastoji od izvora ``obi\v{c}nog'' vremena
+    poveznih na jednostavnu mre\v{z}u, i bez grani\v{c}nih satova. Grandmaster
+    se bira, i svi ostali uredjaji se direktno sinhroni\v{s}u na njega.
 
 	IEEE 1588-2008 predstavljaju Clock koji je povezan sa mre\v{z}nom opremom
-	koja prenosi PTP poruke. Transparent clock \#Transparentni uredjaj\#
+    koja prenosi PTP poruke.  Transparentni uredjaj (eng\. Transparent clock)
 	modifikuje PTP poruke koje prolaze kroz uredjaj. Vremenski pe\v{c}ati
 	(TIMESTAMPs) u porukama su modifikovani tako da se uzme u obzir i vreme za
 	koje poruka prolazi kroz dodatne uredjaje u komunikaciji. Ova \v{s}ema
@@ -582,11 +575,10 @@
 
 	PTP tipi\v{c}no koristi EPOCH vreme, standardno vreme za UNIX sisteme (1
 	Januar 1970 kao po\v{c}etak ra\v{c}unanja vremena). Dok je UNIX vreme
-	bazirano na Univerzalnom vremenu UTC, i mora da postoji sekunda preskoka
-	(\#Ovo dodati, mozda u uvod\#), PTP je baziran na Medjunarodnom Atomskom
-	Vremenu (TAI - International Atomic Time). PTP Grandmaster daje	trenutnu
-	razliku izmedju UTC i TAI, kako bi UTC vreme moglo da se izra\v{c}una od
-	primljenog PTP vremena.
+	bazirano na Univerzalnom vremenu UTC, i mora da postoji sekunda preskoka,
+    PTP je baziran na Medjunarodnom Atomskom Vremenu (TAI - International Atomic
+    Time). PTP Grandmaster daje trenutnu razliku izmedju UTC i TAI, kako bi UTC
+    vreme moglo da se izra\v{c}una od primljenog PTP vremena.
 
 	\subsection{Detalji protokola}
 
@@ -617,22 +609,21 @@
 	Poruke se karakterizuju kao Event i General, odnosno poruke dogadjaja i
 	op\v{s}te poruke. Event	poruke su vremenski kriti\v{c}ne i to u preciznosti
 	predaje i prijema preciznosti vremenskih pe\v{c}ata (TIMESTAMPs) i direktno
-	uti\v{c}u na distribuciju preciznosti vremena. (\#\#JOS JEDNOM POGLEDAJ
-	OVAJ PREVOD\#\#). Sync, Delay\_Req, Pdelay\_Req i Pdelay\_resp su poruke
-	dogadjaja. Op\v{s}te poruke su ubi\v{c}ajene jedinice protokola, zato
-	\v{s}to su podaci u ovim porukama od zna\v{c}aja za PTP, ali njihovi
-	vremenski pe\v{c}ati za predaju i prijem nisu. Announce, Follow\_Up,
-	Delay\_Resp, Pdelay\_Resp\_Follow\_Up, Management i Signalne poruke su
-	op\v{s}te poruke.
+	uti\v{c}u na distribuciju preciznosti vremena. Sync, Delay\_Req, Pdelay\_Req
+    i Pdelay\_resp su poruke dogadjaja. Op\v{s}te poruke su ubi\v{c}ajene
+    jedinice protokola, zato \v{s}to su podaci u ovim porukama od zna\v{c}aja za
+    PTP, ali njihovi vremenski pe\v{c}ati za predaju i prijem nisu. Announce,
+    Follow\_Up, Delay\_Resp, Pdelay\_Resp\_Follow\_Up, Management i Signalne
+    poruke su op\v{s}te poruke.
 
 	\subsection{Prenos poruka}
 
 	PTP poruke mogu da koriste UDP (User datagram portocol) preko Internet
 	protokola (UDP/IP) za prenos poruka. IEEE 1588-2002, koristi samo IPv4
 	prenos, ali je ovo pro\v{s}ireno da	uklju\v{c}uje i IPv6 u IEEE 1588-2008
-	standardu. U IEEE 1588-2002, sve PTP poruke se \v{s}alju u Multicast
-	(modulu objavljivanja na mre\v{z}i) (\#pogldedaj opet ovaj prevod\#), dok
-	je u IEEE 1588-2008 to uvedeno kao opcija.
+	standardu. U IEEE 1588-2002, sve PTP poruke se \v{s}alju u Multicast modu
+	(modu objavljivanja na mre\v{z}i), dok je u IEEE 1588-2008 to uvedeno kao
+    opcija.
 
 	\subsection{Algoritam najboljeg sata}
 	BMC \(Best master clock algorithm\) algoritam obavlja deljenu selekciju
@@ -772,8 +763,6 @@
 	vremenske trenutke u kojima \v{s}alju ili primaju poruke. Stepen primene
 	ovih pretpostavki uti\v{c}e na to koliko \'{c}e se dobro sinhronizovati dva
 	uredjaja.
-
-	\#\# [lazarc] Pogledaj jos da se ubaci sa Teams za Valeo
 
 	\newpage
 
@@ -989,8 +978,6 @@
 				konekcije izmedju dva \v{c}vora	na mre\v{z}i;
 			\end{itemize}
 	\end{itemize}
-
-	IPv4: (\#\#[lazarc] opisati u delu za softversku implementaciju \#\#)
 
 	lwIP pru\v{z}a tri API-a (Application Program's Interface) za programe koji
 	komuniciraju sa	TCP/IP kodom:
@@ -1465,5 +1452,68 @@
 	ve\'{c} postoje\'{c}e implementacije, kao i pro\v{s}irivanje i unapredjenje
 	mo\v{z}e biti lako i brzo uradjeno, kao i da nema potrebe za odredjenim
 	komercijalnim softverskim modulima ili komercijalnim alatima.
+
+    \newpage
+
+    \begin{thebibliography}{10}
+        \addcontentsline{toc}{chapter}{Literatura}
+        \bibitem{lit1} IEEE 1588-2008 - IEEE Standard for a Precision Clock
+        Synchronization Protocol for Networked Measurement and Control Systems;
+
+        dostupno online:
+
+        https://standards.ieee.org/findstds/standard/1588-2008.html
+        \bibitem{lit2} IEEE 1588 Unplugged – An introduction to IEEE 1588;
+
+        dostupno online:
+
+        https://www.rtaautomation.com/technologies/ieee-1588/
+        \bibitem{lit3} P802.1AS-Rev – Timing and Synchronization for
+        Time-Sensitive Applications;
+
+        dostupno online:
+
+        https://1.ieee802.org/tsn/802-1as-rev/
+        \bibitem{lit4} FreeRTOS documentation;
+
+        dostupno online:
+
+        https://www.freertos.org/Documentation/161204\_Mastering\_the\_FreeRTOS
+        \_Real\_Time\_Kernel-A\_Hands-On\_Tutorial\_Guide.pdf
+
+        https://www.wikiwand.com/en/FreeRTOS
+        \bibitem{lit5} lwIP documentation;
+
+        dostupno online:
+
+        https://lwip.fandom.com/wiki/LwIP\_Wiki
+
+        https://savannah.nongnu.org/projects/lwip/
+        \bibitem{lit6} Microchip documentation;
+
+        dostupno online:
+
+        http://ww1.microchip.com/downloads/en/DeviceDoc/SAMA5D27-SOM1-Kit1-User
+        -Guide-DS50002667B.PDF
+
+        https://www.digikey.com/eewiki/display/linuxonarm/SAMA5D27-SOM1-EK1
+
+        https://www.microchip.com/developmenttools/ProductDetails/atsama5d27-
+        som1-ek1
+
+        http://ww1.microchip.com/downloads/en/DeviceDoc/SAMA5D2-Plus-DDR2-
+        LPDDR2-System-in-Package-(SIP)-60001484b.pdf
+        \bibitem{lit7} Precision Time Protocol (PTP/IEEE-1588);
+
+        https://endruntechnologies.com/pdf/PTP-1588.pdf
+
+        \bibitem{lit8} PTPd documentation;
+
+        dostupno online:
+
+        https://github.com/ptpd/ptpd
+
+        http://manpages.ubuntu.com/manpages/bionic/man8/ptpd.8.html
+    \end{thebibliography}
 
 \end{document}
