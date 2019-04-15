@@ -67,7 +67,7 @@
     aproksimativno 31\% sporije kroz obi\v{c}nu opti\v{c}ku mre\v{z}u, lako se
     mo\v{z}e preneti jedan bit informacije preko pola sveta za manje od desetine
     sekunde. Ali, poznato je da idealan svet ne postoji. Dodati svi\v{c}eve
-    (eng\. switches), rutere (eng\. routers), i ostalu mre\v{z}nu
+    (eng\@. switches), rutere (eng\@. routers), i ostalu mre\v{z}nu
     infrastrukturu, i ta desetina sekunde se uve\'{c}a nekoliko puta. Bez
     specijalizovane opreme, na\v{s}a mre\v{z}a lako mo\v{z}e dodati
     ka\v{s}njenje \v{c}ak i ve\'{c}e od sekunde. Jo\v{s} ve\'{c}a briga je
@@ -103,7 +103,7 @@
 	U prvom poglavlju \'{c}e biti prikazan pregled OSI modela komunikacije,
 	TCP/IP modela, i prikaz samog PTP protokola, koji potpuno opisan i
 	obja\v{s}njen. U drugom poglavlju bi\'{c}e prikazan oprativni sistem koji
-	je kori\v{s}\'{c}en, kao i stek (eng\. stack) za komunikaciju koji je
+	je kori\v{s}\'{c}en, kao i stek (eng\@. stack) za komunikaciju koji je
 	iskori\v{s}\'{c}en za implementaciju. U tre\'{c}em poglavlju je data
 	hardverska implementacija sa opisom razvojne plo\v{c}e koja je izabrana i
 	razloga zbog kojih je izabrana ova plo\v{c}a. U \v{c}etvrtom poglavlju je
@@ -118,7 +118,7 @@
 	komunikacije, kao i obja\v{s}njenje	celog PTP protokola. Na po\v{c}etku
 	\'{c}e biti predstavljen OSI konceptualni model, nakon njega TCP/IP	model,
 	i na kraju sam protokol koji je kori\v{s}cen. Ovaj pregled je dat u svrhu
-	dobijanja slike o tome koliko je kompleksan sam stek (eng\. stack) koji se
+	dobijanja slike o tome koliko je kompleksan sam stek (eng\@. stack) koji se
     koristi, kao i da se dobije slika o nekim delovima koji \'{c}e kasnije biti
     spominjani.
 
@@ -142,12 +142,6 @@
 	Ovaj model je proizvod Open Systems Interconnection projekta u
 	International Organization for Standardization (ISO), i ima oznaku ISO/IEC
 	7498-1.
-
-	\begin{figure}[htb]
-			\centering
-			\includegraphics[scale=.43]{../pic/tp_classes.png}
-			\label{fig:tp_classes}
-	\end{figure}
 
 	Na svakom nivou N, dva entiteta na komunikcionim uredjajima razmenjuju
 	jedinice protokola (PDU - protocol data units) pomo\'{c}u sloja N
@@ -173,6 +167,13 @@
 		sloja, dok se ne dostigne najvi\v{s}i sloj u modelu, nakon \v{c}ega su
 		dostupni sirovi podaci.
 	\end{itemize}
+
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[scale=.43]{../pic/osi_model.png}
+		\caption{Prikaz svih slojeva unutar OSI modela komunikacije}
+		\label{fig:osi_model}
+	\end{figure}
 
 	\subsection{Sloj 1: Fizi\v{c}ki sloj (Physical Layer)}
 
@@ -277,12 +278,11 @@
     Detalje karakteristika svih klasa prikazane su u slede\'{c}oj tabeli:
 
 	\begin{figure}[htb]
-			\centering
-			\includegraphics[scale=.43]{../pic/osi_model.png}
-			\caption{Prikaz svih slojeva unutar OSI modela komunikacije}
-			\label{fig:osi_model}
+		\centering
+		\includegraphics[scale=.55]{../pic/tp_classes.png}
+		\label{fig:tp_classes}
 	\end{figure}
-
+	
 	\subsection{Sloj 5: Sloj sesije (Session Layer)}
 
 	Sloj sesije kontroli\v{s}e dijaloge (veze) izmedju uredjaja. Uspostavlja,
@@ -365,7 +365,7 @@
 	izraz je stavio	odr\v{z}avanje stanja i sveobuhvatne inteligencije na ivice,
 	 i pretpostavio da internet koji je	povezivao krajeve nije zadr\v{z}ao
 	nikakvo stanje i koncentrisao se na brzinu i jednostavnost. Potrebe za
-	za\v{s}titnim zidovima (eng\. firewalls), prevodiocima mre\v{z}nih adresa,
+	za\v{s}titnim zidovima (eng\@. firewalls), prevodiocima mre\v{z}nih adresa,
     ke\v{s}iranju sadr\v{z}aja sa interneta i sli\v{c}no, su izazvale promene u
     ovom principu.
 
@@ -511,7 +511,7 @@
 	NTP, ili Network Time Protocol, je \v{s}iroko prihva\'{c}en kao sredstvo za
 	\v{c}uvanje vremena na mre\v{z}i, i trenutno je u upotrebi \v{c}etvrta
 	verzija samog protokola. Hijerarhijski sistem ima razli\v{c}ite slojeve
-	koji se nazivaju STRATA (eng\. strata). Statum 0 uredjaji su u samom vrhu i
+	koji se nazivaju STRATA (eng\@. strata). Statum 0 uredjaji su u samom vrhu i
 	uklju\v{c}uju atomske satove, kao one koji se nalaze u GNSS	satelitima.
 	Stratum 1, ili primarni vremenski server, svaki od njih ima jedan na jedan
 	direktnu konekciju sa Stratum 1 satom, i posti\v{z}u sinhronizaciju red
@@ -565,7 +565,7 @@
     se bira, i svi ostali uredjaji se direktno sinhroni\v{s}u na njega.
 
 	IEEE 1588-2008 predstavljaju Clock koji je povezan sa mre\v{z}nom opremom
-    koja prenosi PTP poruke.  Transparentni uredjaj (eng\. Transparent clock)
+    koja prenosi PTP poruke.  Transparentni uredjaj (eng\@. Transparent clock)
 	modifikuje PTP poruke koje prolaze kroz uredjaj. Vremenski pe\v{c}ati
 	(TIMESTAMPs) u porukama su modifikovani tako da se uzme u obzir i vreme za
 	koje poruka prolazi kroz dodatne uredjaje u komunikaciji. Ova \v{s}ema
@@ -919,7 +919,7 @@
 
 	\section{lwIP}
 
-	lwIP (light-weight IP) je implementacija TCP/IP komplet-a (eng\. suite) je
+	lwIP (light-weight IP) je implementacija TCP/IP komplet-a (eng\@. suite) je
     originalno napisao Adam Dunkels u Computer and Networks Architectures(CNA)
     laboratoriji na \v{S}vedskom institutu za kompjuterske nauke (Swedish
     Institute of Computer Science) ali ga sad aktivno razvija tim in\v{z}enjera
@@ -1239,7 +1239,7 @@
 	funkcionalnost se dozvoljava prilikom inicijalizacije same plo\v{c}e.
 	Takodje, TSU je potrebno konfigurisati tako da se obezbedi puna
     funkcionalnost samog modula. TSU kao modul unutar GMAC-a dobija radni takt
-	(eng\. clock) kako bi se dobilo nezavisno vreme na ploci, i odnosu na
+	(eng\@. clock) kako bi se dobilo nezavisno vreme na ploci, i odnosu na
     ostatak sistema. Kao \v{s}to je navedeno u odeljku hardverske
     implementacije, TSU je implementiran kao 94-bitni broja\v{c}, koji ima
 	rezoluciju od oko 15 femtosekundi. Na inicijalizaciji celog sistema TSU
@@ -1338,7 +1338,7 @@
 	ogleda u tome da u nekim trenucima, uredjaj koji se	sinhronizuje izgubi
     sinhronizaciju, nakon \v{c}ega se vra\'{c}a u roku od jednog ciklusa
 	sinhronizacije. Ova gre\v{s}ka se pojavljuje usled prekora\v{c}enja
-	(eng\. overflow) dela broja\v{c}a za vremena ispod nanosekunde.
+	(eng\@. overflow) dela broja\v{c}a za vremena ispod nanosekunde.
 
 	\begin{figure}[htb]
 			\centering
