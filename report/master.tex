@@ -10,7 +10,7 @@
 
 \addto\captionsserbian{\renewcommand{\bibname}{Literatura}}
 
-\title{Implementacija vremenske sinhronizacije u Namenskim ra\v{c}unarskim sistemima}
+\title{Implementacija vremenske sinhronizacije u namenskim ra\v{c}unarskim sistemima}
 \author{Lazar Caković}
 \indeks{3083/2016}
 \date{april 2019.}
@@ -32,19 +32,19 @@
 
     U ovom radu bi\'{c}e prikazana implementacija vremenske sinhronizacije u
 	namenskim ra\v{c}unarskim sistemima. U implementaciji je kori\v{s}\'{c}en
-	IEEE 1588 standard vremenske sinhrnoizacije. Implementacija je odradjena u
+	IEEE 1588 standard vremenske sinhronizacije. Implementacija je odradjena u
 	realnom sistemu, kori\v{s}\'{c}enjem razvojne plo\v{c}e kompanije Atmel,
-	ATSAMA5D27-SOM1-EK, na kojoj se nalazi Arm A5 mikrokontroler.
+	ATSAMA5D27-SOM1-EK, na kojoj se nalazi ARM A5 mikrokontroler.
 	Implementacija je odradjena u C programskom jeziku, uz kori\v{s}\'{c}enje
 	FreeRTOS operativnog sistema, i lwIP IP (Internet Protocol) steka. Test
 	sistem za ovu implementaciju se sastoji od jednog ra\v{c}unara op\v{s}te
-	namene, PC-a, na kome se pokre\'{c}e Linux operativni sistem, i razvojne
-	plo\v{c}e.
+	namene, na kome se pokre\'{c}e Linux operativni sistem, i razvojne
+	plo\v{c}e na kojoj je odradjena sama implementacija.
 
 	\vspace{2cm}
 
 	\textbf{Klju\v{c}ne re\v{c}i:}
-	Linux, C, Sinhronizacija, FreeRTOS, lwIP, IEEE 1588, Atmel, Arm
+	Linux, C, Sinhronizacija, FreeRTOS, lwIP, IEEE 1588, Atmel, ARM
 
 	\newpage
 
@@ -58,27 +58,25 @@
 	za\v{s}to se server pona\v{s}a onako kako nije predvidjeno. Za finansijske
 	i nau\v{c}ne institucije, vremenska sinhronizacija mora biti ta\v{c}na na
 	milijarditi, ili nekad na trilioniti deo sekunde, medjutim sve vi\v{s}e
-	komercijalnih i industrijskih organizacija se sve vi\v{s}e zala\v{z}u za
-	ideju da preciznost vremenske sinhronizacije bude u sub-milisecond opsegu.
-	Za\v{s}to nije dovoljno da se uredjaji sinhronizuju preko javno dostupnog
-	NTP protokola. Na\v{z}alost, ka\v{s}njenje postoji svugde, i prosto je
-	nemogu\'{c}e posti\'{c}i savr\v{s}enu sinhrnoizaciju. Foton mo\v{z}e
-    napraviti krug oko Zemlje vi\v{s}e od 7 puta u sekundi, iako putuje
-    aproksimativno 31\% sporije kroz obi\v{c}nu opti\v{c}ku mre\v{z}u, lako se
-    mo\v{z}e preneti jedan bit informacije preko pola sveta za manje od desetine
-    sekunde. Ali, poznato je da idealan svet ne postoji. Dodati svi\v{c}eve
-    (eng\@. switches), rutere (eng\@. routers), i ostalu mre\v{z}nu
+	komercijalnih i industrijskih organizacija se zala\v{z}u za ideju da  
+	preciznost vremenske sinhronizacije bude u sub-milisecond opsegu. 
+	Na\v{z}alost, ka\v{s}njenje postoji svugde, i prosto je nemogu\'{c}e 
+	posti\'{c}i savr\v{s}enu sinhrnoizaciju. Foton mo\v{z}e napraviti krug oko 
+	Zemlje vi\v{s}e od 7 puta u sekundi, iako putuje aproksimativno 31\% 
+	sporije kroz obi\v{c}nu opti\v{c}ku mre\v{z}u lako se mo\v{z}e preneti 
+	jedan bit informacije preko pola sveta za manje od desetine sekunde. Dodati 
+	svi\v{c}eve (eng\@. switches), rutere (eng\@. routers), i ostalu mre\v{z}nu
     infrastrukturu, i ta desetina sekunde se uve\'{c}a nekoliko puta. Bez
     specijalizovane opreme, na\v{s}a mre\v{z}a lako mo\v{z}e dodati
     ka\v{s}njenje \v{c}ak i ve\'{c}e od sekunde. Jo\v{s} ve\'{c}a briga je
     sinhronizacija razli\v{c}itih uredjaja unutar iste mre\v{z}e.
 
 	Sinhronizacija postaje neophodna kada uredjaji koji rade zajedno na
-	odredjenoj udaljenosti moraju raditi u vezi jedni sa drugima. U ovim
-	scenarijima, lokalni sat, ili Master Sat, sinhronizuje sve uredjaje u istom
-	sistemu sa tim satom. Zbog ove potrebe za sinhronizacijom, IEEE 1588
-	standard je objavljen kao standardni protokol 2002. godine. Iako su dva
-	sata unutar uredjaja pode\v{s}eni da rade na istoj frekvenciji, ne postoji
+	odredjenoj udaljenosti moraju raditi u vezi jedni sa drugima. U ovakvim 
+	sistemima, lokalni ili Master Sat, sinhronizuje sve uredjaje unutar istog 
+	sistema. Zbog ove potrebe za sinhronizacijom, IEEE 1588	standard je 
+	objavljen kao standardni protokol 2002. godine. Iako su dva	sata unutar 
+	uredjaja pode\v{s}eni da rade na istoj frekvenciji, ne postoji
 	garancija da \'{c}e ostati sinhronizovani. Upravo zbog ovoga proces
 	sinhronizacije je neprekidan. Nekoliko faktora mo\v{z}e uticati na to da
 	dva identi\v{c}na sata izgube sinhronizaciju. Razlozi mogu biti
@@ -89,26 +87,26 @@
 
 	S tim u vezi, u ovom radu \'{c}e biti predstavljen primer implementacije
 	vremenske sinhronizacije izmedju dva uredjaja, kao ogled primene Precision
-	Time Protocol-a, i prikazivanje njegovih mogu\'{c}nosti. Sve \v{s}to je
-	prikazano u ovom radu je napravljeno na osnovu \textit{open source}
-	softverskim modulima, i sve \v{s}to je iskor\v{s}\'{c}eno mo\v{z}e biti
-	nadogradjeno i iskori\v{s}\'{c}eno u nekim drugim sistemima.
-
+	Time Protocol-a, i prikazivanje njegovih mogu\'{c}nosti. Predlo\v{z}ena 
+	implementacija je napravljena celokupno na osnovu \textit{open source} 
+	softverskih modula. I sve \v{s}to je iskori\v{s}\'{c}eno mo\v{z}e biti 
+	ponovo iskori\v{s}\'{c}eno u neke druge svrhe.
+	
 	Implementirani sistem je vrlo jednostavan, sastoji se od jednog kompjutera
 	op\v{s}te namene, PC-a, i razvojne plo\v{c}e kompanije Atmel, bazirane na
-	Arm A5 mikrokontroleru. Sam sistem je zami\v{s}ljen tako da bude modularan,
+	ARM A5 mikrokontroleru. Sam sistem je zami\v{s}ljen tako da bude modularan,
 	i da na osnovu neke naknadne potrebe, moze biti nadogradjen, ili
 	iskori\v{s}\'{c}en u neke druge svrhe.
 
-	U prvom poglavlju \'{c}e biti prikazan pregled OSI modela komunikacije,
-	TCP/IP modela, i prikaz samog PTP protokola, koji potpuno opisan i
-	obja\v{s}njen. U drugom poglavlju bi\'{c}e prikazan oprativni sistem koji
+	U prvom poglavlju \'{c}e biti dat pregled modela komunikacije, sa posebnim 
+	osvrtom na TCP/IP i OSI modele komunikacije, kao i potpun prikaz samog PTP 
+	protokola. U drugom poglavlju bi\'{c}e prikazan operativni sistem koji
 	je kori\v{s}\'{c}en, kao i stek (eng\@. stack) za komunikaciju koji je
 	iskori\v{s}\'{c}en za implementaciju. U tre\'{c}em poglavlju je data
 	hardverska implementacija sa opisom razvojne plo\v{c}e koja je izabrana i
 	razloga zbog kojih je izabrana ova plo\v{c}a. U \v{c}etvrtom poglavlju je
-	dat opis softverske implementacije, kao i rezultati same implementacije. I
-	predlozi za pobolj\v{s}anja same implementacije.
+	dat opis softverske implementacije, rezultati same implementacije unutar 
+	oglednog sistema, kao i predlozi za pobolj\v{s}anja.
 
 	\newpage
 
@@ -177,7 +175,7 @@
 
 	\subsection{Sloj 1: Fizi\v{c}ki sloj (Physical Layer)}
 
-	Fizi\v{c}ki sloj je odgovoran za prenos i prijem nestrukturiranih sirovih
+	Fizi\v{c}ki sloj je odgovoran za prenos i prijem nestruktuiranih sirovih
 	podataka izmedju uredjaja i fizi\v{c}kog medijuma za prenos. On pretvara
 	digitalne bitove u elektri\v{c}ne, radio ili opti\v{c}ke signale.
 	Specifikacije sloja defini\v{s}u karakteristike poput nivoa napona,
@@ -187,12 +185,11 @@
 	be\v{z}i\v{c}ne uredjaje. Kontrola brzine bitova se vr\v{s}i na fizi\v{c}kom
 	nivou i mo\v{z}e definisati na\v{c}in komunikacije kao simpleks, polu
 	dupleks ili dupleks	komunikaciju. Komponente fizi\v{c}kog sloja mogu se
-	opisati u smislu topologije mre\v{z}e. Bluetooth, Ethernet i USB, sve imaju
-	specifikacije za fizi\v{c}ki sloj.
+	opisati u smislu topologije mre\v{z}e.
 
 	\subsection{Sloj 2: Sloj veze (Data Link Layer)}
 
-	Sloj veze podataka obezbedjuje prenos podataka izmedju dva \v{c}vora u
+	Sloj veze podataka obezbedjuje prenos podataka izmedju dva uredjaja u
 	komunikaciji - vezu	izmedju dva direktno povezana uredjaja na mre\v{z}i.
 	Ovaj sloj otkriva i eventualno ispravlja gre\v{s}ke koje se mogu javiti u
 	fizi\v{c}kom sloju. On defini\v{s}e protokol za uspostavljanje i prekid
@@ -224,23 +221,23 @@
 	od jednog \v{c}vora do drugog, poveznih u ``razli\v{c}ite mre\v{z}e''.
 	Mre\v{z}a je medijum na koji mo\v{z}e biti povezano vi\v{s}e \v{c}vorova, u
     kom svaki \v{c}vor ima adresu i koji dozvoljava \v{c}vorovima povezanim sa
-    njim da prenose poruke ka ostalim \v{c}vorovima, i to samo daju\'{c}i
-    sadr\v{z}aj poruke i adresu \v{c}vora na koji poruka treba da bude
-    dostavljena, omogu\'{c}avaju\'{c}i mre\v{z}i da nadje na\v{c}in da isporu\v{c}i
-    poruku odredi\v{s}nom \v{c}voru, eventualno ga usmeravaju\'{c}i kroz
-    sredi\v{s}nje \v{c}vorove (uredjaje koji su izmedju dva uredjaja koji
-    poku\v{s}avaju da komuniciraju). Ako je poruka prevelika da bi se prenela sa
-    jednog uredjaja na drugi samo kori\v{s}\'{c}enjem sloja veze (Data Link
-    Layer), mre\v{z}a mo\v{z}e preneti podatke tako \v{s}to \'{c}e ih podeliti
-    u nekoliko delova na jednom uredjaju, poslati delove nezavisno, i onda
-    spojiti delove na drugom uredjaju. Pri \v{c}emu mo\v{z}e, iako nije uvek
-    potrebno, prijaviti gre\v{s}ke u isporuci.
+	njim da prenose poruke ka ostalim \v{c}vorovima. Prenos poruka se obavlja 
+	tako \v{s}to se daje samo sadr\v{z}aj poruke i adresu \v{c}vora na koji 
+	poruka treba da bude dostavljena, omogu\'{c}avaju\'{c}i mre\v{z}i da nadje 
+	na\v{c}in da isporu\v{c}i poruku odredi\v{s}nom \v{c}voru, eventualno ga 
+	usmeravaju\'{c}i kroz sredi\v{s}nje \v{c}vorove (uredjaje koji su izmedju 
+	dva uredjaja koji poku\v{s}avaju da komuniciraju). Ako je poruka prevelika 
+	da bi se prenela sa jednog uredjaja na drugi samo kori\v{s}\'{c}enjem sloja 
+	veze (Data Link Layer), mre\v{z}a mo\v{z}e preneti podatke tako \v{s}to 
+	\'{c}e ih podeliti u nekoliko delova na jednom uredjaju, poslati delove 
+	nezavisno, i onda spojiti delove na drugom uredjaju. Pri \v{c}emu mo\v{z}e, 
+	iako nije uvek potrebno, prijaviti gre\v{s}ke u isporuci.
 
 	Isporuka poruka na mre\v{z}nom sloju nije garantovano pouzdana. Mre\v{z}ni
 	sloj mo\v{z}e pru\v{z}iti pouzdanu isporuku poruka, ali nije obavezno da to
 	mora biti ispunjeno.
 
-	Neki broj protokola koji upravljaju slojevima, imaju funkciju koja je
+	Odredjeni protokoli koji upravljaju slojevima, imaju funkciju koja je
 	definisana u aneksu	upravljanja, ISO 7498/4, i pripadaju mre\v{z}nom sloju.
 	Oni uklju\v{c}uju protokole rutiranja, upravljanja grupom sa vi\v{s}e
 	uredjaja, informacije o mre\v{z}nom sloju, o gre\v{s}kama, kao i
@@ -254,13 +251,13 @@
 	sekvenci podataka promenljive du\v{z}ine od predajnog do prijemnog uredjaja,
 	 uz odr\v{z}avanje kvaliteta.
 
-	Transportni sloj kontroli\v{s}e pouzdanost date konekcije kroz kontrolu
-	protoka, segmentaciju/desegmentaciju i kontrolu gre\v{s}aka. Neki protokli
-	su orjentisani na stanje mre\v{z}e, a neki na konekciju u mre\v{z}i.
-	Ovo zna\v{c}i da Transportni sloj mo\v{z}e da prati segmente i ponovo
-    prenese one koji nisu isporu\v{c}eni prijemnom uredjaju. Transportni sloj
-    takodje omogu\'{c}ava i potvrdu uspe\v{s}nog prenosa podataka i \v{s}alje
-    naredne podatke ako nije do\v{s}lo do gre\v{s}ke prilikom prenosa.
+	Transportni sloj kontroli\v{s}e pouzdanost uspostavljene konekcije kroz 
+	kontrolu protoka, segmentaciju/desegmentaciju i kontrolu gre\v{s}aka. Neki 
+	protokli su orjentisani na stanje mre\v{z}e, a neki na konekciju u 
+	mre\v{z}i. Ovo zna\v{c}i da Transportni sloj mo\v{z}e da prati segmente i 
+	ponovo prenese one koji nisu isporu\v{c}eni prijemnom uredjaju. Transportni 
+	sloj takodje omogu\'{c}ava i potvrdu uspe\v{s}nog prenosa podataka i 
+	\v{s}alje naredne podatke ako nije do\v{s}lo do gre\v{s}ke prilikom prenosa.
     Transportni sloj formira i segmente koji su primljeni iz vi\v{s}ih slojeva,
     npr. Aplikativnog sloja (Application Layer). Segmentacija je proces podele
     dugih poruka u kra\'{c}e poruke kako bi se lak\v{s}e prenele preko ni\v{z}ih
@@ -288,7 +285,7 @@
 	Sloj sesije kontroli\v{s}e dijaloge (veze) izmedju uredjaja. Uspostavlja,
 	upravlja i uklanja veze izmedju lokalnih i udaljenih aplikacija.
 	Obezbedjuje funkcije Full-Duplex, Half-Duplex ili Simplex i uspostavlja
-	procedure Checkpoint-a, prekida ili ponovnog pokretanja procedura. OSi
+	procedure Checkpoint-a, prekida ili ponovnog pokretanja procedura. OSI
 	model je u\v{c}inio ovaj sloj odgovornim za dobro zavr\v{s}avanje sesija,
 	\v{s}to je osobina TCP (Transmission Control Protocol), i takodje proveru
 	sesija i oporavak, \v{s}to se obi\v{c}no ne koristi u Internet Protocol
@@ -385,8 +382,8 @@
 	koristi skup protokola za slanje svojih podataka kroz slojeve. Podaci se
 	dalje enkapsuliraju na svakom sloju.
 
-	Rani dokumenti o ovom protokolu, govore o \v{c}etvoroslojevnom protokolu.
-	\v{S}to je u upotrebi i	danas. I oni su unutar protokola kori\v{s}\'{c}eni
+	Rani dokumenti o ovom protokolu, govore o \v{c}etvoroslojevnom protokolu,
+	\v{s}to je u upotrebi i	danas. I oni su unutar protokola kori\v{s}\'{c}eni
 	u istom redosledu u kom \'{c}e i ovde biti navedeni.
 
 	\begin{itemize}
@@ -564,7 +561,7 @@
     poveznih na jednostavnu mre\v{z}u, i bez grani\v{c}nih satova. Grandmaster
     se bira, i svi ostali uredjaji se direktno sinhroni\v{s}u na njega.
 
-	IEEE 1588-2008 predstavljaju Clock koji je povezan sa mre\v{z}nom opremom
+	IEEE 1588-2008 predstavlja Clock koji je povezan sa mre\v{z}nom opremom
     koja prenosi PTP poruke.  Transparentni uredjaj (eng\@. Transparent clock)
 	modifikuje PTP poruke koje prolaze kroz uredjaj. Vremenski pe\v{c}ati
 	(TIMESTAMPs) u porukama su modifikovani tako da se uzme u obzir i vreme za
@@ -605,14 +602,15 @@
 	\end{itemize}
 
 	Poruke se karakterizuju kao Event i General, odnosno poruke dogadjaja i
-	op\v{s}te poruke. Event	poruke su vremenski kriti\v{c}ne i to u preciznosti
-	predaje i prijema preciznosti vremenskih pe\v{c}ata (TIMESTAMPs) i direktno
-	uti\v{c}u na distribuciju preciznosti vremena. Sync, Delay\_Req, Pdelay\_Req
-    i Pdelay\_resp su poruke dogadjaja. Op\v{s}te poruke su ubi\v{c}ajene
-    jedinice protokola, zato \v{s}to su podaci u ovim porukama od zna\v{c}aja za
-    PTP, ali njihovi vremenski pe\v{c}ati za predaju i prijem nisu. Announce,
-    Follow\_Up, Delay\_Resp, Pdelay\_Resp\_Follow\_Up, Management i Signalne
-    poruke su op\v{s}te poruke.
+	op\v{s}te poruke. Event	poruke su vremenski kriti\v{c}ne, \v{c}ija se 
+	kriti\v{c}nost ogleda u preciznosti	predaje i prijema vremenskih pe\v{c}ata 
+	(TIMESTAMPs), \v{c}ime direktno	uti\v{c}u na distribuciju preciznosti 
+	vremena u sistemu. Sync, Delay\_Req, Pdelay\_Req i Pdelay\_resp su poruke 
+	dogadjaja. Op\v{s}te poruke su uobi\v{c}ajene jedinice protokola, zato 
+	\v{s}to su podaci u ovim porukama od zna\v{c}aja za PTP, ali njihovi 
+	vremenski pe\v{c}ati za predaju i prijem nisu. Announce, Follow\_Up, 
+	Delay\_Resp, Pdelay\_Resp\_Follow\_Up, Management i Signalne poruke su 
+	op\v{s}te poruke.
 
 	\subsection{Prenos poruka}
 
@@ -624,8 +622,9 @@
     opcija.
 
 	\subsection{Algoritam najboljeg sata}
-	BMC \(Best master clock algorithm\) algoritam obavlja deljenu selekciju
-	najboljeg kandidata	za ta\v{c}no vreme prema slede\'{c}im karakteristikama:
+	BMC (\textit{Best master clock algorithm}) algoritam obavlja deljenu 
+	selekciju najboljeg kandidata za ta\v{c}no vreme prema slede\'{c}im 
+	karakteristikama:
 
 	\begin{itemize}
 		\item Identifikator: Univerzalni jednistveni identifikator za sat.
@@ -647,13 +646,13 @@
 	slede\'{c}im osobinama, u nazna\v{c}enom redosledu:
 
 	\begin{itemize}
-		\item Prioritet 1: korisnik mo\v{z}e dodeliti specifi\v{c}an
-		stati\v{c}ki dizajniran prioritet svakom satu pre svega odredjuju\'{c}i
-		prioritet medju njima. Manje vrednosti prioriteta ozna\v{c}avaju
-		ve\'{c}i prioritet.
+		\item Prioritet 1: korisnik mo\v{z}e dodeliti specifi\v{c}no
+		dizajniran stati\v{c}ki prioritet svakom satu, time odredjuju\'{c}i
+		prioritet medju njima. Prioritet 0 se smatra najve\'{c}im prioritetom.
 		\item Klasa: Svaki sat je \v{c}lan odredjene klase, svaka klasa dobija
 		svoj prioritet.
-		\item Preciznost: Preciznost izmedju sata i UTC, u nanosekundama.
+		\item Ta\v{c}nost: Ta\v{c}nost uredjaja, u odnosu na UTC, u 
+		nanosekundama.
 		\item Varijansa: Varijabilnost sata.
 		\item Prioritet 2: Definisan prioritet, defini\v{s}u\'{c}i redosled
 		rezervne kopije u slu\v{c}aju da drugi kriterijumi nisu dovoljni. Manje
@@ -669,7 +668,7 @@
 	sata prenosi\'{c}e ove informacije kako bi se pozvali svi uredjaji za
 	pormenu Master sata. Kada trenutni Master prepozna bolji sat, tada Master
 	sat	zaustavlja emitovanje poruka za sinhronizaciju (Sync Messages), ili
-	poruke ogra\v{s}avanja (Announce messages), u zavisnosti od verzije
+	poruke ogla\v{s}avanja (Announce messages), u zavisnosti od verzije
 	protokola, i bolji sat preuzima ulogu Master sata. BMC algoritam uzima u
 	obzir samo osobine koje su ve\'{c} poznate, i koje su deklarisali sami
 	satovi, i ne uzima u obzir kvalitet veze na mre\v{z}i.
@@ -768,12 +767,13 @@
 
 	\section{FreeRTOS}
 
-	FreeRTOS je kernel operativnog sistema koji radi u realnom vremenu, i to za
-	namenske sisteme, i mo\v{z}e se koristiti na velikom broju mikrokontrolera.
-	FreeRTOS je idealno sklopljen za duboke namenske aplikacije u realnom
-	vremenu koje koriste mikrokontrolere ili male mikroprocesore. Ovaj
-	na\v{c}in projektovanja aplikacija uklju\v{c}uje kombinaciju kako strogih
-	zahteva za realnim vremenom u aplikaciji, tako i manje strogih.
+	FreeRTOS (Real-time Operating System) je kernel operativnog sistema koji 
+	radi u realnom vremenu, i to za	namenske sisteme, i mo\v{z}e se koristiti 
+	na velikom broju mikrokontrolera. FreeRTOS je idealno sklopljen za duboke 
+	namenske aplikacije u realnom vremenu koje koriste mikrokontrolere ili male 
+	mikroprocesore. Ovaj na\v{c}in projektovanja aplikacija uklju\v{c}uje 
+	kombinaciju kako strogih zahteva za realnim vremenom u aplikaciji, tako i 
+	manje strogih.
 
 	Strogi zahtevi za aplikacijama realnog vremena su oni u kojima postoji
 	vremenski rok u	izvr\v{s}avanju, i ako se taj rok probije, do\'{c}i ce do
@@ -781,29 +781,29 @@
 	potencijal da napravi vi\v{s}e \v{s}tete nego dobrog ukoliko je	odziv
 	sistema samo malo sporiji nego \v{s}to treba.
 
-	FreeRTOS je kernel realnog vrmena (ili rasporedjiva\v{c} realnog
-	vremena) na	koji se nadogradjuje aplikacija tako da ispuni stroge zahteve
-	za realnim vremenom aplikacije. To dozvoljava da aplikacija bude
-	organizovana kao kolekcija nezavisnih programskih niti. Na procesoru koji
-	ima samo jedno jezgro, samo jedna programska nit se mo\v{z}e izvr\v{s}avati
-	u jednom trenutku. Kernel odlu\v{c}uje koja nit se izvr\v{s}ava tako
-	\v{s}to odredjuje prioritet koji se dodeljuje svakoj niti. U
-	najjednostavnijem slu\v{c}aju, dizajner aplikacije mo\v{z}e odrediti
-	vi\v{s}e prioritete nitima koje implementiraju stroge zahteve za realnim
-	vremenom, a ni\v{z}e prioritete onim nitima koje nemaju tako stroge zahteve
-	za izvr\v{s}avanjem. Ovim bi se osiguralo da niti koje imaju stro\v{z}ije
-	zahteve, imaju prioritete izvr\v{s}avanja i pristupa resursima nad ostalim
-	nitima, ali odluke za dodelu izvr\v{s}avanja nisu uvek tako jednostavne.
+	FreeRTOS je kernel (ili rasporedjiva\v{c} realnog vremena) na koji se 
+	nadogradjuje aplikacija tako da ispuni stroge zahteve za realnim vremenom. 
+	To dozvoljava da aplikacija bude organizovana kao kolekcija nezavisnih 
+	programskih niti. Na procesoru koji ima samo jedno jezgro, samo jedna 
+	programska nit se mo\v{z}e izvr\v{s}avati u jednom trenutku. Kernel 
+	odlu\v{c}uje koja nit se izvr\v{s}ava tako \v{s}to odredjuje prioritet koji 
+	se dodeljuje svakoj niti. U najjednostavnijem slu\v{c}aju, dizajner 
+	aplikacije mo\v{z}e odrediti vi\v{s}e prioritete nitima koje implementiraju 
+	stroge zahteve za realnim vremenom, a ni\v{z}e prioritete onim nitima koje 
+	nemaju tako stroge zahteve za izvr\v{s}avanjem. Ovim bi se osiguralo da 
+	niti koje imaju stro\v{z}ije zahteve, imaju prioritete izvr\v{s}avanja i 
+	pristupa resursima nad ostalim nitima, ali odluke za dodelu izvr\v{s}avanja 
+	nisu uvek tako jednostavne.
 
 	Napomena: Unutar FreeRTOS-a se programska nit naziva ``task''. Tako da
 	\'{c}e se u daljem tekstu i koristiti naziv Task za programsku nit.
 
-	U projektovanju aplikacija za namenske sistema postoji ustaljena praksa
-	projektovanja aplikacija koja ne zahteva kori\v{s}\'{c}enje kernela za
-	realno vreme, i ove tehnike mogu dati bolje re\v{s}enje problema. Mada, u
-	kompleksnijim slu\v{c}ajevima, verovatnije je kori\v{s}\'{c}enje kernela za
-	aplikacije u realnom vremenu, i takodje mo\v{z}e biti kombinacija
-	kori\v{s}\'{c}enja kernela, i drugih tehnika projektovanja aplikacije.
+	U projektovanju aplikacija za namenske sisteme postoji ustaljena praksa
+	koja ne zahteva kori\v{s}\'{c}enje kernela za realno vreme, i ove tehnike 
+	mogu dati bolje re\v{s}enje problema. Mada, u kompleksnijim slu\v{c}ajevima,
+	 verovatnije je kori\v{s}\'{c}enje kernela za aplikacije u realnom vremenu,
+	 i takodje mo\v{z}e biti kombinacija kori\v{s}\'{c}enja kernela, i drugih 
+	 tehnika projektovanja aplikacije.
 
 	Kao \v{s}to je ve\'{c} opisano, prioriteti taskova mogu pomo\'{c}i da se
 	osigura da aplikacija ispuni sve zahteve, ali kernel mo\v{z}e doneti i neke
@@ -818,9 +818,9 @@
 		\item Odr\v{z}avanje/Pro\v{s}irivanje (Maintainability/Extensibility):
 		Uskra\'{c}ivanjem informacija o vremenskom rasporedu rezultuje u manjim
 		zavisnostima izmedju modula, i dozvoljava aplikaciji da evoluira na
-		kontrolisan i predvidjen na\v{c}in. Takodje, kernel je odgovoran za
-		rasporedjivanje vremena, tako da performanse aplikacije manje mogu biti
-		promenjene u hardveru na kome se pokre\'{c}u.
+		kontrolisan i predvidjen na\v{c}in. Takodje, kernel je odgovoran samo za
+		rasporedjivanje vremena, tako da performanse aplikacije mogu biti
+		promenjene u zavisnosti od hardvera na kome se pokre\'{c}u.
 		\item Modularnost (Modularity):
 		Taskovi su nezavisni moduli, pri \v{c}emu svaki od njih mora imati
 		dobro definisanu svrhu.
@@ -840,7 +840,7 @@
         koji se ne dogadjaju. Kod se pokre\'{c}e samo ukoliko postoji ne\v{s}to
 		sto je potrebno	uraditi. Protiv pobolj\v{s}ane efikasnosti stoji to da
 		je potrebno pocesuirati	RTOS prekid, i promeniti izvr\v{s}avanje sa
-		jednog taska na drugi. Kako god, i aplikacije koje ne koriste RTOS
+		jednog taska na drugi. Medjutim, i aplikacije koje ne koriste RTOS
 		normalno uklju\v{c}uju neku formu prekida.
 		\item Idle time:
 		Idle task je task koji se automatski kreira prilikom startovanja
@@ -853,7 +853,7 @@
 		Efikasnost koja se dobija kori\v{s}\'{c}enjem RTOS-a dozovoljava
 		procesoru da provede vi\v{s}e vremena u re\v{z}imu smanjene
 		potro\v{s}nje. Potro\v{s}nja se mo\v{z}e zna\v{c}ajno smanjiti time
-		\v{s}to procesor odlazi u re\v{z}im smanjenje potro\v{s}nje kad god je
+		\v{s}to procesor odlazi u re\v{z}im smanjene potro\v{s}nje kad god je
 		pokrenut Idle task. FreeRTOS takodje ima i specijalni tick-less mod, u
 		kome procesor odlazi u re\v{z}im smanjene potro\v{s}nje na du\v{z}e
 		vreme.
@@ -873,12 +873,12 @@
 	\subsection{Implementacija}
 
 	FreeRTOS je dizajniran tako da bude mali i jednostavan. Kernel (srce
-	operativnog sistema) se sastoji od samo 3 fajla, i pisan je u C programskom
-	jeziku. Kako bi se kod napravio da bude \v{c}itljiv, lako portabilan, i
-	kako bi se lako odr\v{z}avao projekat, pisan je uglavnom u C programskom
-	jeziku, sa izuzetkom nekih funkcionalnosti koje su napisane u asembleru,
-	gde je to bilo potrebno, i to uglavnom rutine u Scheduler-u
-	(Rasporedjiva\v{c}u niti) koje su specifi\v{c}ne za samu arhitekturu.
+	operativnog sistema) se sastoji od samo 3 fajla. Kako bi se kod napravio da 
+	bude \v{c}itljiv, lako portabilan, i kako bi se lako odr\v{z}avao projekat, 
+	pisan je uglavnom u C programskom jeziku, sa izuzetkom nekih 
+	funkcionalnosti koje su napisane u asembleru, gde je to bilo potrebno, i to 
+	uglavnom rutine u Scheduler-u (Rasporedjiva\v{c}u niti) koje su 
+	specifi\v{c}ne za samu arhitekturu.
 
 	FreeRTOS omogu\'{c}ava kori\v{s}\'{c}enje metoda za stvaranje vi\v{s}e
 	programskih niti, ili Taskova, stvaranje mehanizama za Sinhronizaciju niti,
@@ -980,7 +980,7 @@
 	lwIP pru\v{z}a tri API-a (Application Program's Interface) za programe koji
 	komuniciraju sa	TCP/IP kodom:
 	\begin{itemize}
-		\item low-level "core"/"callback" ili "raw" API
+		\item low-level ``core''/``callback'' ili ``raw'' API
 		\item dva API-a vi\v{s}eg nivoa (sekvencijalni API-i):
 			\begin{itemize}
 				\item netconn API
@@ -998,7 +998,7 @@
 	Prilikom me\v{s}anja sekvencijalnog i ``sirovog'' API-a u programima, treba
 	biti pa\v{z}ljiv. Funkcije koje pripadaju nesekvencijalnom API-u u stvari
 	mogu biti pozvane iz glavne	tcpip\_thread niti.
-	Takodje, registrovanje programski rutina (ili inicijalizovanje delova u
+	Takodje, registrovanje programskih rutina (ili inicijalizovanje delova u
 	lwIP) mora biti	odradjeno unutar tog konteksta (na primer, u vreme
 	startovanja aplikacije u tcpip\_init\_callback rutini ili u vreme
 	izvr\v{s}avanja unutar tcpip\_callback rutine).
@@ -1021,13 +1021,13 @@
 		kori\v{s}\'{c}enje.
 		\item \textbf{raw API} daje bolje performanse kako ne zahteva promenu
 		izvr\v{s}avanja programskih niti.
-		\item \textbf{raw API i netconn API} podr\v{z}avaju zero-copy
-		\footnotemark{predstavlja operaciju pri kojoj procesor ne vr\v{s}i
-		kopiranje podataka iz jedne memorijske oblasti u drugu. Ovo se
+		\item \textbf{raw API i netconn API} podr\v{z}avaju 
+		zero-copy\footnote{predstavlja operaciju pri kojoj procesor ne 
+		vr\v{s}i kopiranje podataka iz jedne memorijske oblasti u drugu. Ovo se
 		\v{c}esto koristi kako bi se sa\v{c}uvali ciklusi procesora i propusnog
 		opsega memorije prilikom prenosa kontinualnih podataka (datoteka,
-		fajlova) preko mre\v{z}e.} kako	za TX tako i za RX, tj\@. kako za
-		predaju, tako i za prijem podataka.
+		fajlova) preko mre\v{z}e.} operaciju kako za TX tako i za RX, tj\@. 
+		kako za	predaju, tako i za prijem podataka.
 	\end{itemize}
 
 	\newpage
@@ -1076,7 +1076,7 @@
 	Na samom SAMA5D27-SOM1 postoje i:
 	\begin{itemize}
 		\item Ultra mali SIP (SAMA5D27-D1G-CU) koji sadr\v{z}i \v{s}tedljivi
-		SAMA5D27 Arm Cortex A5 procesor i 1Gbit DDR2 SDRAM memoriju
+		SAMA5D27 ARM Cortex A5 procesor i 1Gbit DDR2 SDRAM memoriju
 		\item SST26VF064 64 Mb QSPI Flash memoriju
 		\item 24AA02E48 2 Kb serijski E2PROM (Electrically Erased Programmed
 		Read Only Memory) sa programiranom EUI identifikacijom pristupa
@@ -1254,33 +1254,32 @@
     se cifre iza decimalne ta\v{c}ke periodi\v{c}no ponavljaju,  i to
     ponavljanje je 19512. Nakon \v{c}ega se odredjuje da inkrement nanosekunda
     unutar broja\v{c}a TSU iznosi 12, dok je inkrement vremena ispod nanosekunde
-    celobrojni umno\v{z}ak broja 1951, i u ovoj implementaciji je 9755, odnosno
-    5 puta ostatka. Odabirom ove frekvencije za TSU, i dobijanjem ovih vremena,
-    potrebno je izvr\v{s}iti jo\v{s} jednu modifikaciju TSU\@. TSU ima mogu\'{c}nost
-    i alternativnog inkrementa. Tj\@. zadavanjem vrednosti za alternativno
-    inkrementiranje broja\v{c}a, TSU mo\v{z}e nakon odredjenog zadatog vremena,
-    promeniti vrednosti kojima inkrementira broja\v{c}. U ovom slu\v{c}aju,
-    ispravljanje gre\v{s}ke se vr\v{s}i na svakih 83 ciklusa unutar TSU, i u tom
-    ciklusu se dodaje 16ns na ve\'{c} postoje\'{c}u vrednost unutar TSU
-    broja\v{c}a. Ovim pode\v{s}avanjima modula, dobija se \v{s}to vernija
-    predstava realnog vremena. Tj\@. dobija se da ono \v{s}to dobijamo od
-    oscilatora, odgovara stvarnim vrednostima vremena. Naravno, zbog vrednosti
-    koje dolaze sa oscilatora i pode\v{s}avanja PLL-ova unutar samog procesora,
-    mora postojati odredjena gre\v{s}ka, koja se mo\v{z}e tolerisati, i koja se
-    mo\v{z}e smanjiti na odredjene na\v{c}ine. Konfiguracija GMAC modula
-    podrazumeva i registrovanje prekida za Sync i Delay\_Req pakete koji
-    sti\v{z}u na interfejs, \v{c}ime se dobijaju vremena koja su potrebna. Nakon
-    ispravne konfiguracije, dobijaju se prekidi na koje sti\v{z}u paketi, i iz
-    kojih je mogu\'{c}e i\v{s}\v{c}itati vremena. Na Sync i Delay\_Req pakete,
-    i prekide koji javljaju, mogu\'{c}e je i\v{s}\v{c}itati trenutnu vrednost
-    vremena koje se nalazi u TSU, \v{s}to je bitno za proces sinhronizacije. U
-    skladu sa arhitekturom softverske implementacije, vremena koja se dobijaju,
-    se prosledjuju u red sa porukama, koji su potrebni za celokupnu
-    sinhronizaciju.
+	celobrojni umno\v{z}ak broja 1951, i u ovoj implementaciji je uzet 9755. 
+	Odabirom ove frekvencije za TSU, i dobijanjem ovih vremena,
+	potrebno je izvr\v{s}iti jo\v{s} jednu modifikaciju TSU\@. TSU ima 
+	mogu\'{c}nost i alternativnog inkrementa. Tj\@. zadavanjem vrednosti za 
+	alternativno inkrementiranje broja\v{c}a, TSU mo\v{z}e nakon odredjenog 
+	zadatog vremena, promeniti vrednosti kojima inkrementira broja\v{c}. U ovom 
+	slu\v{c}aju, ispravljanje gre\v{s}ke se vr\v{s}i na svakih 83 ciklusa 
+	unutar TSU, i u tom ciklusu se dodaje 16ns na ve\'{c} postoje\'{c}u 
+	vrednost unutar TSU broja\v{c}a. Ovim pode\v{s}avanjima modula, dobija se 
+	\v{s}to vernija predstava realnog vremena. Tj\@. dobija se da ono \v{s}to 
+	dobijamo od oscilatora, odgovara stvarnim vrednostima vremena. Naravno, 
+	zbog vrednosti koje dolaze sa oscilatora i pode\v{s}avanja PLL-ova unutar 
+	samog procesora, mora postojati odredjena gre\v{s}ka, koja se mo\v{z}e 
+	tolerisati, i koja se mo\v{z}e smanjiti na odredjene na\v{c}ine. 
+	Konfiguracija GMAC modula podrazumeva i registrovanje prekida za Sync i 
+	Delay\_Req pakete koji sti\v{z}u na interfejs, \v{c}ime se dobijaju vremena 
+	koja su potrebna. Nakon ispravne konfiguracije, dobijaju se prekidi na koje 
+	sti\v{z}u paketi, i iz kojih je mogu\'{c}e i\v{s}\v{c}itati vremena. Na 
+	Sync i Delay\_Req pakete, i prekide koji javljaju, mogu\'{c}e je 
+	i\v{s}\v{c}itati trenutnu vrednost vremena koje se nalazi u TSU, \v{s}to je 
+	bitno za proces sinhronizacije. U skladu sa arhitekturom softverske 
+	implementacije, vremena koja se dobijaju, prosledjuju se u red sa porukama.
 
 	Protokol ta\v{c}nog vremena odredjuje i to da slave uredjaj mora prepoznati
 	pakete koji sti\v{z}u, \v{s}to se posti\v{z}e hardverskom podr\v{s}kom za
-	neke od paketa. Ali i odgovoriti na odredjene pakete. Ovo se posti\v{z}e
+	neke od paketa. Kao i odgovoriti na odredjene pakete, \v{s}to se posti\v{z}e
 	implementiranjem ma\v{s}ine stanja koja vodi ra\v{c}una o trenutnom stanju
 	uredjaja u smislu sinhronizacije. S tim u vezi, ma\v{s}ina stanja ostaje u
 	istom, po\v{c}etnom stanju, sve dok ne stigne prvi paket koji je bitan za
@@ -1342,7 +1341,7 @@
 
 	\begin{figure}[htb]
 			\centering
-			\includegraphics[scale=1.0]{../pic/ptpd_startup.png}
+			\includegraphics[scale=1.2]{../pic/ptpd_startup.png}
             \caption{Prikaz pokretanja alata PTPd, i postavljanje PC-a za
             master u oglednom sistemu}
 			\label{fig:ptpd_startup}
@@ -1350,14 +1349,14 @@
 
     \begin{figure}[htb]
 			\centering
-			\includegraphics[scale=1.5]{../pic/ptp_time_1.png}
+			\includegraphics[scale=1.8]{../pic/ptp_time_1.png}
             \caption{Po\v{c}etak sinhronizacije}
 			\label{fig:ptp_time_1}
 	\end{figure}
 
     \begin{figure}[htb]
 			\centering
-			\includegraphics[scale=1.5]{../pic/ptp_time_2.png}
+			\includegraphics[scale=2.1]{../pic/ptp_time_2.png}
             \caption{Sinhronizacija nakon nekog vremena}
 			\label{fig:ptp_time_2}
 	\end{figure}
@@ -1370,19 +1369,19 @@
 
 	\section{Predlozi za pobolj\v{s}anja}
 
-	Unutar ovog dela bi\'{c}e dati predlozi za pobolj\v{s}anja vec
+	Unutar ovog dela bi\'{c}e dati predlozi za pobolj\v{s}anja ve\'{c}
 	postoje\'{c}eg mehanizma, a i predlozi za pobolj\v{s}anja algoritma koji je
 	implementiran.
 
 	Naime, kako je u ovoj implementaciji kori\v{s}\'{c}ena verzija 1
 	originalnog IEEE 1588 standarda, na lwIP steku, mogu\'{c}e je pru\v{z}iti
-	podr\v{s}ku za verziju 2 standarda. \v{C}ime bi se pobolj\v{s}ala
-	sinhronizacija i pru\v{z}ila podr\v{s}ka za razli\v{c}ite softverske i
-	hardverske implementacije ostatka sistema, odnosno integracije razvojne
-	plo\v{c}e u druge sisteme koji ne podr\v{z}avaju ovu verziju standarda.
-	Takodje, na ovaj na\v{c}in bi se pru\v{z}ila podr\v{s}ka za ostali hardver
-	koji podr\v{z}ava standard, \v{c}ime bi se pove\'{c}ala i ta\v{c}nost
-	sinhronizacije.
+	podr\v{s}ku za verziju 2 standarda. Kori\v{s}\'{c}enjem druge verzije 
+	standarda, pobolj\v{s}ala bi se	sinhronizacija i pru\v{z}ila podr\v{s}ka za 
+	razli\v{c}ite softverske i hardverske implementacije ostatka sistema, 
+	odnosno integracije razvojne plo\v{c}e u druge sisteme koji ne 
+	podr\v{z}avaju ovu verziju standarda. Takodje, na ovaj na\v{c}in bi se 
+	pru\v{z}ila podr\v{s}ka za ostali hardver koji podr\v{z}ava standard, 
+	\v{c}ime bi se pove\'{c}ala i ta\v{c}nost sinhronizacije.
 
 	Takodje, kao jo\v{s} jedan predlog za pobolj\v{s}anje mo\v{z}e se navesti i
 	kori\v{s}\'{c}enje druga\v{c}ije softverske implementacije standarda na
@@ -1441,16 +1440,16 @@
 	\textit{open source} zajednica, koja podr\v{z}ava ovaj hardver.
 
 	Ovaj rad se mo\v{z}e posmatrati kao primer inicijalne vremenske
-	sinhronizacije u jednom Namenskom ra\v{c}unarskom sistemu. Kao i jedan deo
-	ve\'{c}eg sistema, koji je spreman za kori\v{s}\'{c}enje u ve\'{c}
-	postoje\'{c}im sistemima kojima nedostaje vremenska sinhronizacija. Takodje,
-	 ovaj rad predstavlja kombinaciju modularnog projektovanja jednog namenskog
-	sistema u koji je mogu\'{c}e dodavanje novih funkcionalnosti, i to na vrlo
-	lak na\v{c}in. Sama priroda implementacije koja se bazira na
-	\textit{open source} projektima, omogu\'{c}ava da kori\v{s}\'{c}enje
-	ve\'{c} postoje\'{c}e implementacije, kao i pro\v{s}irivanje i unapredjenje
-	mo\v{z}e biti lako i brzo uradjeno, kao i da nema potrebe za odredjenim
-	komercijalnim softverskim modulima ili komercijalnim alatima.
+	sinhronizacije u jednom namenskom ra\v{c}unarskom sistemu. Takodje, 
+	mo\v{z}e se posmatrati kao i deo ve\'{c}eg sistema, kojim bi zadati sistem 
+	dobio potrebnu vremensku sinhronizaciju. Takodje, ovaj rad predstavlja 
+	kombinaciju modularnog projektovanja jednog namenskog sistema u koji je 
+	mogu\'{c}e dodavanje novih funkcionalnosti, i to na vrlo lak na\v{c}in. 
+	Sama priroda implementacije koja se bazira na \textit{open source} 
+	projektima, omogu\'{c}ava da kori\v{s}\'{c}enje	ve\'{c} postoje\'{c}e 
+	implementacije, kao i pro\v{s}irivanje i unapredjenje mo\v{z}e biti lako i 
+	brzo uradjeno, kao i da nema potrebe za odredjenim komercijalnim 
+	softverskim modulima ili komercijalnim alatima.
 
     \newpage
 
